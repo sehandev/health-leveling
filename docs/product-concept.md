@@ -20,7 +20,7 @@ A mobile-first personal health and fitness tracking service that turns a user's 
 - **Supplements**: record supplement items, dosage, and intake time. Support daily and weekly goals and routine adherence.
 - **Workouts**: record exercises, target muscle groups, equipment, sets, load, duration, place, and feedback. A `Program` may define a split such as two- or three-day training. Use past records and the program to suggest the next workout and exercise prescription.
 - **Body Metrics**: record height, body weight, and individual body-composition measurements. An InBody assessment is a measurement event/source, not a single metric; store its resulting metrics separately.
-- **Goals**: support measurable and qualitative goals with a `Target Date`, such as weight change, body-fat target, muscle gain, or an appearance-related goal.
+- **Goals**: the initial Goal setup offers four types—`Target Body Weight`, `Target Body Fat Percentage`, `Muscle Gain`, and `Performance Goal`—each with a `Target Date`. The fields and metrics required for each type remain to be defined.
 - **Progress Photos**: let users upload dated photos and review them chronologically or side by side.
 
 ## Data Layers
@@ -66,7 +66,7 @@ The Wake-up experience is a sequence of focused pages:
 3. Show the current `Avatar` level and XP.
 4. Show a daily-granularity 14-day progression graph with a cumulative XP line and an `Avatar` Level step line.
 5. If a `Primary Goal` exists, show exactly one `Next Best Action` for something to do at any point during the current day. Balance today's `Plan` with progress toward the `Primary Goal`; the action does not have to start immediately.
-6. If no `Primary Goal` exists, show available Goal setup choices instead. If there are no suitable choices to present, show only today's `Plan` and finish the Wake-up flow.
+6. If no `Primary Goal` exists, show the four Goal setup choices instead. If no choices are available to present, show only today's `Plan` and finish the Wake-up flow.
 
 If the user leaves `Body Weight` unchanged and continues, record that day's entry using the saved value; a separate skip action is not required. This provides a daily value for the 14-day graph. The two graphs share the same visual design and differ in their plotted values and scale.
 

@@ -9,7 +9,8 @@ This roadmap decomposes the product into epics with dependency-aware completion 
 - **Decided:** the first release is a private, single-user personal app; in-app registration and multi-user support are out of scope initially.
 - **Decided:** organize the daily journey into seven contextual touchpoints: Wake-up, Post-breakfast, Post-lunch, Post-dinner, Pre-workout, Post-workout, and Bedtime.
 - **Decided:** Wake-up's first four pages are editable current `Body Weight`; 14-day daily weight graph; current `Avatar` level and XP; 14-day daily graph with cumulative XP line and `Avatar` Level step line. `Height` is not shown at Wake-up. Continuing without edits records that day's value unchanged.
-- **Decided:** if a `Primary Goal` exists, the final page shows one `Next Best Action` balanced between today's `Plan` and that goal. If there is no `Primary Goal`, show Goal setup choices; if no suitable choices are available, show only today's `Plan` and finish.
+- **Decided:** if a `Primary Goal` exists, the final page shows one `Next Best Action` balanced between today's `Plan` and that goal. If there is no `Primary Goal`, show the four Goal setup choices; if no choices are available, show only today's `Plan` and finish.
+- **Decided:** the four initial `Goal Type` choices are `Target Body Weight`, `Target Body Fat Percentage`, `Muscle Gain`, and `Performance Goal`.
 - **Decided:** both graphs share a visual design; the `Body Weight` graph uses 5-display-unit scale/reference intervals.
 - **Decided:** `Next Best Action` recommends one action to do at any point today, not necessarily immediately.
 - **Decided:** use a **Balanced** policy that considers both today's `Plan` and progress toward the `Primary Goal`.

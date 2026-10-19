@@ -15,6 +15,7 @@ Canonical domain terms are English. UI labels may be Korean and do not need to m
 | **Segmental Lean Mass** | A segment-level body-composition value, stored separately for each reported body segment. Confirm the exact field names against the device report before implementation; do not treat all InBody results as one opaque value. |
 | **InBody Assessment** | A measurement event/source that may contain multiple individual body metrics. InBody is not itself a metric. |
 | **Target Date** | The date by which a goal is intended to be achieved. |
+| **Goal Type** | One of the initial setup choices: `Target Body Weight`, `Target Body Fat Percentage`, `Muscle Gain`, or `Performance Goal`. |
 | **Primary Goal** | The active goal the user designates as the main priority for personalized recommendations and progress summaries. |
 | **Derived Data** | Data calculated or inferred from source data, including AI estimates. Preserve its provenance and distinguish estimates from direct measurements. |
 | **Calories** | Product/domain term for meal energy. Persisted field names should make the unit explicit, such as kcal. |
