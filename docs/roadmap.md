@@ -8,7 +8,8 @@ This roadmap decomposes the product into epics with dependency-aware completion 
 
 - **Decided:** the first release is a private, single-user personal app; in-app registration and multi-user support are out of scope initially.
 - **Decided:** organize the daily journey into seven contextual touchpoints: Wake-up, Post-breakfast, Post-lunch, Post-dinner, Pre-workout, Post-workout, and Bedtime.
-- **Decided:** Wake-up is a five-page flow: editable current `Body Weight`; 14-day daily weight graph; current `Avatar` level and XP; 14-day daily level/XP graph; one `Next Best Action` recommendation. `Height` is not shown at Wake-up.
+- **Decided:** Wake-up is a five-page flow: editable current `Body Weight`; 14-day daily weight graph; current `Avatar` level and XP; 14-day daily graph with cumulative XP line and `Avatar` Level step line; one `Next Best Action` recommendation. `Height` is not shown at Wake-up. Continuing without edits records that day's value unchanged.
+- **Decided:** both graphs share a visual design; the `Body Weight` graph uses 5-display-unit scale/reference intervals.
 - Define the full first-release scope, primary user journeys, page map, and acceptance criteria. Map the relevant actions to each touchpoint and protect access if the app is remotely reachable.
 - Confirm domain fields, units, timezone behavior, and InBody report metrics.
 - Specify XP awards, the supplement counting unit, and how body-metric levels relate to user goals.
@@ -17,7 +18,7 @@ This roadmap decomposes the product into epics with dependency-aware completion 
 
 - The first release's included and excluded features are explicit.
 - Each touchpoint has a clear purpose, relevant actions, and a focused mobile flow.
-- The Wake-up flow's page sequence and graph behavior are defined, including missing-data handling and XP series/scale.
+- The Wake-up flow's page sequence and graph behavior are defined, including daily value capture and the XP/Level series.
 - Core records and progression rules have unambiguous definitions.
 
 ## Phase 1 — Platform Foundation and Feasibility
@@ -87,7 +88,7 @@ Each record flow should support validation, useful empty/error states, and corre
 
 - Create the minimalist `Avatar` view with selectable body areas.
 - Show concise overall and per-area levels and XP progress.
-- Add a daily-granularity 14-day `Body Weight` graph and daily-granularity 14-day `Avatar` level/XP progression graph.
+- Add matching daily-granularity 14-day graphs: `Body Weight` with 5-unit scale intervals, and cumulative XP with an `Avatar` Level step line.
 - Add progress-photo timeline and side-by-side comparison.
 - Split details into focused mobile-first screens with progressive disclosure.
 

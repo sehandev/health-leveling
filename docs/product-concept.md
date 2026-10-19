@@ -62,12 +62,12 @@ These are flexible entry points, not mandatory steps or a strict clock-based seq
 The Wake-up experience is a sequence of focused pages:
 
 1. Show the current `Body Weight` and allow it to be edited. Do not ask for or display `Height` here; height changes infrequently and remains available in Body Metrics.
-2. Show a daily-granularity `Body Weight` graph covering the past 14 days.
+2. Show a daily-granularity `Body Weight` graph covering the past 14 days. Use the same visual chart design as the XP graph, with scale/reference intervals of 5 display units (5 kg when the selected unit is kg).
 3. Show the current `Avatar` level and XP.
-4. Show a daily-granularity 14-day progression graph for `Avatar` level and XP.
+4. Show a daily-granularity 14-day progression graph with a cumulative XP line and an `Avatar` Level step line.
 5. Show exactly one `Next Best Action` recommendation, then finish the Wake-up flow.
 
-If the user leaves `Body Weight` unchanged and continues, preserve the saved value; a separate skip action is not required. The XP series/scale and graph encoding, and how missing measurement days appear, remain undecided.
+If the user leaves `Body Weight` unchanged and continues, record that day's entry using the saved value; a separate skip action is not required. This provides a daily value for the 14-day graph. The two graphs share the same visual design and differ in their plotted values and scale.
 
 ## UX and Visual Direction
 
