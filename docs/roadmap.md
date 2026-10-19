@@ -11,6 +11,7 @@ This roadmap decomposes the product into epics with dependency-aware completion 
 - **Decided:** Wake-up is a five-page flow: editable current `Body Weight`; 14-day daily weight graph; current `Avatar` level and XP; 14-day daily graph with cumulative XP line and `Avatar` Level step line; one `Next Best Action` recommendation. `Height` is not shown at Wake-up. Continuing without edits records that day's value unchanged.
 - **Decided:** both graphs share a visual design; the `Body Weight` graph uses 5-display-unit scale/reference intervals.
 - **Decided:** `Next Best Action` recommends one action to do at any point today, not necessarily immediately.
+- **Decided:** use a **Balanced** policy that considers both today's planned actions and progress toward active goals; exact ranking signals and tie-breakers remain open.
 - Define the full first-release scope, primary user journeys, page map, and acceptance criteria. Map the relevant actions to each touchpoint and protect access if the app is remotely reachable.
 - Confirm domain fields, units, timezone behavior, and InBody report metrics.
 - Specify XP awards, the supplement counting unit, and how body-metric levels relate to user goals.

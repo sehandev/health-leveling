@@ -69,6 +69,8 @@ The Wake-up experience is a sequence of focused pages:
 
 If the user leaves `Body Weight` unchanged and continues, record that day's entry using the saved value; a separate skip action is not required. This provides a daily value for the 14-day graph. The two graphs share the same visual design and differ in their plotted values and scale.
 
+`Next Best Action` uses a **Balanced** policy: consider both actions already planned for today and actions that advance the user's active goals. Do not rank solely by what can be done immediately. Exact signals, weights, and tie-breakers remain undecided.
+
 ## UX and Visual Direction
 
 - **Mobile-first**, with little information on each screen.
