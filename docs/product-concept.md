@@ -43,6 +43,20 @@ Keep these concepts distinct throughout domain models, storage, and application 
 
 Exact XP rules and how body-metric levels reflect different user goals remain open design decisions.
 
+## Daily Touchpoints
+
+The user journey is divided into seven contextual touchpoints rather than one generic daily check-in:
+
+1. **Wake-up** — after waking.
+2. **Post-breakfast** — after breakfast.
+3. **Post-lunch** — after lunch.
+4. **Post-dinner** — after dinner.
+5. **Pre-workout** — before a workout.
+6. **Post-workout** — after a workout.
+7. **Bedtime** — before sleep.
+
+These are flexible entry points, not mandatory steps or a strict clock-based sequence. Users may skip irrelevant touchpoints without penalty; existing XP never decreases. The exact records, actions, and recommendations shown at each touchpoint—and whether to send reminders—remain to be defined.
+
 ## UX and Visual Direction
 
 - **Mobile-first**, with little information on each screen.
