@@ -1,19 +1,19 @@
 # Product Roadmap
 
-This roadmap decomposes the product into epics with dependency-aware completion criteria. It has no dates or estimates yet. UI copy is Korean; canonical domain concepts and implementation discussions use English. See [Product Concept](product-concept.md), [Domain Glossary](domain-glossary.md), and [Cloudflare CLI and Local Pi Bridge](cloudflare-cli.md).
+This roadmap decomposes the product into epics with dependency-aware completion criteria. It has no dates or estimates yet. Phases define implementation order, not a reduced feature scope for the first release. UI copy is Korean; canonical domain concepts and implementation discussions use English. See [Product Concept](product-concept.md), [Domain Glossary](domain-glossary.md), and [Cloudflare CLI and Local Pi Bridge](cloudflare-cli.md).
 
 ## Phase 0 — Product Definition
 
 ### Work
 
-- Decide whether the first release is a personal tool or a multi-user product.
-- Define the MVP boundary, primary user journeys, page map, and acceptance criteria.
+- **Decided:** the first release is a private, single-user personal app; in-app registration and multi-user support are out of scope initially.
+- Define the full first-release scope, primary user journeys, page map, and acceptance criteria. Protect access if the app is remotely reachable.
 - Confirm domain fields, units, timezone behavior, and InBody report metrics.
 - Specify XP awards, the supplement counting unit, and how body-metric levels relate to user goals.
 
 ### Done when
 
-- The MVP's included and excluded features are explicit.
+- The first release's included and excluded features are explicit.
 - Core records and progression rules have unambiguous definitions.
 
 ## Phase 1 — Platform Foundation and Feasibility
@@ -34,8 +34,8 @@ This roadmap decomposes the product into epics with dependency-aware completion 
 
 ### Work
 
-- Implement authentication and per-user data ownership if the MVP is multi-user.
-- Define profile, timezone, and unit preferences.
+- No in-app registration or multi-user authentication in the initial single-user release.
+- Define owner-only access control for remote use, plus profile, timezone, and unit preferences.
 - Create D1 schemas and migrations for source records and derived data.
 - Implement private image upload and retrieval through R2.
 - Define edit, delete, and image cleanup behavior.
@@ -110,19 +110,28 @@ Add AI features after the corresponding source-data flows exist:
 
 ### Work
 
-- Test authentication, data isolation, upload limits, deletion, and Access boundaries.
+- Test owner-only access, upload limits, deletion, and Access boundaries.
 - Test XP calculations, migrations, AI timeouts, retries, and error handling.
+- Test and clearly communicate AI unavailability when the Mac or Tunnel is offline.
 - Verify mobile usability, accessibility, and performance.
 - Add operational logging and a backup/recovery plan appropriate to the release.
 - For a public release, replace or supplement the development-Mac Pi dependency with an available production AI runtime and decide how health data may be sent to model providers.
 
 ### Done when
 
-- The chosen release scope works reliably without relying on an individual developer's local session or machine.
+- The private single-user release works reliably within its documented Mac/Tunnel availability constraints.
+- Any later public or multi-user release has a separately available AI runtime and an explicit data-access model.
 
-## Proposed MVP Cut Line — Not Final
+## Confirmed Initial Release Scope
 
-A reasonable first release is manual tracking for the selected core domains, goals, and a basic `Avatar`/XP progression loop. AI meal analysis and personalized recommendations can follow as a second milestone after the data model and logging flows are stable. This cut line is a proposal; the release scope must be confirmed in Phase 0.
+The first complete release includes all planned core domains, AI, and progression features:
+
+- Manual logging for meals, supplements, workouts, body metrics, goals, and progress photos.
+- `Avatar`, muscle/body-metric/overall levels, non-decreasing XP, and progress history.
+- AI meal-nutrition estimation and meal recommendations.
+- Program- and workout-history-based training recommendations.
+
+The feature scope is decided; Phase 0 still needs detailed acceptance criteria and user journeys. Implementation remains phased so each domain can be tested before later features depend on it. The Pi-on-Mac integration is the initial AI runtime; AI availability depends on the Mac and Tunnel being online.
 
 ## Key Dependencies
 

@@ -1,10 +1,18 @@
 # Product Concept
 
-See [Product Roadmap](roadmap.md) for the proposed completion phases and MVP cut line.
+See [Product Roadmap](roadmap.md) for the confirmed first-release scope and implementation phases.
 
 ## Product Vision
 
 A mobile-first personal health and fitness tracking service that turns a user's health records into useful feedback and a positive, game-like growth experience. The product supports consistent behavior and visible progress; missed days do not erase accumulated progress.
+
+## Initial Release Scope
+
+- The first release is a private, single-user personal app. In-app registration and multi-user support are out of scope initially.
+- Include all planned core domains, the Avatar/XP progression loop, progress views, and AI features in the first complete release; AI is not deferred to a later product milestone.
+- UI access still needs protection if the app is remotely reachable. The access-control implementation is not yet finalized.
+- The initial AI integration uses Pi on the development Mac through the local bridge and Cloudflare Tunnel. AI availability therefore depends on that Mac and its connection being online.
+- Roadmap phases describe implementation order, not a reduced feature scope for the first release.
 
 ## Core Domains
 

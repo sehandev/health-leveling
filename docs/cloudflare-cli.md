@@ -43,7 +43,7 @@ Cloudflare Mesh is for private IP connectivity among enrolled devices. A deploye
 - Run the bridge and Pi locally on the Mac, initially through a project script such as `pnpm dev:pi-bridge`.
 - Do not expose the raw Pi RPC protocol or an unrestricted agent-control endpoint through the tunnel. Expose only the application operations the product needs.
 - Protect the hostname with Cloudflare Access. Keep the Service Token in Worker secrets; do not commit credentials or place them in browser code.
-- Keep the bridge available only while the Mac is awake and connected. This is a development/prototype integration, not a highly available production AI service.
+- Keep the bridge available while the Mac is awake and connected. This can support the private single-user initial release, but AI will be unavailable when the Mac or Tunnel is offline; it is not a highly available multi-user runtime.
 - Running Pi locally does not guarantee that inference stays on the Mac. The configured model provider may receive prompts, including health-related data; the provider and data-sharing behavior remain to be decided.
 
 ## Not Yet Decided
