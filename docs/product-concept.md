@@ -55,9 +55,19 @@ The user journey is divided into seven contextual touchpoints rather than one ge
 6. **Post-workout** — after a workout.
 7. **Bedtime** — before sleep.
 
-These are flexible entry points, not mandatory steps or a strict clock-based sequence. Users may skip irrelevant touchpoints without penalty; existing XP never decreases. At **Wake-up**, show the current `Body Weight` and `Height` together and allow either value to be edited. Continuing without changing them keeps the saved values; a separate skip action is not required. The exact records, actions, and recommendations shown at the other touchpoints—and whether to send reminders—remain to be defined.
+These are flexible entry points, not mandatory steps or a strict clock-based sequence. Users may skip irrelevant touchpoints without penalty; existing XP never decreases. The exact records, actions, and recommendations shown at the other touchpoints—and whether to send reminders—remain to be defined.
 
-The contents of **Today’s Status** are undecided. Candidate information includes goal progress, planned training, nutrition and supplement progress, recent body metrics, XP/level progress, unlogged records, and a concise AI insight. Show only information that is available and relevant at that point in the day; do not present not-yet-logged values as failures or as meaningful zeroes.
+### Wake-up Flow
+
+The Wake-up experience is a sequence of focused pages:
+
+1. Show the current `Body Weight` and allow it to be edited. Do not ask for or display `Height` here; height changes infrequently and remains available in Body Metrics.
+2. Show a daily-granularity `Body Weight` graph covering the past 14 days.
+3. Show the current `Avatar` level and XP.
+4. Show a daily-granularity 14-day progression graph for `Avatar` level and XP.
+5. Show exactly one `Next Best Action` recommendation, then finish the Wake-up flow.
+
+If the user leaves `Body Weight` unchanged and continues, preserve the saved value; a separate skip action is not required. The XP series/scale and graph encoding, and how missing measurement days appear, remain undecided.
 
 ## UX and Visual Direction
 
