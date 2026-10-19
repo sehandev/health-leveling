@@ -1,0 +1,55 @@
+# Product Concept
+
+See [Product Roadmap](roadmap.md) for the proposed completion phases and MVP cut line.
+
+## Product Vision
+
+A mobile-first personal health and fitness tracking service that turns a user's health records into useful feedback and a positive, game-like growth experience. The product supports consistent behavior and visible progress; missed days do not erase accumulated progress.
+
+## Core Domains
+
+- **Meals**: record meal photos, `Food Items`, `Place`, dining companions, and time. AI may estimate `Calories`, carbohydrates, protein, fat, sugar, sodium, and other nutrition values, then provide meal insights and next-meal suggestions.
+- **Supplements**: record supplement items, dosage, and intake time. Support daily and weekly goals and routine adherence.
+- **Workouts**: record exercises, target muscle groups, equipment, sets, load, duration, place, and feedback. A `Program` may define a split such as two- or three-day training. Use past records and the program to suggest the next workout and exercise prescription.
+- **Body Metrics**: record height, body weight, and individual body-composition measurements. An InBody assessment is a measurement event/source, not a single metric; store its resulting metrics separately.
+- **Goals**: support measurable and qualitative goals with a `Target Date`, such as weight change, body-fat target, muscle gain, or an appearance-related goal.
+- **Progress Photos**: let users upload dated photos and review them chronologically or side by side.
+
+## Data Layers
+
+Keep these concepts distinct throughout domain models, storage, and application code:
+
+1. **User-Generated Data / Source Data** — information the user enters or uploads, including photos and measurements from a device.
+2. **Derived Data** — values calculated or inferred from source records, including AI nutrition estimates, workout metrics, adherence, trends, recommendations, XP, and levels. AI outputs are estimates, not user-entered facts.
+3. **Presentation Model** — data composed for a particular screen. It may combine source and derived data and does not have to be stored as a separate canonical record.
+
+## Gamification
+
+- The **Avatar** is the central growth visualization on the home screen.
+- Track separate levels for muscle groups and body-related metrics, plus an overall character level.
+- All levels start at Level 1.
+- Reward defined positive behaviors with XP. Never subtract XP for missed records, inactivity, or an unfavorable result.
+- Keep the XP threshold per level fixed; it does not increase at higher levels.
+- The XP awarded for supplement intake should vary with the number of supplement items taken. The counting unit (distinct items, planned doses, or servings) and exact XP values remain undecided.
+- Provide a separate progression view with XP and level history so users can recognize periods of growth and plateaus.
+
+Exact XP rules and how body-metric levels reflect different user goals remain open design decisions.
+
+## UX and Visual Direction
+
+- **Mobile-first**, with little information on each screen.
+- Split tasks into focused screens rather than creating a dense all-in-one dashboard.
+- Use progressive disclosure for details and analysis.
+- Use a minimalist visual language based primarily on dots and lines, with minimal filled surfaces.
+- The home screen centers on the Avatar and concise growth information; detailed logging, analysis, goals, photos, and progression live in focused views.
+- UI copy is Korean. Canonical domain terms, code identifiers, and engineering discussions use English.
+
+## Initial Technology Direction
+
+- **Runtime and data**: Cloudflare Workers, D1, and R2.
+- **Web application**: pnpm, TanStack Start, and shadcn/ui.
+- **Client libraries**: TanStack Form for forms, TanStack Query for remote/server state, and Zustand for client-only state.
+- Define clear ownership between route loaders and TanStack Query to avoid maintaining duplicate server-state caches.
+- **AI prototype**: connect to Pi running on the development Mac through Pi CLI RPC mode and a local HTTP bridge. See [Cloudflare CLI and Pi Bridge](cloudflare-cli.md).
+
+Additional dependencies such as schema validation, an ORM, or charting libraries have not been selected yet.
