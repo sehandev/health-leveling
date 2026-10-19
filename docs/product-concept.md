@@ -20,7 +20,7 @@ A mobile-first personal health and fitness tracking service that turns a user's 
 - **Supplements**: record supplement items, dosage, and intake time. Support daily and weekly goals and routine adherence.
 - **Workouts**: record exercises, target muscle groups, equipment, sets, load, duration, place, and feedback. A `Program` may define a split such as two- or three-day training. Use past records and the program to suggest the next workout and exercise prescription.
 - **Body Metrics**: record height, body weight, and individual body-composition measurements. An InBody assessment is a measurement event/source, not a single metric; store its resulting metrics separately.
-- **Goals**: the initial Goal setup offers four types—`Target Body Weight`, `Target Body Fat Percentage`, `Muscle Gain`, and `Performance Goal`—each with a `Target Date`. A `Target Body Weight` goal stores only the target weight and `Target Date`; it does not store a separate start value. Fields for the other types remain to be defined.
+- **Goals**: the initial Goal setup offers four types—`Target Body Weight`, `Target Body Fat Percentage`, `Muscle Gain`, and `Performance Goal`—each with a `Target Date`. `Target Body Weight` stores only the target weight and `Target Date`; `Target Body Fat Percentage` stores only the target percentage and `Target Date`. Neither stores a separate start value. Fields for the other types remain to be defined.
 - **Progress Photos**: let users upload dated photos and review them chronologically or side by side.
 
 ## Data Layers

@@ -17,6 +17,7 @@ Canonical domain terms are English. UI labels may be Korean and do not need to m
 | **Target Date** | The date by which a goal is intended to be achieved. |
 | **Goal Type** | One of the initial setup choices: `Target Body Weight`, `Target Body Fat Percentage`, `Muscle Gain`, or `Performance Goal`. |
 | **Target Body Weight** | A Goal Type with a target weight and `Target Date`; no separate start value is stored. |
+| **Target Body Fat Percentage** | A Goal Type with a target percentage and `Target Date`; no separate start value is stored. |
 | **Primary Goal** | The active goal the user designates as the main priority for personalized recommendations and progress summaries. |
 | **Derived Data** | Data calculated or inferred from source data, including AI estimates. Preserve its provenance and distinguish estimates from direct measurements. |
 | **Calories** | Product/domain term for meal energy. Persisted field names should make the unit explicit, such as kcal. |
