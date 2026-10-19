@@ -10,6 +10,7 @@ This roadmap decomposes the product into epics with dependency-aware completion 
 - **Decided:** organize the daily journey into seven contextual touchpoints: Wake-up, Post-breakfast, Post-lunch, Post-dinner, Pre-workout, Post-workout, and Bedtime.
 - **Decided:** Wake-up is a five-page flow: editable current `Body Weight`; 14-day daily weight graph; current `Avatar` level and XP; 14-day daily graph with cumulative XP line and `Avatar` Level step line; one `Next Best Action` recommendation. `Height` is not shown at Wake-up. Continuing without edits records that day's value unchanged.
 - **Decided:** both graphs share a visual design; the `Body Weight` graph uses 5-display-unit scale/reference intervals.
+- **Decided:** `Next Best Action` recommends one action to do at any point today, not necessarily immediately.
 - Define the full first-release scope, primary user journeys, page map, and acceptance criteria. Map the relevant actions to each touchpoint and protect access if the app is remotely reachable.
 - Confirm domain fields, units, timezone behavior, and InBody report metrics.
 - Specify XP awards, the supplement counting unit, and how body-metric levels relate to user goals.
@@ -19,6 +20,7 @@ This roadmap decomposes the product into epics with dependency-aware completion 
 - The first release's included and excluded features are explicit.
 - Each touchpoint has a clear purpose, relevant actions, and a focused mobile flow.
 - The Wake-up flow's page sequence and graph behavior are defined, including daily value capture and the XP/Level series.
+- `Next Best Action` selection is grounded in a clearly defined daily horizon and ranking policy.
 - Core records and progression rules have unambiguous definitions.
 
 ## Phase 1 — Platform Foundation and Feasibility
