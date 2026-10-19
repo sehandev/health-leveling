@@ -65,11 +65,12 @@ The Wake-up experience is a sequence of focused pages:
 2. Show a daily-granularity `Body Weight` graph covering the past 14 days. Use the same visual chart design as the XP graph, with scale/reference intervals of 5 display units (5 kg when the selected unit is kg).
 3. Show the current `Avatar` level and XP.
 4. Show a daily-granularity 14-day progression graph with a cumulative XP line and an `Avatar` Level step line.
-5. Show exactly one `Next Best Action` recommendation for something to do at any point during the current day, then finish the Wake-up flow. It does not have to be started immediately; it may fit a later meal, scheduled workout, or supplement routine.
+5. If a `Primary Goal` exists, show exactly one `Next Best Action` for something to do at any point during the current day. Balance today's `Plan` with progress toward the `Primary Goal`; the action does not have to start immediately.
+6. If no `Primary Goal` exists, show available Goal setup choices instead. If there are no suitable choices to present, show only today's `Plan` and finish the Wake-up flow.
 
 If the user leaves `Body Weight` unchanged and continues, record that day's entry using the saved value; a separate skip action is not required. This provides a daily value for the 14-day graph. The two graphs share the same visual design and differ in their plotted values and scale.
 
-Users can designate one active `Goal` as their `Primary Goal`. `Next Best Action` uses a **Balanced** policy: consider both actions already planned for today and actions that advance the `Primary Goal`. Do not rank solely by what can be done immediately. Exact signals, weights, and tie-breakers remain undecided.
+Users can designate one active `Goal` as their `Primary Goal`. When a `Primary Goal` exists, `Next Best Action` uses a **Balanced** policy: consider both today's `Plan` and actions that advance the `Primary Goal`. Do not rank solely by what can be done immediately. Exact signals, weights, and tie-breakers remain undecided.
 
 ## UX and Visual Direction
 
