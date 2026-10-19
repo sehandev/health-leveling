@@ -8,6 +8,7 @@ This roadmap decomposes the product into epics with dependency-aware completion 
 
 - **Decided:** the first release is a private, single-user personal app; in-app registration and multi-user support are out of scope initially.
 - **Decided:** organize the daily journey into seven contextual touchpoints: Wake-up, Post-breakfast, Post-lunch, Post-dinner, Pre-workout, Post-workout, and Bedtime.
+- **Decided:** Wake-up shows current `Body Weight` and `Height` together and allows edits; continuing without changes preserves saved values.
 - Define the full first-release scope, primary user journeys, page map, and acceptance criteria. Map the relevant actions to each touchpoint and protect access if the app is remotely reachable.
 - Confirm domain fields, units, timezone behavior, and InBody report metrics.
 - Specify XP awards, the supplement counting unit, and how body-metric levels relate to user goals.
@@ -16,6 +17,7 @@ This roadmap decomposes the product into epics with dependency-aware completion 
 
 - The first release's included and excluded features are explicit.
 - Each touchpoint has a clear purpose, relevant actions, and a focused mobile flow.
+- `Today’s Status` content and presentation rules are defined.
 - Core records and progression rules have unambiguous definitions.
 
 ## Phase 1 — Platform Foundation and Feasibility

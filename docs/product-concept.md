@@ -55,7 +55,9 @@ The user journey is divided into seven contextual touchpoints rather than one ge
 6. **Post-workout** — after a workout.
 7. **Bedtime** — before sleep.
 
-These are flexible entry points, not mandatory steps or a strict clock-based sequence. Users may skip irrelevant touchpoints without penalty; existing XP never decreases. The exact records, actions, and recommendations shown at each touchpoint—and whether to send reminders—remain to be defined.
+These are flexible entry points, not mandatory steps or a strict clock-based sequence. Users may skip irrelevant touchpoints without penalty; existing XP never decreases. At **Wake-up**, show the current `Body Weight` and `Height` together and allow either value to be edited. Continuing without changing them keeps the saved values; a separate skip action is not required. The exact records, actions, and recommendations shown at the other touchpoints—and whether to send reminders—remain to be defined.
+
+The contents of **Today’s Status** are undecided. Candidate information includes goal progress, planned training, nutrition and supplement progress, recent body metrics, XP/level progress, unlogged records, and a concise AI insight. Show only information that is available and relevant at that point in the day; do not present not-yet-logged values as failures or as meaningful zeroes.
 
 ## UX and Visual Direction
 
