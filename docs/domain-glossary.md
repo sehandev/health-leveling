@@ -31,6 +31,7 @@ Canonical domain terms are English. UI labels may be Korean and do not need to m
 | **Streak** | A count or duration of consecutive qualifying behaviors. A missed day may end a streak but must not deduct XP. |
 | **Workout Type** | The broad logging category for a workout: `Strength Training`, `Cardio/Endurance`, `Sport`, `Mobility/Recovery`, or `Other`. |
 | **Sport Option** | The initial `Sport` choices are `Soccer/Futsal`, `Basketball`, `Volleyball`, `Baseball`, `Tennis`, `Badminton`, `Table Tennis`, `Golf`, and `Combat Sports`, plus `Other Sport` with a user-entered name. `Running`, `Cycling`, and `Swimming` use `Cardio/Endurance`. |
+| **Mobility/Recovery Activity** | Choose `Stretching`, `Yoga`, `Mobility Drill`, `Foam Rolling`, or `Other` with a user-entered name. Record `Duration`; `Target Muscle Groups`, `Place`, and `Note` are optional. Do not record `Reps`, `Load`, or `Distance`. |
 | **Note** | An optional workout-level plain-text field available for every `Workout Type`. Use a simple textarea without Markdown; store a blank value as an empty string. |
 | **Workout Set** | A performed set under an exercise in a `Strength Training` workout. Store `Reps` and one optional `Load` per set; rest time is not recorded. For bodyweight-only sets, leave `Load` empty rather than using zero or the user's `Body Weight`. |
 | **Pace** | For `Cardio/Endurance`, derive pace as `Duration` divided by `Distance` (min/km) when both values are available. This is derived data, not a separately entered source value. |
