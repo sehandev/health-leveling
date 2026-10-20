@@ -19,7 +19,7 @@ Canonical domain terms are English. UI labels may be Korean and do not need to m
 | **Target Body Weight** | A Goal Type with a target weight and `Target Date`; no separate start value is stored. |
 | **Target Body Fat Percentage** | A Goal Type with a target percentage and `Target Date`; no separate start value is stored. |
 | **Muscle Gain** | A Goal Type with two sub-options: general muscle development with a `Target Date` only, or a whole-body InBody `Skeletal Muscle Mass` target with a target value and `Target Date`. |
-| **Performance Goal** | A Goal Type with target performance metric(s)/value(s), units, and a `Target Date`; no separate start value is stored. Progress is compared with workout records. Supported metric families include `Load`, `Reps`, `Distance`, `Duration`/time, and `Pace`; exact units remain undecided. |
+| **Performance Goal** | A Goal Type with target performance metric(s)/value(s), units, and a `Target Date`; no separate start value is stored. Progress is compared with workout records. Defaults: `Load` in kg, `Reps` as a count, `Distance` in km, `Duration` in seconds or minutes, and `Pace` in min/km. Other units may be added later. |
 | **Primary Goal** | The active goal the user designates as the main priority for personalized recommendations and progress summaries. |
 | **Derived Data** | Data calculated or inferred from source data, including AI estimates. Preserve its provenance and distinguish estimates from direct measurements. |
 | **Calories** | Product/domain term for meal energy. Persisted field names should make the unit explicit, such as kcal. |
