@@ -13,6 +13,7 @@ This roadmap decomposes the product into epics with dependency-aware completion 
 - **Decided:** the four initial `Goal Type` choices are `Target Body Weight`, `Target Body Fat Percentage`, `Muscle Gain`, and `Performance Goal`.
 - **Decided:** `Target Body Weight` stores only the target value and `Target Date`; `Target Body Fat Percentage` stores only the target percentage and `Target Date`. Neither stores a separate start value.
 - **Decided:** `Muscle Gain` has two sub-options: general muscle development with a `Target Date` only, or whole-body InBody `Skeletal Muscle Mass` with a target value and `Target Date`. The InBody option is a subtype, not a fifth top-level Goal Type.
+- **Decided:** `Performance Goal` stores a target performance value and `Target Date`, with no separate start value; workout records provide observed progress. Supported metrics and units remain open.
 - **Decided:** both graphs share a visual design; the `Body Weight` graph uses 5-display-unit scale/reference intervals.
 - **Decided:** `Next Best Action` recommends one action to do at any point today, not necessarily immediately.
 - **Decided:** use a **Balanced** policy that considers both today's `Plan` and progress toward the `Primary Goal`.
