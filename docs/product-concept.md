@@ -14,6 +14,10 @@ A mobile-first personal health and fitness tracking service that turns a user's 
 - The initial AI integration uses Pi on the development Mac through the local bridge and Cloudflare Tunnel. AI availability therefore depends on that Mac and its connection being online.
 - Roadmap phases describe implementation order, not a reduced feature scope for the first release.
 
+## User Confirmation Principle
+
+The app may offer recommendations, inferred values, and prefilled suggestions, but the user makes the decisions and confirms records across every domain. Suggestions—including extracted `Food Items`, workout actions, meal recommendations, and body-metric values—remain proposals and must not create or modify user source records, be applied to a `Plan`/`Goal`, or be treated as completed behavior until the user explicitly confirms. Derived AI outputs and recommendation sessions may be stored separately as specified, but are not user-confirmed facts. A deliberate Save, Confirm, or Continue action counts as confirmation; do not add a redundant confirmation dialog. Derived analysis may be shown after its source record is confirmed and saved.
+
 ## Core Domains
 
 - **Meals**: record meal photos, `Food Items`, `Place`, dining companions, and time. Provide separate `Meal Photo`, `Receipt/Order Import`, and `Manual Food Item Entry` paths. AI extracts candidate `Food Items` from meal photos and image-based receipts/orders, recognizing a specific brand/menu item when possible or a generic food item otherwise. The user reviews and confirms, edits, removes, or adds items before saving. Retain the original receipt/order image with the saved Meal. Deleting a Meal deletes all images associated with it, including meal photos and retained receipt/order images. Receipt/order PDF import is not supported initially. After a meal is recorded, AI shows nutrition analysis such as `Calories`, carbohydrates, protein, fat, sugar, and sodium, then ends the meal flow without unsolicited improvement advice. Users can explicitly request on-demand meal/menu recommendations based on prior meals, current body metrics, active goals, current time, and remaining meal slots.
@@ -57,7 +61,7 @@ The user journey is divided into seven contextual touchpoints rather than one ge
 
 These are flexible entry points, not mandatory steps or a strict clock-based sequence. Users may skip irrelevant touchpoints without penalty; existing XP never decreases. The exact records, actions, and recommendations shown at the other touchpoints—and whether to send reminders—remain to be defined.
 
-The daily `Plan` is assembled from existing schedules, including workouts from `Program` and scheduled supplement routines. Users can manually add other actions; a separate full-featured planner is not required for the initial release.
+The daily `Plan` is assembled from existing schedules, including workouts from `Program` and scheduled supplement routines. Users can manually add other actions; a separate full-featured planner is not required for the initial release. At `Pre-workout`, show available choices before starting or changing a workout; never start or alter a workout from a recommendation without the user's explicit choice and confirmation. The exact choices remain to be defined.
 
 Meal logging at Post-breakfast, Post-lunch, and Post-dinner ends after showing AI nutrition analysis. Meal/menu recommendations are user-initiated, not automatically suggested after logging. Tapping an empty `Meal Slot` opens a modal `Action Sheet` with two choices: `Menu Recommendation` or `Log Meal`. `Log Meal` then offers separate `Meal Photo`, `Receipt/Order Import`, and `Manual Food Item Entry` paths. Receipt/order extraction is a reviewable candidate list; only user-confirmed items are saved.
 
@@ -74,7 +78,7 @@ The Wake-up experience is a sequence of focused pages:
 5. If a `Primary Goal` exists, show exactly one `Next Best Action` for something to do at any point during the current day. Balance today's `Plan` with progress toward the `Primary Goal`; the action does not have to start immediately.
 6. If no `Primary Goal` exists, show the four Goal setup choices instead. If no choices are available to present, show only today's `Plan` and finish the Wake-up flow.
 
-If the user leaves `Body Weight` unchanged and continues, record that day's entry using the saved value; a separate skip action is not required. This provides a daily value for the 14-day graph. The two graphs share the same visual design and differ in their plotted values and scale.
+If the user leaves `Body Weight` unchanged and continues, record that day's entry using the saved value; pressing Continue is explicit confirmation, so a separate skip action or redundant confirmation dialog is not required. This provides a daily value for the 14-day graph. The two graphs share the same visual design and differ in their plotted values and scale.
 
 Users can designate one active `Goal` as their `Primary Goal`. When a `Primary Goal` exists, `Next Best Action` uses a **Balanced** policy: consider both today's `Plan` and actions that advance the `Primary Goal`. Do not rank solely by what can be done immediately. Exact signals, weights, and tie-breakers remain undecided.
 
