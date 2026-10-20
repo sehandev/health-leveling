@@ -59,7 +59,7 @@ These are flexible entry points, not mandatory steps or a strict clock-based seq
 
 The daily `Plan` is assembled from existing schedules, including workouts from `Program` and scheduled supplement routines. Users can manually add other actions; a separate full-featured planner is not required for the initial release.
 
-Meal logging at Post-breakfast, Post-lunch, and Post-dinner ends after showing AI nutrition analysis. Meal/menu recommendations are user-initiated, not automatically suggested after logging.
+Meal logging at Post-breakfast, Post-lunch, and Post-dinner ends after showing AI nutrition analysis. Meal/menu recommendations are user-initiated, not automatically suggested after logging. Tapping an empty `Meal Slot` opens a modal `Action Sheet` with two choices: `Menu Recommendation` or `Log Meal`. The recommendation flow remains user-initiated; selecting a recommended menu does not by itself confirm that it was eaten.
 
 ### Wake-up Flow
 

@@ -19,7 +19,7 @@ This roadmap decomposes the product into epics with dependency-aware completion 
 - **Decided:** use a **Balanced** policy that considers both today's `Plan` and progress toward the `Primary Goal`.
 - **Decided:** the user designates one active `Goal` as the `Primary Goal`; `Next Best Action` uses it as the main goal-priority signal. Exact ranking signals and tie-breakers remain open.
 - **Decided:** assemble the daily `Plan` from existing sources such as `Program` workouts and scheduled supplement routines, with user-added actions; a separate full-featured planner is out of scope initially.
-- **Decided:** meal logging ends after AI nutrition analysis; meal/menu recommendations are shown only when the user explicitly requests them.
+- **Decided:** meal logging ends after AI nutrition analysis; meal/menu recommendations are shown only when the user explicitly requests them. Tapping an empty `Meal Slot` opens a modal `Action Sheet` with `Menu Recommendation` and `Log Meal` actions. A recommendation is not automatically recorded as a consumed meal.
 - Define the full first-release scope, primary user journeys, page map, and acceptance criteria. Map the relevant actions to each touchpoint and protect access if the app is remotely reachable.
 - Confirm domain fields, units, timezone behavior, and InBody report metrics.
 - Specify XP awards, the supplement counting unit, and how body-metric levels relate to user goals.
