@@ -18,8 +18,7 @@ Canonical domain terms are English. UI labels may be Korean and do not need to m
 | **Goal Type** | One of the initial setup choices: `Target Body Weight`, `Target Body Fat Percentage`, `Muscle Gain`, or `Performance Goal`. |
 | **Target Body Weight** | A Goal Type with a target weight and `Target Date`; no separate start value is stored. |
 | **Target Body Fat Percentage** | A Goal Type with a target percentage and `Target Date`; no separate start value is stored. |
-| **Muscle Gain** | A Goal Type for general muscle development with a `Target Date` but no numeric target value. |
-| **Skeletal Muscle Mass Goal** | A target for whole-body `Skeletal Muscle Mass` from InBody, with a target value and `Target Date`. Whether this is a separate Goal Type or a `Muscle Gain` subtype is undecided. |
+| **Muscle Gain** | A Goal Type with two sub-options: general muscle development with a `Target Date` only, or a whole-body InBody `Skeletal Muscle Mass` target with a target value and `Target Date`. |
 | **Primary Goal** | The active goal the user designates as the main priority for personalized recommendations and progress summaries. |
 | **Derived Data** | Data calculated or inferred from source data, including AI estimates. Preserve its provenance and distinguish estimates from direct measurements. |
 | **Calories** | Product/domain term for meal energy. Persisted field names should make the unit explicit, such as kcal. |
