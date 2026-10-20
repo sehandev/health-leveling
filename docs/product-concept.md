@@ -57,6 +57,8 @@ The user journey is divided into seven contextual touchpoints rather than one ge
 
 These are flexible entry points, not mandatory steps or a strict clock-based sequence. Users may skip irrelevant touchpoints without penalty; existing XP never decreases. The exact records, actions, and recommendations shown at the other touchpoints—and whether to send reminders—remain to be defined.
 
+The daily `Plan` is assembled from existing schedules, including workouts from `Program` and scheduled supplement routines. Users can manually add other actions; a separate full-featured planner is not required for the initial release.
+
 ### Wake-up Flow
 
 The Wake-up experience is a sequence of focused pages:

@@ -25,7 +25,7 @@ Canonical domain terms are English. UI labels may be Korean and do not need to m
 | **Calories** | Product/domain term for meal energy. Persisted field names should make the unit explicit, such as kcal. |
 | **Streak** | A count or duration of consecutive qualifying behaviors. A missed day may end a streak but must not deduct XP. |
 | **Program** | A user's workout plan, including its split and planned training sessions. |
-| **Plan** | The activities scheduled for the current day. Distinct from `Program`, which defines the workout routine. |
+| **Plan** | A daily collection of scheduled activities, assembled from existing sources such as `Program` and supplement routines, plus user-added actions. Distinct from `Program`, which defines the workout routine. |
 | **Presentation Model** | Data composed for a particular UI screen from source and derived data. It is not automatically a separate source-of-truth record. |
 | **Avatar** | The game-like character used to visualize the user's overall and body-area progression. |
 | **XP** | Experience points granted for qualifying behaviors. XP is never deducted. |
