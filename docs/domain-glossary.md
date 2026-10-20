@@ -30,6 +30,7 @@ Canonical domain terms are English. UI labels may be Korean and do not need to m
 | **Calories** | Product/domain term for meal energy. Persisted field names should make the unit explicit, such as kcal. |
 | **Streak** | A count or duration of consecutive qualifying behaviors. A missed day may end a streak but must not deduct XP. |
 | **Workout Type** | The broad logging category for a workout: `Strength Training`, `Cardio/Endurance`, `Sport`, `Mobility/Recovery`, or `Other`. |
+| **Workout Logging Mode** | A workout can be entered live during the activity or as a batch afterward. `Post-workout` is for logging/editing, not a summary screen. |
 | **Sport Option** | The initial `Sport` choices are `Soccer/Futsal`, `Basketball`, `Volleyball`, `Baseball`, `Tennis`, `Badminton`, `Table Tennis`, `Golf`, and `Combat Sports`, plus `Other Sport` with a user-entered name. `Running`, `Cycling`, and `Swimming` use `Cardio/Endurance`. |
 | **Mobility/Recovery Activity** | Choose `Stretching`, `Yoga`, `Mobility Drill`, `Foam Rolling`, or `Other` with a user-entered name. Record `Duration`; `Target Muscle Groups`, `Place`, and `Note` are optional. Do not record `Reps`, `Load`, or `Distance`. |
 | **Other Workout** | For the `Other` `Workout Type`, require a user-entered activity name and `Duration`; `Place` and `Note` are optional. |
