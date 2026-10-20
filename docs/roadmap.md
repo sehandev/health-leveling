@@ -21,6 +21,7 @@ This roadmap decomposes the product into epics with dependency-aware completion 
 - **Decided:** assemble the daily `Plan` from existing sources such as `Program` workouts and scheduled supplement routines, with user-added actions; a separate full-featured planner is out of scope initially.
 - **Decided:** all recommendations, inferred values, and prefilled suggestions across every domain are proposals only. The user explicitly confirms before they create or modify a source record, are applied to a `Plan`/`Goal`, or count as a completed action. Derived AI outputs and recommendation sessions may be stored separately but are not user-confirmed facts. Save/Confirm/Continue actions count as confirmation; avoid redundant confirmation dialogs. Derived analysis may be shown after the source record is confirmed.
 - **Decided:** `Pre-workout` is a page for deciding what workout to do, with today's scheduled workout prefilled as the initial value. The user may edit or replace it; without a scheduled workout, the selection starts empty. The prefilled value does not itself modify `Program` or `Plan`. There is no separate start/select/modify menu or standalone add action. A left-arrow back control lets the user exit if they entered by mistake; this is not a `Skip` action.
+- **Decided:** `Workout Type` values are `Strength Training`, `Cardio/Endurance`, `Sport`, `Mobility/Recovery`, and `Other`. `Strength Training` has `Machine`, `Free Weight`, and `Bodyweight` modes; these are not top-level workout types.
 - **Decided:** meal logging ends after AI nutrition analysis; recommendations are user-initiated. Tapping an empty `Meal Slot` opens a modal `Action Sheet` with `Menu Recommendation` and `Log Meal`. The `Log Meal` flow offers separate `Meal Photo`, `Receipt/Order Import`, and `Manual Food Item Entry` modes. AI extracts candidate `Food Items` from both meal photos and image-based receipts/orders; the user reviews and confirms before saving. Retain the original receipt/order image with the saved Meal. PDF import is unsupported initially.
 - Define the full first-release scope, primary user journeys, page map, and acceptance criteria. Map the relevant actions to each touchpoint and protect access if the app is remotely reachable.
 - Confirm domain fields, units, timezone behavior, and InBody report metrics.
@@ -70,7 +71,7 @@ Implement manual source-data capture before relying on AI:
 - **Goals**: measurable and qualitative goals with a `Target Date`.
 - **Meals**: separate `Meal Photo`, `Receipt/Order Import`, and `Manual Food Item Entry` modes; `Food Items`, `Place`, dining companions, and time. Retain receipt/order source images with saved meal records.
 - **Supplements**: items, dosage, intake time, daily/weekly targets, and adherence records.
-- **Workouts**: exercises, target muscles, equipment, sets, load, duration, place, and feedback.
+- **Workouts**: `Workout Type`-specific logging for `Strength Training`, `Cardio/Endurance`, `Sport`, `Mobility/Recovery`, or `Other`. `Strength Training` distinguishes `Machine`, `Free Weight`, and `Bodyweight` modes. Capture applicable exercises, target muscles, equipment, sets, reps, load, duration, distance, place, and feedback.
 - **Program**: training split and planned workout sessions.
 - **Progress Photos**: dated upload, timeline, and comparison.
 

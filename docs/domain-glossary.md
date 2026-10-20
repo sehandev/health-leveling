@@ -29,6 +29,8 @@ Canonical domain terms are English. UI labels may be Korean and do not need to m
 | **Derived Data** | Data calculated or inferred from source data, including AI estimates. Preserve its provenance and distinguish estimates from direct measurements. |
 | **Calories** | Product/domain term for meal energy. Persisted field names should make the unit explicit, such as kcal. |
 | **Streak** | A count or duration of consecutive qualifying behaviors. A missed day may end a streak but must not deduct XP. |
+| **Workout Type** | The broad logging category for a workout: `Strength Training`, `Cardio/Endurance`, `Sport`, `Mobility/Recovery`, or `Other`. |
+| **Strength Training Mode** | The subtype of a `Strength Training` workout: `Machine`, `Free Weight`, or `Bodyweight`. These modes are not separate top-level `Workout Type` values. |
 | **Program** | A user's workout plan, including its split and planned training sessions. |
 | **Plan** | A daily collection of scheduled activities, assembled from existing sources such as `Program` and supplement routines, plus user-added actions. Distinct from `Program`, which defines the workout routine. |
 | **Presentation Model** | Data composed for a particular UI screen from source and derived data. It is not automatically a separate source-of-truth record. |
