@@ -16,7 +16,7 @@ A mobile-first personal health and fitness tracking service that turns a user's 
 
 ## Core Domains
 
-- **Meals**: record meal photos, `Food Items`, `Place`, dining companions, and time. AI may estimate `Calories`, carbohydrates, protein, fat, sugar, sodium, and other nutrition values, then provide meal insights and next-meal suggestions.
+- **Meals**: record meal photos, `Food Items`, `Place`, dining companions, and time. After a meal is recorded, AI shows nutrition analysis such as `Calories`, carbohydrates, protein, fat, sugar, and sodium, then ends the meal flow without unsolicited improvement advice. Users can explicitly request on-demand meal/menu recommendations based on meal records and goals.
 - **Supplements**: record supplement items, dosage, and intake time. Support daily and weekly goals and routine adherence.
 - **Workouts**: record exercises, target muscle groups, equipment, sets, load, duration, place, and feedback. A `Program` may define a split such as two- or three-day training. Use past records and the program to suggest the next workout and exercise prescription.
 - **Body Metrics**: record height, body weight, and individual body-composition measurements. An InBody assessment is a measurement event/source, not a single metric; store its resulting metrics separately.
@@ -58,6 +58,8 @@ The user journey is divided into seven contextual touchpoints rather than one ge
 These are flexible entry points, not mandatory steps or a strict clock-based sequence. Users may skip irrelevant touchpoints without penalty; existing XP never decreases. The exact records, actions, and recommendations shown at the other touchpoints—and whether to send reminders—remain to be defined.
 
 The daily `Plan` is assembled from existing schedules, including workouts from `Program` and scheduled supplement routines. Users can manually add other actions; a separate full-featured planner is not required for the initial release.
+
+Meal logging at Post-breakfast, Post-lunch, and Post-dinner ends after showing AI nutrition analysis. Meal/menu recommendations are user-initiated, not automatically suggested after logging.
 
 ### Wake-up Flow
 
