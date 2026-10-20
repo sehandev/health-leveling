@@ -54,7 +54,7 @@ This roadmap decomposes the product into epics with dependency-aware completion 
 - Define owner-only access control for remote use, plus profile, timezone, and unit preferences.
 - Create D1 schemas and migrations for source records and derived data.
 - Implement private image upload and retrieval through R2 for meal/progress photos and retained receipt/order source images.
-- Define edit, delete, and image cleanup behavior.
+- Define edit, delete, and image cleanup behavior, including deleting all images associated with a Meal when that Meal is deleted.
 
 ### Done when
 
@@ -127,7 +127,7 @@ Add AI features after the corresponding source-data flows exist:
 
 ### Work
 
-- Test owner-only access, upload limits, deletion, and Access boundaries.
+- Test owner-only access, upload limits, deletion (including cleanup of every image associated with a deleted Meal), and Access boundaries.
 - Test XP calculations, migrations, AI timeouts, retries, and error handling.
 - Test and clearly communicate AI unavailability when the Mac or Tunnel is offline.
 - Verify mobile usability, accessibility, and performance.
