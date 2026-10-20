@@ -7,6 +7,7 @@ Canonical domain terms are English. UI labels may be Korean and do not need to m
 | **User-Generated Data** | Data directly entered or uploaded by the user. Device-imported values are also treated as source records, with their source recorded. |
 | **Food Item** | A food or menu item included in a meal. Use `Food Items` for a collection. |
 | **Meal Slot** | A meal entry position for a day, such as breakfast, lunch, or dinner. An empty slot can open meal-recommendation or meal-logging actions. |
+| **Menu Recommendation Session** | A user-initiated AI request that stores the recommendation input snapshot, ranked output/reasons, and selected rank or no selection for future personalization. It does not create a meal record or draft. |
 | **Place** | A general location associated with a meal or workout. Prefer over `Restaurant` or `Venue` as the shared domain concept so home and other locations are included. |
 | **Place Type** | A classification for a `Place`, such as `Home`, `Restaurant`, or `Gym`. `Gym` is a type of place, not the general location concept. |
 | **Meal Preparation Method** | How a meal was prepared or obtained, separately from where it was eaten; for example, home-cooked, restaurant-prepared, or takeaway. Exact allowed values are undecided. |
