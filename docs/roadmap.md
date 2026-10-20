@@ -71,7 +71,7 @@ Implement manual source-data capture before relying on AI:
 - **Goals**: measurable and qualitative goals with a `Target Date`.
 - **Meals**: separate `Meal Photo`, `Receipt/Order Import`, and `Manual Food Item Entry` modes; `Food Items`, `Place`, dining companions, and time. Retain receipt/order source images with saved meal records.
 - **Supplements**: items, dosage, intake time, daily/weekly targets, and adherence records.
-- **Workouts**: `Workout Type`-specific logging for `Strength Training`, `Cardio/Endurance`, `Sport`, `Mobility/Recovery`, or `Other`. `Strength Training` distinguishes `Machine`, `Free Weight`, and `Bodyweight` modes. Capture applicable exercises, target muscles, equipment, sets, reps, load, duration, distance, place, and feedback.
+- **Workouts**: `Workout Type`-specific logging for `Strength Training`, `Cardio/Endurance`, `Sport`, `Mobility/Recovery`, or `Other`. `Strength Training` distinguishes `Machine`, `Free Weight`, and `Bodyweight` modes. Capture applicable exercises, target muscles, equipment, sets, reps, load, duration, distance, place, and feedback; do not record set rest time.
 - **Program**: training split and planned workout sessions.
 - **Progress Photos**: dated upload, timeline, and comparison.
 
