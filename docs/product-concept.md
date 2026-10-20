@@ -16,7 +16,7 @@ A mobile-first personal health and fitness tracking service that turns a user's 
 
 ## Core Domains
 
-- **Meals**: record meal photos, `Food Items`, `Place`, dining companions, and time. After a meal is recorded, AI shows nutrition analysis such as `Calories`, carbohydrates, protein, fat, sugar, and sodium, then ends the meal flow without unsolicited improvement advice. Users can explicitly request on-demand meal/menu recommendations based on prior meals, current body metrics, active goals, current time, and remaining meal slots.
+- **Meals**: record meal photos, `Food Items`, `Place`, dining companions, and time. Provide separate `Meal Photo`, `Receipt/Order Import`, and `Manual Food Item Entry` paths. AI can extract candidate `Food Items` from receipts/orders, but the user reviews and confirms, edits, removes, or adds items before saving. After a meal is recorded, AI shows nutrition analysis such as `Calories`, carbohydrates, protein, fat, sugar, and sodium, then ends the meal flow without unsolicited improvement advice. Users can explicitly request on-demand meal/menu recommendations based on prior meals, current body metrics, active goals, current time, and remaining meal slots.
 - **Supplements**: record supplement items, dosage, and intake time. Support daily and weekly goals and routine adherence.
 - **Workouts**: record exercises, target muscle groups, equipment, sets, load, duration, place, and feedback. A `Program` may define a split such as two- or three-day training. Use past records and the program to suggest the next workout and exercise prescription.
 - **Body Metrics**: record height, body weight, and individual body-composition measurements. An InBody assessment is a measurement event/source, not a single metric; store its resulting metrics separately.
@@ -59,7 +59,7 @@ These are flexible entry points, not mandatory steps or a strict clock-based seq
 
 The daily `Plan` is assembled from existing schedules, including workouts from `Program` and scheduled supplement routines. Users can manually add other actions; a separate full-featured planner is not required for the initial release.
 
-Meal logging at Post-breakfast, Post-lunch, and Post-dinner ends after showing AI nutrition analysis. Meal/menu recommendations are user-initiated, not automatically suggested after logging. Tapping an empty `Meal Slot` opens a modal `Action Sheet` with two choices: `Menu Recommendation` or `Log Meal`.
+Meal logging at Post-breakfast, Post-lunch, and Post-dinner ends after showing AI nutrition analysis. Meal/menu recommendations are user-initiated, not automatically suggested after logging. Tapping an empty `Meal Slot` opens a modal `Action Sheet` with two choices: `Menu Recommendation` or `Log Meal`. `Log Meal` then offers separate `Meal Photo`, `Receipt/Order Import`, and `Manual Food Item Entry` paths. Receipt/order extraction is a reviewable candidate list; only user-confirmed items are saved.
 
 `Menu Recommendation` opens a separate page that returns 1–3 ranked menu options with reasons, using prior meal records, current body metrics, active goals, current time, and remaining meal slots. It does not create or change a Meal, `Draft`, or `Plan`. On leaving the page, store a `Menu Recommendation Session` containing the input snapshot, AI output, and either the selected rank or no selection. Use these sessions to inform future recommendations.
 

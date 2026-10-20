@@ -19,7 +19,7 @@ This roadmap decomposes the product into epics with dependency-aware completion 
 - **Decided:** use a **Balanced** policy that considers both today's `Plan` and progress toward the `Primary Goal`.
 - **Decided:** the user designates one active `Goal` as the `Primary Goal`; `Next Best Action` uses it as the main goal-priority signal. Exact ranking signals and tie-breakers remain open.
 - **Decided:** assemble the daily `Plan` from existing sources such as `Program` workouts and scheduled supplement routines, with user-added actions; a separate full-featured planner is out of scope initially.
-- **Decided:** meal logging ends after AI nutrition analysis; recommendations are user-initiated. Tapping an empty `Meal Slot` opens a modal `Action Sheet` with `Menu Recommendation` and `Log Meal`. The recommendation page returns 1–3 ranked options with reasons, then stores its input snapshot, output, and selected rank or no selection for future personalization. It does not create or modify a Meal, `Draft`, or `Plan`.
+- **Decided:** meal logging ends after AI nutrition analysis; recommendations are user-initiated. Tapping an empty `Meal Slot` opens a modal `Action Sheet` with `Menu Recommendation` and `Log Meal`. The `Log Meal` flow offers separate `Meal Photo`, `Receipt/Order Import`, and `Manual Food Item Entry` modes. Receipt/order AI extraction is reviewed and confirmed by the user before saving.
 - Define the full first-release scope, primary user journeys, page map, and acceptance criteria. Map the relevant actions to each touchpoint and protect access if the app is remotely reachable.
 - Confirm domain fields, units, timezone behavior, and InBody report metrics.
 - Specify XP awards, the supplement counting unit, and how body-metric levels relate to user goals.
@@ -66,7 +66,7 @@ Implement manual source-data capture before relying on AI:
 
 - **Body Metrics**: body weight and individual body-composition metrics.
 - **Goals**: measurable and qualitative goals with a `Target Date`.
-- **Meals**: photos, `Food Items`, `Place`, dining companions, and time.
+- **Meals**: separate `Meal Photo`, `Receipt/Order Import`, and `Manual Food Item Entry` modes; `Food Items`, `Place`, dining companions, and time.
 - **Supplements**: items, dosage, intake time, daily/weekly targets, and adherence records.
 - **Workouts**: exercises, target muscles, equipment, sets, load, duration, place, and feedback.
 - **Program**: training split and planned workout sessions.
@@ -114,9 +114,10 @@ Add AI features after the corresponding source-data flows exist:
 1. Estimate meal nutrition from photos and `Food Items`, including `Calories`, macros, sugar, and sodium.
 2. Show estimates as estimates and preserve source, status, and provenance.
 3. Support corrections and clearly handle low-confidence or failed analysis.
-4. Provide on-demand meal/menu recommendations based on prior meals, current body metrics, active goals, current time, and remaining meal slots. Return 1–3 ranked options with reasons, and store the input snapshot, output, and selection/no-selection for future personalization. Do not proactively suggest meal improvements after logging or mutate Meal, `Draft`, or `Plan` data.
-5. Provide next-workout suggestions based on `Program` and workout history.
-6. Add supplement routine insights where deterministic rules are sufficient; use AI only if it adds value.
+4. Extract candidate `Food Items` from receipt/order uploads, then require user review and confirmation before creating meal data.
+5. Provide on-demand meal/menu recommendations based on prior meals, current body metrics, active goals, current time, and remaining meal slots. Return 1–3 ranked options with reasons, and store the input snapshot, output, and selection/no-selection for future personalization. Do not proactively suggest meal improvements after logging or mutate Meal, `Draft`, or `Plan` data.
+6. Provide next-workout suggestions based on `Program` and workout history.
+7. Add supplement routine insights where deterministic rules are sufficient; use AI only if it adds value.
 
 ### Done when
 
