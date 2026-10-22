@@ -8,7 +8,7 @@ Each CSV data row represents one `InBody Assessment`. Store the assessment time 
 - `측정장비` is the source device model (the sample uses model `270`).
 - A `-` means the value is unavailable: store it as missing/null, never as zero.
 - Preserve reported values and units. For example, keep reported `BMI` and `InBody Score` as source measurements even if a derived equivalent can also be calculated.
-- For segmental fields, store one metric per body segment using the segment name and metric type rather than treating all segments as one opaque value.
+- For segmental fields, store one metric per body segment using the segment name and metric type rather than treating all segments as one opaque value. The report labels the muscle section `Segmental Lean Analysis`; retain its per-segment values when present.
 - Keep the three balance indicator values as raw source values until their code meanings are verified; do not infer labels from the numeric code.
 - AI-extracted values are candidates. The user reviews, corrects, and confirms each value before it becomes a saved body metric.
 - Do not retain the uploaded report image. Delete the temporary image when the extraction/review flow ends; the assessment keeps confirmed metrics and source metadata, not the image.
@@ -24,12 +24,12 @@ Each CSV data row represents one `InBody Assessment`. Store the assessment time 
 | `BMI(kg/m²)` | `BMI` | kg/m² |
 | `체지방률(%)` | `Body Fat Percentage` | % |
 | `기초대사량(kcal)` | `Basal Metabolic Rate` | kcal |
-| `인바디점수` | `InBody Score` | Source-reported score; unitless |
-| `오른팔 근육량(kg)` | Segmental Muscle Mass — right arm | kg |
-| `왼팔 근육량(kg)` | Segmental Muscle Mass — left arm | kg |
-| `몸통 근육량(kg)` | Segmental Muscle Mass — trunk | kg |
-| `오른다리 근육량(kg)` | Segmental Muscle Mass — right leg | kg |
-| `왼다리 근육량(kg)` | Segmental Muscle Mass — left leg | kg |
+| `인바디점수` | `InBody Score` | Source-reported points out of 100 |
+| `오른팔 근육량(kg)` | Segmental Lean Mass — right arm | kg |
+| `왼팔 근육량(kg)` | Segmental Lean Mass — left arm | kg |
+| `몸통 근육량(kg)` | Segmental Lean Mass — trunk | kg |
+| `오른다리 근육량(kg)` | Segmental Lean Mass — right leg | kg |
+| `왼다리 근육량(kg)` | Segmental Lean Mass — left leg | kg |
 | `오른팔 체지방(kg)` | Segmental Body Fat Mass — right arm | kg |
 | `왼팔 체지방(kg)` | Segmental Body Fat Mass — left arm | kg |
 | `몸통 체지방(kg)` | Segmental Body Fat Mass — trunk | kg |
@@ -40,7 +40,7 @@ Each CSV data row represents one `InBody Assessment`. Store the assessment time 
 | `몸통 세포외수분비` | Segmental ECW/TBW Ratio — trunk | Source-reported ratio |
 | `오른다리 세포외수분비` | Segmental ECW/TBW Ratio — right leg | Source-reported ratio |
 | `왼다리 세포외수분비` | Segmental ECW/TBW Ratio — left leg | Source-reported ratio |
-| `복부지방률` | Abdominal Fat Ratio | Source-reported ratio |
+| `복부지방률` | `Waist-Hip Ratio` | Source-reported ratio |
 | `허리둘레(cm)` | Waist Circumference | cm |
 | `내장지방단면적(cm²)` | Visceral Fat Area | cm² |
 | `내장지방레벨(Level)` | Visceral Fat Level | Level |
