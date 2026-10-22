@@ -57,4 +57,4 @@ Canonical domain terms are English. UI labels may be Korean and do not need to m
 - Use `Place` for the location and `Meal Preparation Method` for how the food was prepared or obtained. This distinguishes, for example, home-cooked food eaten at work.
 - Use `Body Weight` for anthropometric weight and `Load` for exercise weight.
 - Record each result from an InBody assessment as an individual metric with its measurement time and source. Segmental values should follow the exact metric labels in the source report.
-- The supplement XP counting unit is not finalized: it could mean distinct supplement items, planned doses, or servings. Do not encode that assumption into the domain model until agreed.
+- Supplement XP thresholds are 0 below 50% planned completion, 1 from 50% to below 100%, and 2 at 100%. The counting unit and evaluation period are not finalized; do not encode an assumption into the domain model until agreed.

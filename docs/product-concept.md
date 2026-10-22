@@ -42,7 +42,7 @@ Keep these concepts distinct throughout domain models, storage, and application 
 - All levels start at Level 1.
 - Reward defined positive behaviors with XP. Never subtract XP for missed records, inactivity, or an unfavorable result.
 - Keep the XP threshold per level fixed; it does not increase at higher levels.
-- The XP awarded for supplement intake should vary with the number of supplement items taken. The counting unit (distinct items, planned doses, or servings) and exact XP values remain undecided.
+- Award supplement XP by completion of planned supplements in the applicable plan period: below 50% completion earns 0 XP, 50% to below 100% earns 1 XP, and 100% earns 2 XP. The counting unit and applicable period remain to be defined.
 - Provide a separate progression view with XP and level history so users can recognize periods of growth and plateaus.
 
 Exact XP rules and how body-metric levels reflect different user goals remain open design decisions.
