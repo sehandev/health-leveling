@@ -80,7 +80,7 @@ The Wake-up experience is a sequence of focused pages:
 
 If the user leaves `Body Weight` unchanged and continues, record that day's entry using the saved value; pressing Continue is explicit confirmation, so a separate skip action or redundant confirmation dialog is not required. This provides a daily value for the 14-day graph. The two graphs share the same visual design and differ in their plotted values and scale.
 
-Users can designate one active `Goal` as their `Primary Goal`. When a `Primary Goal` exists, `Next Best Action` uses a **Balanced** policy: consider both today's `Plan` and actions that advance the `Primary Goal`. Do not rank solely by what can be done immediately. Exact signals, weights, and tie-breakers remain undecided.
+Users can designate one active `Goal` as their `Primary Goal`. When a `Primary Goal` exists, `Next Best Action` uses a **Balanced, discomfort-avoiding** policy: consider both today's `Plan` and actions that advance the `Primary Goal`, while first excluding completed, infeasible, or explicitly rejected actions and favoring lower-disruption options. The aim is to avoid unpleasant recommendations, not maximize user satisfaction. A single skip or lack of response is neutral; repeated declines or edits away from similar recommendations create a soft negative signal. Store lightweight structured interaction signals and give AI a compact recent aggregate rather than the user's full history. The ranking lookback window and threshold for a repeated pattern remain undecided.
 
 ## UX and Visual Direction
 
