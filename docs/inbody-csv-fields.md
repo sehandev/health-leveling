@@ -1,6 +1,6 @@
 # InBody CSV Field Reference
 
-This field set is based on the supplied `InBody-20261022.csv`. Use it for manual InBody entry and AI extraction from an uploaded report image.
+This field set is based on the supplied `InBody-20261022.csv`. Use it for manual InBody entry and AI extraction from an uploaded report image. These are the only supported entry paths in the initial release; direct CSV import is unsupported.
 
 Each CSV data row represents one `InBody Assessment`. Store the assessment time and device model as source metadata, and store each non-empty measurement as an individual body metric associated with that assessment.
 

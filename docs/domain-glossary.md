@@ -19,7 +19,7 @@ Canonical domain terms are English. UI labels may be Korean and do not need to m
 | **Body Fat Percentage** | The percentage of body weight that is fat. Store as an individual body metric. |
 | **Skeletal Muscle Mass** | A body-composition metric reported by a measurement device. Store independently from the assessment event. |
 | **Segmental Muscle Mass** | A segment-level muscle-mass value stored separately for each region reported in the supplied InBody CSV: right arm, left arm, trunk, right leg, and left leg. See the [InBody CSV Field Reference](inbody-csv-fields.md). |
-| **InBody Assessment** | A measurement event/source that may contain multiple individual body metrics. InBody is not itself a metric. Values may be entered manually or extracted from an uploaded report image; AI-extracted candidates require user review and confirmation before saving. Use the [InBody CSV Field Reference](inbody-csv-fields.md) for supported fields. |
+| **InBody Assessment** | A measurement event/source that may contain multiple individual body metrics. InBody is not itself a metric. Values may be entered manually or extracted from an uploaded report image; AI-extracted candidates require user review and confirmation before saving. These are the only initial-release entry paths; direct CSV import is unsupported. Use the [InBody CSV Field Reference](inbody-csv-fields.md) for supported fields. |
 | **Target Date** | The date by which a goal is intended to be achieved. |
 | **Goal Type** | One of the initial setup choices: `Target Body Weight`, `Target Body Fat Percentage`, `Muscle Gain`, or `Performance Goal`. |
 | **Target Body Weight** | A Goal Type with a target weight and `Target Date`; no separate start value is stored. |
