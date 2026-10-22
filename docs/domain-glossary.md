@@ -14,6 +14,7 @@ Canonical domain terms are English. UI labels may be Korean and do not need to m
 | **Place** | A general location associated with a meal or workout. Prefer over `Restaurant` or `Venue` as the shared domain concept so home and other locations are included. |
 | **Place Type** | A classification for a `Place`, such as `Home`, `Restaurant`, or `Gym`. `Gym` is a type of place, not the general location concept. |
 | **Meal Preparation Method** | How a meal was prepared or obtained, separately from where it was eaten; for example, home-cooked, restaurant-prepared, or takeaway. Exact allowed values are undecided. |
+| **Supplement Intake** | One intake occasion that may group multiple supplements taken together. Each item has its own confirmed taken status and dosage. |
 | **Body Weight** | A person's measured body weight. Use `Load` for resistance-training weight to avoid ambiguity. |
 | **Body Fat Percentage** | The percentage of body weight that is fat. Store as an individual body metric. |
 | **Skeletal Muscle Mass** | A body-composition metric reported by a measurement device. Store independently from the assessment event. |
