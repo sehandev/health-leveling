@@ -1,57 +1,36 @@
-# InBody CSV Field Reference
+# InBody Report Field Reference
 
-This field set is based on the supplied `InBody-20261022.csv`. Use it for manual InBody entry and AI extraction from an uploaded report image. These are the only supported entry paths in the initial release; direct CSV import is unsupported. Exclude `상체하체`, `상체좌우`, and `하체좌우` from the supported field set because their values are not defined by the supplied report.
+The supplied `IMG_1522.png` report image is the authority for the initial InBody field set. The CSV was used only for comparison; values that appear only in the CSV are excluded. Initial entry paths are manual entry and AI extraction from an uploaded report image. Direct CSV import is unsupported. Parse the report's displayed measurement date/time as assessment metadata.
 
-Each CSV data row represents one `InBody Assessment`. Store the assessment time and device model as source metadata, and store each non-empty measurement as an individual body metric associated with that assessment.
+Store the report's measurement date/time and device model (`InBody 270`) as assessment metadata. Store each supported reported numeric result as an individual metric. Duplicate appearances of the same value in different report sections (for example, body weight and body fat mass) are one metric, not duplicate records. Treat computed InBody outputs as reported results; do not recalculate them. The `InBody Score` is a score, not a measurement, and is excluded.
 
-- Parse `날짜` in the source format `yyyyMMddHHmmss` as the assessment's local measurement time.
-- `측정장비` is the source device model (the sample uses model `270`).
-- A `-` means the value is unavailable: store it as missing/null, never as zero.
-- Preserve reported values and units. For example, keep reported `BMI` and `InBody Score` as source measurements even if a derived equivalent can also be calculated.
-- For segmental fields, store one metric per body segment using the segment name and metric type rather than treating all segments as one opaque value. The report labels the muscle section `Segmental Lean Analysis`; retain its per-segment values when present.
-- AI-extracted values are candidates. The user reviews, corrects, and confirms each value before it becomes a saved body metric.
-- Do not retain the uploaded report image. Delete the temporary image when the extraction/review flow ends; the assessment keeps confirmed metrics and source metadata, not the image.
+AI-extracted values are candidates. The user reviews, corrects, and confirms them before they become saved metrics. Do not retain the uploaded report image; delete its temporary copy when the extraction/review flow ends.
 
-| CSV header | Canonical metric / metadata | Unit or representation |
+## Supported current-assessment values
+
+| Report label | Canonical metric | Unit / representation |
 |---|---|---|
-| `날짜` | Assessment measurement time | `yyyyMMddHHmmss`, local time |
-| `측정장비` | InBody device model | Source metadata; e.g. `270` |
-| `체중(kg)` | `Body Weight` | kg |
-| `골격근량(kg)` | `Skeletal Muscle Mass` | kg |
-| `근육량(kg)` | `Muscle Mass` | kg |
-| `체지방량(kg)` | `Body Fat Mass` | kg |
-| `BMI(kg/m²)` | `BMI` | kg/m² |
-| `체지방률(%)` | `Body Fat Percentage` | % |
-| `기초대사량(kcal)` | `Basal Metabolic Rate` | kcal |
-| `인바디점수` | `InBody Score` | Source-reported points out of 100 |
-| `오른팔 근육량(kg)` | Segmental Lean Mass — right arm | kg |
-| `왼팔 근육량(kg)` | Segmental Lean Mass — left arm | kg |
-| `몸통 근육량(kg)` | Segmental Lean Mass — trunk | kg |
-| `오른다리 근육량(kg)` | Segmental Lean Mass — right leg | kg |
-| `왼다리 근육량(kg)` | Segmental Lean Mass — left leg | kg |
-| `오른팔 체지방(kg)` | Segmental Body Fat Mass — right arm | kg |
-| `왼팔 체지방(kg)` | Segmental Body Fat Mass — left arm | kg |
-| `몸통 체지방(kg)` | Segmental Body Fat Mass — trunk | kg |
-| `오른다리 체지방(kg)` | Segmental Body Fat Mass — right leg | kg |
-| `왼다리 체지방(kg)` | Segmental Body Fat Mass — left leg | kg |
-| `오른팔 세포외수분비` | Segmental ECW/TBW Ratio — right arm | Source-reported ratio |
-| `왼팔 세포외수분비` | Segmental ECW/TBW Ratio — left arm | Source-reported ratio |
-| `몸통 세포외수분비` | Segmental ECW/TBW Ratio — trunk | Source-reported ratio |
-| `오른다리 세포외수분비` | Segmental ECW/TBW Ratio — right leg | Source-reported ratio |
-| `왼다리 세포외수분비` | Segmental ECW/TBW Ratio — left leg | Source-reported ratio |
-| `복부지방률` | `Waist-Hip Ratio` | Source-reported ratio |
-| `허리둘레(cm)` | Waist Circumference | cm |
-| `내장지방단면적(cm²)` | Visceral Fat Area | cm² |
-| `내장지방레벨(Level)` | Visceral Fat Level | Level |
-| `체수분(L)` | Total Body Water | L |
-| `세포내수분(L)` | Intracellular Water | L |
-| `세포외수분(L)` | Extracellular Water | L |
-| `세포외수분비` | ECW/TBW Ratio | Source-reported ratio |
-| `다리근육레벨(Level)` | Leg Muscle Level | Level |
-| `다리근육량(kg)` | Leg Muscle Mass | kg |
-| `단백질(kg)` | Protein Mass | kg |
-| `무기질(kg)` | Mineral Mass | kg |
-| `골무기질량(kg)` | Bone Mineral Mass | kg |
-| `체세포량(kg)` | Body Cell Mass | kg |
-| `SMI(kg/m²)` | Skeletal Muscle Index | kg/m² |
-| `전신위상각(°)` | Whole Body Phase Angle | degrees |
+| `체중` / `Weight` | `Body Weight` | kg |
+| `골격근량` / `Skeletal Muscle Mass` | `Skeletal Muscle Mass` | kg |
+| `체지방량` / `Body Fat Mass` | `Body Fat Mass` | kg |
+| `체수분` / `Body Water` | `Total Body Water` | L |
+| `단백질` / `Protein` | `Protein Mass` | kg |
+| `무기질` / `Minerals` | `Mineral Mass` | kg |
+| `BMI` | `BMI` | kg/m² |
+| `체지방률` / `Percent Body Fat` | `Body Fat Percentage` | % |
+| `복부지방률` / `Waist-Hip Ratio` | `Waist-Hip Ratio` | Source-reported ratio |
+| `내장지방레벨` / `Visceral Fat Level` | `Visceral Fat Level` | Level |
+| `기초대사량` / `Basal Metabolic Rate` | `Basal Metabolic Rate` | kcal |
+| `비만도` / `Obesity Degree` | `Obesity Degree` | % |
+| Impedance at `20 kHz` and `100 kHz` for `RA`, `LA`, `TR`, `RL`, and `LL` | `Segment Impedance` by body segment and frequency | Ω |
+
+In the impedance table, `RA` means right arm, `LA` left arm, `TR` trunk, `RL` right leg, and `LL` left leg. Repeated appearances of `Body Weight`/`Body Fat Mass` across report sections, and the graph history, are not additional current-assessment metrics. Whether past points in the report's `Body Composition History` chart should be imported as separate historical assessments remains undecided.
+
+## Excluded report content
+
+- Member number, height, age, and sex.
+- `InBody Score`.
+- Recommended/target weight and weight, fat, or muscle adjustment amounts.
+- Recommended calorie intake and exercise calorie expenditure tables.
+- Reference ranges, chart bars, and qualitative segment labels such as `표준` or `표준이하`.
+- Any field available only in the CSV, including the three balance columns `상체하체`, `상체좌우`, and `하체좌우`.

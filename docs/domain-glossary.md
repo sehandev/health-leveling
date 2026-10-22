@@ -17,10 +17,11 @@ Canonical domain terms are English. UI labels may be Korean and do not need to m
 | **Supplement Intake** | One intake occasion that may group multiple supplements taken together. Each item has its own confirmed taken status and dosage. |
 | **Body Weight** | A person's measured body weight. Use `Load` for resistance-training weight to avoid ambiguity. |
 | **Body Fat Percentage** | The percentage of body weight that is fat. Store as an individual body metric. |
-| **Waist-Hip Ratio** | An InBody-reported ratio metric, labeled `복부지방률` in the supplied CSV. |
+| **Waist-Hip Ratio** | An InBody-reported ratio metric, labeled `복부지방률` in the supplied report. |
+| **Segment Impedance** | An electrical impedance value in Ω reported for a body segment at a specific measurement frequency. Store each segment/frequency value separately. |
 | **Skeletal Muscle Mass** | A body-composition metric reported by a measurement device. Store independently from the assessment event. |
-| **Segmental Lean Mass** | A segment-level value from the report's `Segmental Lean Analysis`, stored separately for each region reported in the supplied InBody CSV: right arm, left arm, trunk, right leg, and left leg. See the [InBody CSV Field Reference](inbody-csv-fields.md). |
-| **InBody Assessment** | A measurement event/source that may contain multiple individual body metrics. InBody is not itself a metric. Values may be entered manually or extracted from an uploaded report image; AI-extracted candidates require user review and confirmation before saving. These are the only initial-release entry paths; direct CSV import is unsupported. Do not retain the uploaded report image; delete it when the extraction/review flow ends, and retain only confirmed metric values. Use the [InBody CSV Field Reference](inbody-csv-fields.md) for supported fields. |
+| **Obesity Degree** | A percentage result reported by InBody. Store the report's value as an individual metric. |
+| **InBody Assessment** | A measurement event/source that may contain multiple individual body metrics. InBody is not itself a metric. Values may be entered manually or extracted from an uploaded report image; AI-extracted candidates require user review and confirmation before saving. These are the only initial-release entry paths; direct CSV import is unsupported. Do not retain the uploaded report image; delete it when the extraction/review flow ends, and retain only confirmed metric values. Use the [InBody Report Field Reference](inbody-csv-fields.md) for supported fields. |
 | **Target Date** | The date by which a goal is intended to be achieved. |
 | **Goal Type** | One of the initial setup choices: `Target Body Weight`, `Target Body Fat Percentage`, `Muscle Gain`, or `Performance Goal`. |
 | **Target Body Weight** | A Goal Type with a target weight and `Target Date`; no separate start value is stored. |
