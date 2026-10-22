@@ -65,7 +65,7 @@ The daily `Plan` is assembled from existing schedules, including workouts from `
 
 Meal logging at Post-breakfast, Post-lunch, and Post-dinner ends after showing AI nutrition analysis. Meal/menu recommendations are user-initiated, not automatically suggested after logging. Tapping an empty `Meal Slot` opens a modal `Action Sheet` with two choices: `Menu Recommendation` or `Log Meal`. `Log Meal` then offers separate `Meal Photo`, `Receipt/Order Import`, and `Manual Food Item Entry` paths. Receipt/order extraction is a reviewable candidate list; only user-confirmed items are saved.
 
-`Menu Recommendation` opens a separate page that returns 1–3 ranked menu options with reasons, using prior meal records, current body metrics, active goals, current time, and remaining meal slots. It does not create or change a Meal, `Draft`, or `Plan`. On leaving the page, store a `Menu Recommendation Session` containing the input snapshot, AI output, and either the selected rank or no selection. Use these sessions to inform future recommendations.
+`Menu Recommendation` opens a separate page that returns 1–3 ranked menu options with reasons, using prior meal records, current body metrics, active goals, current time, and remaining meal slots. It does not create or change a Meal, `Draft`, or `Plan`. On leaving the page, store a `Menu Recommendation Session`—the internal record of this one use—containing the input snapshot, AI output, and either the selected rank or no selection. Retain each session indefinitely with no automatic expiry, and use it to inform future recommendations.
 
 ### Wake-up Flow
 
