@@ -1,6 +1,6 @@
 # InBody CSV Field Reference
 
-This field set is based on the supplied `InBody-20261022.csv`. Use it for manual InBody entry and AI extraction from an uploaded report image. These are the only supported entry paths in the initial release; direct CSV import is unsupported.
+This field set is based on the supplied `InBody-20261022.csv`. Use it for manual InBody entry and AI extraction from an uploaded report image. These are the only supported entry paths in the initial release; direct CSV import is unsupported. Exclude `상체하체`, `상체좌우`, and `하체좌우` from the supported field set because their values are not defined by the supplied report.
 
 Each CSV data row represents one `InBody Assessment`. Store the assessment time and device model as source metadata, and store each non-empty measurement as an individual body metric associated with that assessment.
 
@@ -9,7 +9,6 @@ Each CSV data row represents one `InBody Assessment`. Store the assessment time 
 - A `-` means the value is unavailable: store it as missing/null, never as zero.
 - Preserve reported values and units. For example, keep reported `BMI` and `InBody Score` as source measurements even if a derived equivalent can also be calculated.
 - For segmental fields, store one metric per body segment using the segment name and metric type rather than treating all segments as one opaque value. The report labels the muscle section `Segmental Lean Analysis`; retain its per-segment values when present.
-- Keep the three balance indicator values as raw source values until their code meanings are verified; do not infer labels from the numeric code.
 - AI-extracted values are candidates. The user reviews, corrects, and confirms each value before it becomes a saved body metric.
 - Do not retain the uploaded report image. Delete the temporary image when the extraction/review flow ends; the assessment keeps confirmed metrics and source metadata, not the image.
 
@@ -48,9 +47,6 @@ Each CSV data row represents one `InBody Assessment`. Store the assessment time 
 | `세포내수분(L)` | Intracellular Water | L |
 | `세포외수분(L)` | Extracellular Water | L |
 | `세포외수분비` | ECW/TBW Ratio | Source-reported ratio |
-| `상체하체` | Upper/Lower Balance Indicator | Preserve raw source value; semantics to verify |
-| `상체좌우` | Upper Left/Right Balance Indicator | Preserve raw source value; semantics to verify |
-| `하체좌우` | Lower Left/Right Balance Indicator | Preserve raw source value; semantics to verify |
 | `다리근육레벨(Level)` | Leg Muscle Level | Level |
 | `다리근육량(kg)` | Leg Muscle Mass | kg |
 | `단백질(kg)` | Protein Mass | kg |
