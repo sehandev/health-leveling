@@ -31,6 +31,7 @@ This roadmap decomposes the product into epics with dependency-aware completion 
 - **Decided:** every workout has an optional plain-text `Note`, entered in a simple textarea without Markdown. Persist a blank note as an empty string.
 - **Decided:** meal logging ends after AI nutrition analysis; recommendations are user-initiated. Tapping an empty `Meal Slot` opens a modal `Action Sheet` with `Menu Recommendation` and `Log Meal`. The `Log Meal` flow offers separate `Meal Photo`, `Receipt/Order Import`, and `Manual Food Item Entry` modes. AI extracts candidate `Food Items` from both meal photos and image-based receipts/orders; the user reviews and confirms before saving. Retain the original receipt/order image with the saved Meal. PDF import is unsupported initially.
 - **Decided:** `Menu Recommendation Session` is the internal record of one use of `Menu Recommendation`, not a separate user-facing feature. Store request/end times, `Meal Slot`, exact structured AI input (without duplicating original photos), ranked output/reasons, selected rank or no selection, and AI provider/model and prompt-version provenance. Retain indefinitely with no automatic expiry.
+- **Decided:** support both manual InBody metric entry and AI extraction from an uploaded InBody report image. Treat extracted values as candidates; the user reviews, corrects, and confirms individual metrics before saving.
 - Define the full first-release scope, primary user journeys, page map, and acceptance criteria. Map the relevant actions to each touchpoint and protect access if the app is remotely reachable.
 - Confirm domain fields, units, timezone behavior, and InBody report metrics.
 - **Decided:** supplement XP is 0 below 50% planned completion, 1 at 50% to below 100%, and 2 at 100%. Each scheduled per-item intake occurrence counts once when confirmed as taken; repeated scheduled occurrences of the same supplement count separately, and actual dosage does not multiply XP. Calculate completion per day using the user's configured timezone. Define how body-metric levels relate to user goals.
@@ -75,7 +76,7 @@ This roadmap decomposes the product into epics with dependency-aware completion 
 
 Implement manual source-data capture before relying on AI:
 
-- **Body Metrics**: body weight and individual body-composition metrics.
+- **Body Metrics**: manual entry of body weight and individual body-composition metrics; image-based InBody extraction is added in Phase 6.
 - **Goals**: measurable and qualitative goals with a `Target Date`.
 - **Meals**: separate `Meal Photo`, `Receipt/Order Import`, and `Manual Food Item Entry` modes; `Food Items`, `Place`, dining companions, and time. Retain receipt/order source images with saved meal records.
 - **Supplements**: items, per-item dosage and taken status, intake time, daily/weekly targets, and adherence records. Group items taken together in one `Supplement Intake`.
@@ -125,10 +126,11 @@ Add AI features after the corresponding source-data flows exist:
 1. Estimate meal nutrition from photos and `Food Items`, including `Calories`, macros, sugar, and sodium.
 2. Show estimates as estimates and preserve source, status, and provenance.
 3. Support corrections and clearly handle low-confidence or failed analysis.
-4. Extract candidate `Food Items` from meal photos and image-based receipt/order uploads. Identify a specific branded/menu item when possible, otherwise use a generic food item. Require user review and confirmation before saving; do not support PDF import initially.
-5. Provide on-demand meal/menu recommendations based on prior meals, current body metrics, active goals, current time, and remaining meal slots. Return 1–3 ranked options with reasons. Store each session's request/end times, `Meal Slot`, exact structured input (without duplicate source photos), output/reasons, selected rank or no selection, and AI provider/model and prompt-version provenance indefinitely for future personalization. Do not proactively suggest meal improvements after logging or mutate Meal, `Draft`, or `Plan` data.
-6. Provide next-workout suggestions based on `Program` and workout history.
-7. Add supplement routine insights where deterministic rules are sufficient; use AI only if it adds value.
+4. Extract candidate individual body metrics from uploaded InBody report images; require user review and confirmation before saving.
+5. Extract candidate `Food Items` from meal photos and image-based receipt/order uploads. Identify a specific branded/menu item when possible, otherwise use a generic food item. Require user review and confirmation before saving; do not support PDF import initially.
+6. Provide on-demand meal/menu recommendations based on prior meals, current body metrics, active goals, current time, and remaining meal slots. Return 1–3 ranked options with reasons. Store each session's request/end times, `Meal Slot`, exact structured input (without duplicate source photos), output/reasons, selected rank or no selection, and AI provider/model and prompt-version provenance indefinitely for future personalization. Do not proactively suggest meal improvements after logging or mutate Meal, `Draft`, or `Plan` data.
+7. Provide next-workout suggestions based on `Program` and workout history.
+8. Add supplement routine insights where deterministic rules are sufficient; use AI only if it adds value.
 
 ### Done when
 
