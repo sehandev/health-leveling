@@ -33,7 +33,7 @@ This roadmap decomposes the product into epics with dependency-aware completion 
 - **Decided:** `Menu Recommendation Session` is the internal record of one use of `Menu Recommendation`, not a separate user-facing feature. Store request/end times, `Meal Slot`, exact structured AI input (without duplicating original photos), ranked output/reasons, selected rank or no selection, and AI provider/model and prompt-version provenance. Retain indefinitely with no automatic expiry.
 - Define the full first-release scope, primary user journeys, page map, and acceptance criteria. Map the relevant actions to each touchpoint and protect access if the app is remotely reachable.
 - Confirm domain fields, units, timezone behavior, and InBody report metrics.
-- **Decided:** supplement XP is 0 below 50% planned completion, 1 at 50% to below 100%, and 2 at 100%. Each scheduled per-item intake occurrence counts once when confirmed as taken; repeated scheduled occurrences of the same supplement count separately, and actual dosage does not multiply XP. Define the evaluation period and how body-metric levels relate to user goals.
+- **Decided:** supplement XP is 0 below 50% planned completion, 1 at 50% to below 100%, and 2 at 100%. Each scheduled per-item intake occurrence counts once when confirmed as taken; repeated scheduled occurrences of the same supplement count separately, and actual dosage does not multiply XP. Calculate completion per day using the user's configured timezone. Define how body-metric levels relate to user goals.
 
 ### Done when
 
@@ -95,7 +95,7 @@ Each record flow should support validation, useful empty/error states, and corre
 
 - Define qualifying actions and XP awards.
 - Keep the XP threshold per level fixed; never deduct XP.
-- Implement the supplement XP thresholds after defining the evaluation period.
+- Implement the supplement XP thresholds using the user's configured local day.
 - Calculate muscle-group, body-metric, and overall `Avatar` levels.
 - Store XP awards/history so retries or edits cannot accidentally award XP twice.
 

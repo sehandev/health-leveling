@@ -57,4 +57,4 @@ Canonical domain terms are English. UI labels may be Korean and do not need to m
 - Use `Place` for the location and `Meal Preparation Method` for how the food was prepared or obtained. This distinguishes, for example, home-cooked food eaten at work.
 - Use `Body Weight` for anthropometric weight and `Load` for exercise weight.
 - Record each result from an InBody assessment as an individual metric with its measurement time and source. Segmental values should follow the exact metric labels in the source report.
-- Supplement XP thresholds are 0 below 50% planned completion, 1 from 50% to below 100%, and 2 at 100%. Count each scheduled per-item intake occurrence once when confirmed as taken; repeated planned occurrences count separately, while actual dosage does not multiply XP. The evaluation period remains undecided.
+- Supplement XP thresholds are 0 below 50% planned completion, 1 from 50% to below 100%, and 2 at 100%. Count each scheduled per-item intake occurrence once when confirmed as taken; repeated planned occurrences count separately, while actual dosage does not multiply XP. Calculate completion per day using the user's configured timezone.
