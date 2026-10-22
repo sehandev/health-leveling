@@ -11,6 +11,7 @@ Each CSV data row represents one `InBody Assessment`. Store the assessment time 
 - For segmental fields, store one metric per body segment using the segment name and metric type rather than treating all segments as one opaque value.
 - Keep the three balance indicator values as raw source values until their code meanings are verified; do not infer labels from the numeric code.
 - AI-extracted values are candidates. The user reviews, corrects, and confirms each value before it becomes a saved body metric.
+- Do not retain the uploaded report image. Delete the temporary image when the extraction/review flow ends; the assessment keeps confirmed metrics and source metadata, not the image.
 
 | CSV header | Canonical metric / metadata | Unit or representation |
 |---|---|---|
