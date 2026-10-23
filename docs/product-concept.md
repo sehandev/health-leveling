@@ -74,8 +74,9 @@ The Wake-up experience is a sequence of focused pages:
 2. Show a daily-granularity `Body Weight` graph covering the past 14 days. Use the same visual chart design as the XP graph, with scale/reference intervals of 5 display units (5 kg when the selected unit is kg).
 3. Show the current `Avatar` level and XP.
 4. Show a daily-granularity 14-day progression graph with a cumulative XP line and an `Avatar` Level step line.
-5. If a `Primary Goal` exists, show exactly one `Next Best Action` for something to do at any point during the current day. Balance today's `Plan` with progress toward the `Primary Goal`; the action does not have to start immediately.
-6. If no `Primary Goal` exists, show the four Goal setup choices instead. If no choices are available to present, show only today's `Plan` and finish the Wake-up flow.
+5. If a `Primary Goal` exists and today's `Plan` has at least one incomplete, feasible item, show exactly one `Next Best Action` for something to do at any point during the current day. Balance today's `Plan` with progress toward the `Primary Goal`; the action does not have to start immediately.
+6. If no eligible item exists in today's `Plan`, skip the `Next Best Action` page and finish the Wake-up flow.
+7. If no `Primary Goal` exists, show the four Goal setup choices instead. If no choices are available to present, show only today's `Plan` and finish the Wake-up flow.
 
 If the user leaves `Body Weight` unchanged and continues, record that day's entry using the saved value; pressing Continue is explicit confirmation, so a separate skip action or redundant confirmation dialog is not required. This provides a daily value for the 14-day graph. The two graphs share the same visual design and differ in their plotted values and scale.
 
