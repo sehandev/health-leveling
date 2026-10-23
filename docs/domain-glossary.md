@@ -49,7 +49,7 @@ Canonical domain terms are English. UI labels may be Korean and do not need to m
 | **Pace** | For `Cardio/Endurance`, derive pace as `Duration` divided by `Distance` (min/km) when both values are available. This is derived data, not a separately entered source value. |
 | **Strength Training Mode** | The subtype of a `Strength Training` workout: `Machine`, `Free Weight`, or `Bodyweight`. These modes are not separate top-level `Workout Type` values. |
 | **Program** | A user's workout plan, including its split and planned training sessions. |
-| **Plan** | A daily collection of scheduled activities, assembled from existing sources such as `Program` and supplement routines, plus user-added actions. Distinct from `Program`, which defines the workout routine. |
+| **Plan** | A daily collection of scheduled activities, assembled from existing sources such as `Program` and supplement routines, plus user-added actions. Distinct from `Program`, which defines the workout routine. Saving a linked `Workout` does not complete its `Plan` item; the user completes that item through a separate explicit action. |
 | **Presentation Model** | Data composed for a particular UI screen from source and derived data. It is not automatically a separate source-of-truth record. |
 | **Avatar** | The game-like character used to visualize the user's overall and body-area progression. |
 | **XP** | Experience points granted for qualifying behaviors. XP is never deducted. |
