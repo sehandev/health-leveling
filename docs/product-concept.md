@@ -49,19 +49,18 @@ Exact XP rules and how body-metric levels reflect different user goals remain op
 
 ## Daily Touchpoints
 
-The user journey is divided into seven contextual touchpoints rather than one generic daily check-in:
+The user journey is divided into six contextual touchpoints rather than one generic daily check-in:
 
 1. **Wake-up** — after waking.
 2. **Post-breakfast** — after breakfast.
 3. **Post-lunch** — after lunch.
 4. **Post-dinner** — after dinner.
-5. **Pre-workout** — before a workout.
-6. **Post-workout** — after a workout.
-7. **Bedtime** — before sleep.
+5. **Post-workout** — after a workout.
+6. **Bedtime** — before sleep.
 
 These are flexible entry points, not mandatory steps or a strict clock-based sequence. Users may skip irrelevant touchpoints without penalty; existing XP never decreases. `Bedtime` is a lightweight end-of-day closeout for reviewing today's `Plan` and recorded activity; it does not add a Sleep domain or bedtime/wake-time logging. The exact Bedtime screen and remaining touchpoint actions—and whether to send reminders—remain to be defined.
 
-The daily `Plan` is assembled from existing schedules, including workouts from `Program` and scheduled supplement routines. Users can manually add other actions; a separate full-featured planner is not required for the initial release. `Pre-workout` opens a page for deciding what workout to do. Use today's scheduled workout as the page's initial value; the user can edit or replace it. If none is scheduled, start with an empty selection. The prefilled value is not itself an edit to `Program` or `Plan`, and there is no separate start/select/modify menu or standalone add action. Provide a left-arrow back-navigation control for leaving the flow if it was opened by mistake; this is not a `Skip` action.
+The daily `Plan` is assembled from existing schedules, including workouts from `Program` and scheduled supplement routines. Users can manually add other actions; a separate full-featured planner is not required for the initial release. Start workout logging directly from today's `Plan` or the workout logging entry point; there is no standalone `Pre-workout` page or pre-workout-only data collection. Users can view or change today's scheduled workout in `Plan`; changing today's `Plan` does not change the recurring `Program` schedule unless the user separately edits `Program`.
 
 Meal logging at Post-breakfast, Post-lunch, and Post-dinner ends after showing AI nutrition analysis. Meal/menu recommendations are user-initiated, not automatically suggested after logging. Tapping an empty `Meal Slot` opens a modal `Action Sheet` with two choices: `Menu Recommendation` or `Log Meal`. `Log Meal` then offers separate `Meal Photo`, `Receipt/Order Import`, and `Manual Food Item Entry` paths. Receipt/order extraction is a reviewable candidate list; only user-confirmed items are saved.
 
