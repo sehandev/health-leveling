@@ -6,7 +6,7 @@ Canonical domain terms are English. UI labels may be Korean and do not need to m
 |---|---|
 | **User-Generated Data** | Data directly entered or uploaded by the user. Device-imported values are also treated as source records, with their source recorded. |
 | **Food Item** | A food or menu item included in a meal. Use `Food Items` for a collection. |
-| **Meal Slot** | A meal entry position for a day, such as breakfast, lunch, or dinner. An empty slot can open meal-recommendation or meal-logging actions. |
+| **Meal Slot** | A meal entry position for a day, such as breakfast, lunch, or dinner. An empty slot can open meal-recommendation or meal-logging actions. A filled slot provides `View`, `Edit`, and `Delete` buttons; deleting its Meal also deletes associated images and leaves the slot empty. |
 | **Meal Entry Mode** | A separate path for recording a meal: `Meal Photo`, `Receipt/Order Import`, or `Manual Food Item Entry`. |
 | **Meal Photo** | A meal image from which AI may extract candidate branded/menu-specific or generic `Food Items`; the user reviews candidates before saving. |
 | **Receipt/Order Import** | Image-only AI extraction of candidate `Food Items` from a receipt or order. PDF import is not supported initially; candidates require user review and confirmation before becoming meal data. Retain the original image with the saved Meal. |
