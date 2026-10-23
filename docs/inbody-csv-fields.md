@@ -24,7 +24,7 @@ AI-extracted values are candidates. The user reviews, corrects, and confirms the
 | `비만도` / `Obesity Degree` | `Obesity Degree` | % |
 | Impedance at `20 kHz` and `100 kHz` for `RA`, `LA`, `TR`, `RL`, and `LL` | `Segment Impedance` by body segment and frequency | Ω |
 
-In the impedance table, `RA` means right arm, `LA` left arm, `TR` trunk, `RL` right leg, and `LL` left leg. Repeated appearances of `Body Weight`/`Body Fat Mass` across report sections, and the graph history, are not additional current-assessment metrics. Whether past points in the report's `Body Composition History` chart should be imported as separate historical assessments remains undecided.
+In the impedance table, `RA` means right arm, `LA` left arm, `TR` trunk, `RL` right leg, and `LL` left leg. Repeated appearances of `Body Weight`/`Body Fat Mass` across report sections are one current-assessment metric, not duplicate records. Record only the current assessment identified by the report's measurement date/time; do not extract past points from the `Body Composition History` chart.
 
 ## Excluded report content
 
