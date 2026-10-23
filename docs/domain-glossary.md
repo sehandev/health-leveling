@@ -16,6 +16,7 @@ Canonical domain terms are English. UI labels may be Korean and do not need to m
 | **Meal Preparation Method** | How a meal was prepared or obtained, separately from where it was eaten; for example, home-cooked, restaurant-prepared, or takeaway. Exact allowed values are undecided. |
 | **Supplement Intake** | One intake occasion that may group multiple supplements taken together. Each item has its own confirmed taken status and dosage. |
 | **Body Weight** | A person's measured body weight. Use `Load` for resistance-training weight to avoid ambiguity. |
+| **Bedtime** | A lightweight end-of-day review of today's `Plan` and recorded activity. It may offer the existing individual `Plan Item` completion action; no Sleep logging, bulk/automatic completion, or Bedtime reminders. |
 | **Body Fat Percentage** | The percentage of body weight that is fat. Store as an individual body metric. |
 | **Waist-Hip Ratio** | An InBody-reported ratio metric, labeled `복부지방률` in the supplied report. |
 | **Segment Impedance** | An electrical impedance value in Ω reported for a body segment at a specific measurement frequency. Store each segment/frequency value separately. |

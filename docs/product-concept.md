@@ -58,7 +58,7 @@ The user journey is divided into six contextual touchpoints rather than one gene
 5. **Post-workout** — after a workout.
 6. **Bedtime** — before sleep.
 
-These are flexible entry points, not mandatory steps or a strict clock-based sequence. Users may skip irrelevant touchpoints without penalty; existing XP never decreases. `Bedtime` is a lightweight end-of-day closeout for reviewing today's `Plan` and recorded activity; it does not add a Sleep domain or bedtime/wake-time logging. The exact Bedtime screen and remaining touchpoint actions—and whether to send reminders—remain to be defined.
+These are flexible entry points, not mandatory steps or a strict clock-based sequence. Users may skip irrelevant touchpoints without penalty; existing XP never decreases. `Bedtime` is a lightweight end-of-day closeout for reviewing today's `Plan` and recorded activity; it does not add a Sleep domain or bedtime/wake-time logging. The screen may use the existing individual `Plan Item` completion action for remaining items; do not add bulk or automatic completion. Do not send Bedtime reminders.
 
 The daily `Plan` is assembled from existing schedules, including workouts from `Program` and scheduled supplement routines. Users can manually add other actions; a separate full-featured planner is not required for the initial release. Start workout logging directly from today's `Plan` or the workout logging entry point; there is no standalone `Pre-workout` page or pre-workout-only data collection. Users can view or change today's scheduled workout in `Plan`; changing today's `Plan` does not change the recurring `Program` schedule unless the user separately edits `Program`.
 
