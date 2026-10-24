@@ -19,8 +19,8 @@ Canonical domain terms are English. UI labels may be Korean and do not need to m
 | **Supplement Intake** | One intake occasion that may group multiple supplements taken together. Each item has its own confirmed taken status and dosage. |
 | **Body Weight** | A person's measured body weight. Use `Load` for resistance-training weight to avoid ambiguity. |
 | **Bedtime** | A lightweight end-of-day review of today's `Plan` and recorded activity. It may offer the existing individual `Plan Item` completion action; no Sleep logging, bulk/automatic completion, or Bedtime reminders. |
-| **Unit Preference** | A user profile setting that selects display units; unit-bearing values are stored in canonical metric units and converted for display. Exact options remain open. |
-| **User Timezone** | The profile timezone, initially set from the device timezone, used to assign events to local days and calculate daily XP. The effect of changing it on historical day assignments remains open. |
+| **Unit Preference** | One profile-wide `Metric` or `Imperial` display setting, defaulting to `Metric`. Store measurements in canonical metric units; convert mass (`kg`/`lb`), height (`cm`/`in`), distance (`km`/`mi`), and pace (`min/km`/`min/mi`) for display. Counts, durations, ratios, and unitless values are not converted. |
+| **User Timezone** | A profile setting initially set from the device timezone and changeable by the user. Store each event's UTC instant and timezone at recording; use that timezone for local-day and daily XP assignment. Changing the profile timezone affects future events only; historical day assignments remain fixed. |
 | **Body Fat Percentage** | The percentage of body weight that is fat. Store as an individual body metric. |
 | **Waist-Hip Ratio** | An InBody-reported ratio metric, labeled `복부지방률` in the supplied report. |
 | **Segment Impedance** | An electrical impedance value in Ω reported for a body segment at a specific measurement frequency. Store each segment/frequency value separately. |

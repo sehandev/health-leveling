@@ -37,7 +37,7 @@ Keep these concepts distinct throughout domain models, storage, and application 
 
 ## Units and Timezone
 
-Store unit-bearing values in canonical metric units and convert them for display using user-selectable unit preferences in the profile. The profile timezone defaults to the device timezone and governs local-day grouping, including daily XP calculations. The exact supported display-unit choices and how changing the timezone affects historical day assignments remain open.
+Store unit-bearing values in canonical metric units and convert them for display using one profile-wide `Metric` or `Imperial` preference. Default to `Metric`. Support `kg`/`lb` for mass, `cm`/`in` for height, `km`/`mi` for distance, and `min/km`/`min/mi` for pace; counts, durations, ratios, and other unitless values are not converted. The profile timezone defaults to the device timezone and can be changed by the user. Store each event's UTC instant and timezone at recording; use that timezone for its local-day and daily XP assignment. A profile timezone change affects future events only and does not reassign historical days.
 
 ## Gamification
 
