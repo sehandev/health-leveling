@@ -35,6 +35,10 @@ Keep these concepts distinct throughout domain models, storage, and application 
 2. **Derived Data** — values calculated or inferred from source records, including AI nutrition estimates, workout metrics, adherence, trends, recommendations, XP, and levels. AI outputs are estimates, not user-entered facts.
 3. **Presentation Model** — data composed for a particular screen. It may combine source and derived data and does not have to be stored as a separate canonical record.
 
+## Units and Timezone
+
+Store unit-bearing values in canonical metric units and convert them for display using user-selectable unit preferences in the profile. The profile timezone defaults to the device timezone and governs local-day grouping, including daily XP calculations. The exact supported display-unit choices and how changing the timezone affects historical day assignments remain open.
+
 ## Gamification
 
 - The **Avatar** is the central growth visualization on the home screen.
