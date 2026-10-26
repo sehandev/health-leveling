@@ -49,7 +49,7 @@ Store unit-bearing values in canonical metric units and convert them for display
 - Award supplement XP by completion of planned supplement intake occurrences: below 50% earns 0 XP, 50% to below 100% earns 1 XP, and 100% earns 2 XP. Each scheduled per-item intake occurrence counts once when confirmed as taken; if the same supplement is scheduled more than once, each occurrence counts separately. Record actual dosage separately; it does not multiply the XP unit. Calculate this percentage per day using the user's configured timezone.
 - Provide a separate progression view with XP and level history so users can recognize periods of growth and plateaus.
 
-For a body-metric level tied to a numeric `Goal`, progress is based on reducing the absolute gap between the latest confirmed current value and the `Goal` target, not on a universal increase/decrease direction. XP and levels never decrease. Exact gap normalization, XP awards/thresholds, mapping when multiple Goals target the same metric, and progression for targetless Goals remain open.
+For a body-metric level tied to a numeric `Goal`, award 1 XP for that metric on a local day when the absolute gap between its latest confirmed value and the `Goal` target decreases by at least a threshold. This is not based on a universal increase/decrease direction, and XP/levels never decrease. The threshold values and comparison interval, which Goal to use when multiple Goals target the same metric, and progression for targetless Goals remain open.
 
 ## Daily Touchpoints
 
