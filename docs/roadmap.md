@@ -9,7 +9,7 @@ This roadmap decomposes the product into epics with dependency-aware completion 
 - **Decided:** the first release is a private, single-user personal app; in-app registration and multi-user support are out of scope initially.
 - **Decided:** organize the daily journey into six contextual touchpoints: Wake-up, Post-breakfast, Post-lunch, Post-dinner, Post-workout, and Bedtime.
 - **Decided:** `Bedtime` is a lightweight end-of-day closeout for reviewing today's `Plan` and recorded activity. It may use the existing individual `Plan Item` completion action for remaining items; do not add bulk or automatic completion. Do not add a Sleep domain or bedtime/wake-time logging, or send Bedtime reminders.
-- **Decided:** Wake-up's first four pages are editable current `Body Weight`; 14-day daily weight graph; current `Avatar` level and XP; 14-day daily graph with cumulative XP line and `Avatar` Level step line. `Height` is not shown at Wake-up. Continuing without edits records that day's value unchanged.
+- **Decided:** Wake-up's first four pages are current `Body Weight` as an editable input for a new measurement, not an edit of a saved record; 14-day daily weight graph; current `Avatar` level and XP; 14-day daily graph with cumulative XP line and `Avatar` Level step line. `Height` is not shown at Wake-up. Continuing without edits records that day's value unchanged.
 - **Decided:** if a `Primary Goal` exists and today's `Plan` has an incomplete, feasible item, show one `Next Best Action` balanced between the `Plan` and that goal. If no eligible item exists, skip the recommendation page and finish the Wake-up flow. If there is no `Primary Goal`, show the four Goal setup choices; if no choices are available, show only today's `Plan` and finish.
 - **Decided:** the four initial `Goal Type` choices are `Target Body Weight`, `Target Body Fat Percentage`, `Muscle Gain`, and `Performance Goal`.
 - **Decided:** `Target Body Weight` stores only the target value and `Target Date`; `Target Body Fat Percentage` stores only the target percentage and `Target Date`. Neither stores a separate start value.
@@ -35,7 +35,15 @@ This roadmap decomposes the product into epics with dependency-aware completion 
 - **Decided:** support both manual InBody metric entry and AI extraction from an uploaded InBody report image. Treat extracted values as candidates; the user reviews, corrects, and confirms individual metrics before saving. Use the supplied InBody 270 report image as the field authority. Record numeric body-composition results and segment impedance, including computed values as reported; exclude the `InBody Score`, demographic identifiers, recommendations, qualitative classifications, and fields present only in the CSV. Initial-release entry paths are manual entry and report-image AI extraction only; direct CSV import is unsupported. Save only the current assessment, not points from the history chart. Do not retain report images; delete temporary uploads when the extraction/review flow ends and keep only confirmed metrics.
 - Define the full first-release scope, primary user journeys, page map, and acceptance criteria. Map the relevant actions to each touchpoint and protect access if the app is remotely reachable.
 - **Decided:** store unit-bearing values in canonical metric units and convert for display using one profile-wide `Metric` or `Imperial` preference, defaulting to `Metric`. Support `kg`/`lb` for mass, `cm`/`in` for height, `km`/`mi` for distance, and `min/km`/`min/mi` for pace; counts, durations, ratios, and other unitless values are not converted. The profile timezone defaults to the device timezone and can be changed by the user. Store each event's UTC instant and timezone at recording; use that timezone for its local-day and daily XP assignment. A profile timezone change affects future events only and does not reassign historical days.
-- **Decided:** supplement XP is 0 below 50% planned completion, 1 at 50% to below 100%, and 2 at 100%. Each scheduled per-item intake occurrence counts once when confirmed as taken; repeated scheduled occurrences of the same supplement count separately, and actual dosage does not multiply XP. Calculate completion per day using the user's configured timezone. For a body-metric level tied to a numeric `Goal`, award 1 XP for that metric on a local day when the absolute gap between its latest confirmed value and the `Goal` target decreases by at least a threshold. This is not based on a universal increase/decrease direction, and XP/levels never decrease. Each Body Metric Level uses one selected `Goal` for its metric. If multiple active Goals target that metric, use the `Primary Goal` when it is among them; otherwise the user selects one. The threshold values, comparison interval, and targetless-Goal progression remain open.
+- **Decided:** supplement XP is 0 below 50% planned completion, 1 at 50% to below 100%, and 2 at 100%. Each scheduled per-item intake occurrence counts once when confirmed as taken; repeated scheduled occurrences of the same supplement count separately, and actual dosage does not multiply XP. Calculate completion per day using the user's configured timezone. For a body-metric level tied to a numeric `Goal`, award 1 XP for that metric on a local day when the absolute gap between its latest confirmed value and the `Goal` target decreases by any amount; an unchanged gap does not qualify. Award at most 1 XP per metric per local day, immediately on the first qualifying confirmed measurement; later measurements that day do not award additional XP. Later measurements do not replace that XP-awarded measurement as the 7-day XP comparison baseline; if there is no eligible XP measurement in that window, use the previous confirmed measurement as usual. This is not based on a universal increase/decrease direction. Undoing a measurement cancels the XP it awarded; levels are derived from XP and may decrease. Each Body Metric Level uses one selected `Goal` for its metric. If multiple active Goals target that metric, use the `Primary Goal` when it is among them; otherwise the user selects one. Compare with the most recent measurement that earned XP for the metric within the past 7 days; if none exists, compare with the previous confirmed measurement. If no previous confirmed measurement exists, award 1 XP for the first confirmed measurement as a recording reward and use that measurement as the comparison baseline. Do not store a fabricated initial value. When the selected Goal changes, use the latest confirmed measurement as the new baseline, exclude XP measurements from before the change from the 7-day comparison, and do not award XP for the change itself; previously awarded XP is retained. If no confirmed measurement exists when the Goal changes, the first confirmed measurement receives the first-measurement 1 XP and becomes the baseline. A Goal without a numeric target does not grant separate Goal XP or body-metric XP based on target-gap progress; activity XP follows its own rules.
+
+### Open questions from progression review
+
+- Define the exact 7-day window boundaries and timezone handling, including how a timezone change affects daily XP limits and scheduled supplement completion.
+- Define whether editing a selected Goal's target resets its comparison baseline, and what happens if the measurement used as a new Goal's baseline is undone.
+- Define undo availability and history handling, including repeated undo, backdated measurements, and whether undone values are retained or deleted.
+- Define XP aggregation for muscle groups and the Avatar, including how an undone body-metric XP award propagates to those totals and historical graphs.
+- Define how displayed measurement precision, canonical storage precision, and measurement noise interact with the any-decrease XP rule.
 
 ### Done when
 
@@ -71,13 +79,13 @@ This roadmap decomposes the product into epics with dependency-aware completion 
 
 ### Done when
 
-- A user can create, view, update, and delete their own records and associated images.
+- A user can create and view their records, correct or delete them according to each domain's rules, and manage associated images; saved Body Metric measurements use the most-recent-measurement undo flow rather than direct editing.
 
 ## Phase 3 — Core Logging
 
 Implement manual source-data capture before relying on AI:
 
-- **Body Metrics**: manual entry of body weight and individual body-composition metrics; image-based InBody extraction is added in Phase 6.
+- **Body Metrics**: manual entry of body weight and individual body-composition metrics; image-based InBody extraction is added in Phase 6. Correct a saved measurement by undoing the most recent measurement for that metric and entering the correct value as a new measurement, rather than editing the saved measurement. Undo cancels XP awarded by that measurement, allowing a re-entered value to be evaluated normally; exclude the undone measurement and its XP award from future comparisons and apply the existing 7-day rule to remaining records. Displayed levels are derived from XP and may decrease if undo cancels an award.
 - **Goals**: measurable and qualitative goals with a `Target Date`.
 - **Meals**: separate `Meal Photo`, `Receipt/Order Import`, and `Manual Food Item Entry` modes; `Food Items`, `Place`, dining companions, and time. Retain receipt/order source images with saved meal records.
 - **Supplements**: items, per-item dosage and taken status, intake time, daily/weekly targets, and adherence records. Group items taken together in one `Supplement Intake`.
@@ -85,7 +93,7 @@ Implement manual source-data capture before relying on AI:
 - **Program**: training split and planned workout sessions.
 - **Progress Photos**: dated upload, timeline, and comparison.
 
-Each record flow should support validation, useful empty/error states, and correction or deletion of an entry.
+Each record flow should support validation, useful empty/error states, and correction or deletion of an entry, subject to the Body Metric rule above: undo the most recent measurement rather than editing it.
 
 ### Done when
 
@@ -96,14 +104,14 @@ Each record flow should support validation, useful empty/error states, and corre
 ### Work
 
 - Define qualifying actions and XP awards.
-- Keep the XP threshold per level fixed; never deduct XP.
+- Derive displayed levels from XP, starting at Level 1, without storing an independent level. Use the same fixed threshold of 10 XP per level for body metrics, muscle groups, and the Avatar: `1 + floor(XP / 10)`. Undoing a body-metric measurement cancels XP awarded by that measurement and may lower displayed levels.
 - Implement the supplement XP thresholds using the user's configured local day.
 - Calculate muscle-group, body-metric, and overall `Avatar` levels.
-- Store XP awards/history so retries or edits cannot accidentally award XP twice.
+- Store XP awards/history so retries or edits cannot accidentally award XP twice, and a measurement undo cancels only its own award.
 
 ### Done when
 
-- A qualifying action changes progression exactly once according to the documented rules.
+- A qualifying action changes progression exactly once according to the documented rules; undoing a body-metric measurement cancels only its own XP award and recalculates displayed levels.
 - Missed days and unfavorable measurements never remove XP or levels.
 
 ## Phase 5 — Dashboard and Progress Views
@@ -158,7 +166,7 @@ Add AI features after the corresponding source-data flows exist:
 The first complete release includes all planned core domains, AI, and progression features:
 
 - Manual logging for meals, supplements, workouts, body metrics, goals, and progress photos.
-- `Avatar`, muscle/body-metric/overall levels, non-decreasing XP, and progress history.
+- `Avatar`, muscle/body-metric/overall levels, XP, and progress history; undoing a body-metric measurement cancels its XP award.
 - AI meal-nutrition estimation and meal recommendations.
 - Program- and workout-history-based training recommendations.
 
