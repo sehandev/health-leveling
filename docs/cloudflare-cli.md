@@ -42,9 +42,9 @@ Cloudflare Mesh is for private IP connectivity among enrolled devices. A deploye
 
 - Run the bridge and Pi locally on the Mac, initially through a project script such as `pnpm dev:pi-bridge`.
 - Do not expose the raw Pi RPC protocol or an unrestricted agent-control endpoint through the tunnel. Expose only the application operations the product needs.
-- Protect the hostname with Cloudflare Access. Keep the Service Token in Worker secrets; do not commit credentials or place them in browser code.
+- Protect the bridge hostname with Cloudflare Access. Keep the Service Token in Worker secrets; do not commit credentials or place them in browser code. This protects the Worker-to-bridge connection, not the app: the deployed app remains publicly accessible without login during MVP development. Add app access management shortly before MVP completion, without modeling an owner in the database or API beforehand.
 - Keep the bridge available while the Mac is awake and connected. This can support the private single-user initial release, but AI will be unavailable when the Mac or Tunnel is offline; it is not a highly available multi-user runtime.
-- Running Pi locally does not guarantee that inference stays on the Mac. The configured model provider may receive prompts, including health-related data; the provider and data-sharing behavior remain to be decided.
+- Use the local Pi agent with provider `openai-codex`, model ID `gpt-6-luna`, and thinking level `xhigh`, with real health data. A direct Pi CLI request using these settings succeeded with non-health test data. The current Pi default is `openai-codex/gpt-6.1-terra`, so select the intended model and thinking level explicitly for the bridge. Pi runs locally, but inference uses the OpenAI Codex provider; health data included in prompts is sent to that provider. The Worker-to-bridge integration remains to be tested.
 
 ## Not Yet Decided
 

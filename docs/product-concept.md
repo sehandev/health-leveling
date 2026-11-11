@@ -10,7 +10,7 @@ A mobile-first personal health and fitness tracking service that turns a user's 
 
 - The first release is a private, single-user personal app. In-app registration and multi-user support are out of scope initially.
 - Include all planned core domains, the Avatar/XP progression loop, progress views, and AI features in the first complete release; AI is not deferred to a later product milestone.
-- UI access still needs protection if the app is remotely reachable. The access-control implementation is not yet finalized.
+- During MVP development, use real health data and allow anyone to access the deployed app without login. Do not model an owner in the database or API before access management is added shortly before MVP completion. Until then, public visitors can view, modify, and delete data and use exposed AI features; access control must be addressed before completion.
 - The initial AI integration uses Pi on the development Mac through the local bridge and Cloudflare Tunnel. AI availability therefore depends on that Mac and its connection being online.
 - Roadmap phases describe implementation order, not a reduced feature scope for the first release.
 
@@ -101,6 +101,6 @@ Users can designate one active `Goal` as their `Primary Goal`. When a `Primary G
 - **Web application**: pnpm, TanStack Start, and shadcn/ui.
 - **Client libraries**: TanStack Form for forms, TanStack Query for remote/server state, and Zustand for client-only state.
 - Define clear ownership between route loaders and TanStack Query to avoid maintaining duplicate server-state caches.
-- **AI prototype**: connect to Pi running on the development Mac through Pi CLI RPC mode and a local HTTP bridge. See [Cloudflare CLI and Pi Bridge](cloudflare-cli.md).
+- **AI**: use the local Pi agent with `openai-codex/gpt-6-luna` and `xhigh` thinking on the development Mac through Pi CLI RPC mode and a local HTTP bridge. Real health data may be used; Pi runs locally but sends prompts to the OpenAI Codex provider. See [Cloudflare CLI and Pi Bridge](cloudflare-cli.md).
 
 Additional dependencies such as schema validation, an ORM, or charting libraries have not been selected yet.
