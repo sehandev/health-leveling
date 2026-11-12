@@ -44,10 +44,11 @@ Cloudflare Mesh is for private IP connectivity among enrolled devices. A deploye
 - Do not expose the raw Pi RPC protocol or an unrestricted agent-control endpoint through the tunnel. Expose only the application operations the product needs.
 - Protect the bridge hostname with Cloudflare Access. Keep the Service Token in Worker secrets; do not commit credentials or place them in browser code. This protects the Worker-to-bridge connection, not the app: the deployed app remains publicly accessible without login during MVP development. Add app access management shortly before MVP completion, without modeling an owner in the database or API beforehand.
 - Keep the bridge available while the Mac is awake and connected. This can support the private single-user initial release, but AI will be unavailable when the Mac or Tunnel is offline; it is not a highly available multi-user runtime.
-- Use the local Pi agent with provider `openai-codex`, model ID `gpt-6-luna`, and thinking level `xhigh`, with real health data. A direct Pi CLI request using these settings succeeded with non-health test data. The current Pi default is `openai-codex/gpt-6.1-terra`, so select the intended model and thinking level explicitly for the bridge. Pi runs locally, but inference uses the OpenAI Codex provider; health data included in prompts is sent to that provider. The Worker-to-bridge integration remains to be tested.
+- Use the local Pi agent with provider `openai-codex`, model ID `gpt-6-luna`, and thinking level `xhigh`, with real health data. A direct Pi CLI request using these settings succeeded with non-health test data. The current Pi default is `openai-codex/gpt-6.1-terra`, so select the intended model and thinking level explicitly for the bridge. Pi runs locally, but inference uses the OpenAI Codex provider; health data included in prompts is sent to that provider. The authenticated local HTTP bridge smoke has now succeeded with this model. The deployed Worker → Access → Tunnel → Mac path remains unverified; see [Pi Bridge Setup](pi-bridge-setup.md).
 
-## Not Yet Decided
+## Implementation Status and Remaining Checks
 
-- The bridge's HTTP API shape and whether it will use Pi CLI RPC directly or the Pi SDK behind a local Node.js/Bun process.
-- How the TanStack Start project will build and deploy with the current `cf` CLI; validate the integration before implementation.
-- The eventual production AI runtime, availability expectations, and health-data handling policy.
+- The initial Node.js bridge uses Pi CLI RPC directly and exposes only authenticated `GET /health` and fixed-input `POST /v1/smoke`. App-specific AI operations are not implemented yet. See [Pi Bridge Setup](pi-bridge-setup.md).
+- Local TanStack Start development and production builds passed with `cf dev` and `cf build`. The official Cloudflare Vite plugin requires Wrangler, which is also used for binding type generation and local-only D1 migrations without a remote database ID. See [Local Development](../README.md#local-development) for this explicit exception.
+- Remote Workers deployment, D1/R2 resource verification, and the protected Worker-to-Mac path remain unverified. Local success does not establish those release checks.
+- The eventual production AI runtime, availability expectations, and health-data handling policy remain undecided.
