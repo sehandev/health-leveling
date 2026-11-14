@@ -89,3 +89,13 @@ export const healthApi = {
     targetDate: string
   }) => request<GoalResponse>('/api/health/goals', jsonRequest('POST', goal)),
 }
+
+export async function loadProfile() {
+  const profile = await healthApi.getProfile()
+  if (typeof window === 'undefined' || profile.initialized) return profile
+
+  const deviceTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+  return deviceTimezone
+    ? healthApi.updateProfile({ unitPreference: profile.unitPreference, timezone: deviceTimezone })
+    : profile
+}

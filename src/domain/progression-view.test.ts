@@ -4,8 +4,10 @@ import {
   PROGRESSION_METRICS,
   buildProgressionSnapshot,
   type BodyMetricXpAward,
+  type MuscleXpEvent,
   type ProgressionMeasurement,
 } from "./progression-view.ts";
+import { MUSCLE_GROUPS } from "./workouts.ts";
 
 const measurement = (
   id: string,
@@ -22,6 +24,17 @@ const award = (source: ProgressionMeasurement): BodyMetricXpAward => ({
   localDate: source.localDate,
   xp: 1,
 });
+
+const muscleEvent = (
+  id: string,
+  workoutId: string,
+  itemId: string,
+  group: MuscleXpEvent["group"],
+  delta: MuscleXpEvent["delta"],
+  localDate: string,
+  occurredAt: string,
+  sequence: number,
+): MuscleXpEvent => ({ id, workoutId, itemId, group, delta, localDate, occurredAt, sequence });
 
 test("snapshot always has 14 consecutive dates across month, year, and leap-day boundaries", () => {
   const leapWindow = buildProgressionSnapshot([], [], "2024-03-05");
@@ -117,6 +130,112 @@ test("future retained awards affect all-time totals but not dates before their l
   assert.equal(snapshot.avatar.xp, 1);
   assert.equal(snapshot.bodyMetrics[2].xp, 1);
   assert.equal(snapshot.days.at(-1)?.xp, 0);
+});
+
+test("workout corrections debit the original award date, not the edit or edited workout date", () => {
+  const body = measurement("body", "body_weight", 70, "2024-01-16T12:00:00Z", "2024-01-16");
+  const events = [
+    muscleEvent("chest-award", "workout", "press", "Chest", 1, "2024-01-15", "2024-01-15T12:00:00Z", 1),
+    muscleEvent("chest-cancel", "workout", "press", "Chest", -1, "2024-01-20", "2024-01-20T12:00:00Z", 2),
+    muscleEvent("back-award", "workout", "press", "Back", 1, "2024-01-20", "2024-01-20T12:00:00Z", 3),
+  ];
+  const snapshot = buildProgressionSnapshot([body], [award(body)], "2024-01-25", events);
+  assert.equal(snapshot.days.find(({ date }) => date === "2024-01-15")?.xp, 0);
+  assert.equal(snapshot.days.find(({ date }) => date === "2024-01-16")?.xp, 1);
+  assert.equal(snapshot.days.find(({ date }) => date === "2024-01-19")?.xp, 1);
+  assert.equal(snapshot.days.find(({ date }) => date === "2024-01-20")?.xp, 2);
+  assert.deepEqual(snapshot.muscles.slice(0, 2), [
+    { group: "Chest", xp: 0, level: 1 },
+    { group: "Back", xp: 1, level: 1 },
+  ]);
+  assert.deepEqual(snapshot.avatar, { xp: 2, level: 1 });
+});
+
+test("cancellation across original and current timezone dates recomputes alongside body XP and undo", () => {
+  const body = measurement("body", "body_weight", 70, "2025-01-02T08:00:00Z", "2025-01-02");
+  const events = [
+    muscleEvent("award", "workout", "item", "Chest", 1, "2025-01-02", "2025-01-02T08:00:00Z", 1),
+    muscleEvent("cancel", "workout", "item", "Chest", -1, "2025-01-01", "2025-01-03T08:00:00Z", 2),
+  ];
+  const withBody = buildProgressionSnapshot([body], [award(body)], "2025-01-05", events);
+  assert.equal(withBody.days.find(({ date }) => date === "2025-01-01")?.xp, 0);
+  assert.equal(withBody.days.find(({ date }) => date === "2025-01-02")?.xp, 1);
+  assert.equal(withBody.days.find(({ date }) => date === "2025-01-05")?.xp, 1);
+  assert.equal(withBody.muscles[0].xp, 0);
+  assert.deepEqual(withBody.avatar, { xp: 1, level: 1 });
+
+  const afterBodyUndo = buildProgressionSnapshot([], [], "2025-01-05", events);
+  assert.equal(afterBodyUndo.days.find(({ date }) => date === "2025-01-02")?.xp, 0);
+  assert.equal(afterBodyUndo.avatar.xp, 0);
+});
+
+test("confirmed workout deletion cancels XP on each original award date", () => {
+  const events = [
+    muscleEvent("award", "deleted-workout", "item", "Glutes", 1, "2024-01-15", "2024-01-15T12:00:00Z", 1),
+    muscleEvent("delete", "deleted-workout", "item", "Glutes", -1, "2024-01-20", "2024-01-20T12:00:00Z", 2),
+  ];
+  const snapshot = buildProgressionSnapshot([], [], "2024-01-25", events);
+  assert.equal(snapshot.days.find(({ date }) => date === "2024-01-15")?.xp, 0);
+  assert.equal(snapshot.days.find(({ date }) => date === "2024-01-19")?.xp, 0);
+  assert.equal(snapshot.days.find(({ date }) => date === "2024-01-20")?.xp, 0);
+  assert.equal(snapshot.muscles.find(({ group }) => group === "Glutes")?.xp, 0);
+  assert.deepEqual(snapshot.avatar, { xp: 0, level: 1 });
+});
+
+test("muscle totals use catalog order and the fixed ten-XP level threshold", () => {
+  const events = Array.from({ length: 10 }, (_, index) => muscleEvent(
+    `event-${index}`, "workout", `item-${index}`, "Chest", 1,
+    "2024-11-10", `2024-11-10T12:00:${String(index).padStart(2, "0")}Z`, index,
+  ));
+  const snapshot = buildProgressionSnapshot([], [], "2024-11-10", events);
+  assert.deepEqual(snapshot.muscles.map(({ group }) => group), MUSCLE_GROUPS);
+  assert.deepEqual(snapshot.muscles[0], { group: "Chest", xp: 10, level: 2 });
+  assert.deepEqual(snapshot.avatar, { xp: 10, level: 2 });
+  assert.equal(snapshot.days.at(-1)?.xp, 10);
+});
+
+test("signed muscle events require unique identities and an ordered active award pair", () => {
+  const add = muscleEvent("add", "workout", "item", "Back", 1, "2024-01-10", "2024-01-10T12:00:00Z", 1);
+  const cancel = muscleEvent("cancel", "workout", "item", "Back", -1, "2024-01-20", "2024-01-20T12:00:00Z", 2);
+  assert.equal(buildProgressionSnapshot([], [], "2024-01-20", [cancel, add]).muscles[1].xp, 0);
+  assert.throws(() => buildProgressionSnapshot([], [], "2024-01-20", [add, { ...add }]), RangeError);
+  assert.throws(() => buildProgressionSnapshot([], [], "2024-01-20", [cancel]), RangeError);
+  assert.throws(() => buildProgressionSnapshot([], [], "2024-01-20", [add, { ...add, id: "second-add", sequence: 2 }]), RangeError);
+  assert.throws(() => buildProgressionSnapshot([], [], "2024-01-20", [
+    { ...add, delta: -2 as -1 },
+  ]), RangeError);
+  assert.throws(() => buildProgressionSnapshot([], [], "2024-01-20", [
+    { ...add, group: "Neck" as MuscleXpEvent["group"] },
+  ]), RangeError);
+  assert.throws(() => buildProgressionSnapshot([], [], "2024-01-20", [
+    { ...add, sequence: -1 },
+  ]), RangeError);
+});
+
+test("legacy edit-date negatives dated before their grant are normalized without rewriting events", () => {
+  const saved = muscleEvent("award", "workout", "item", "Chest", 1, "2025-01-02", "2025-01-02T08:00:00Z", 1);
+  const legacyEditDateCancel = muscleEvent("cancel", "workout", "item", "Chest", -1, "2025-01-01", "2025-01-03T08:00:00Z", 2);
+  const snapshot = buildProgressionSnapshot([], [], "2025-01-05", [saved, legacyEditDateCancel]);
+  assert.equal(legacyEditDateCancel.localDate, "2025-01-01");
+  assert.equal(snapshot.days.find(({ date }) => date === "2025-01-01")?.xp, 0);
+  assert.equal(snapshot.days.find(({ date }) => date === "2025-01-02")?.xp, 0);
+  assert.equal(snapshot.muscles[0].xp, 0);
+  assert.equal(snapshot.avatar.xp, 0);
+});
+
+test("re-award and later cancellation debit the latest active grant date", () => {
+  const events = [
+    muscleEvent("first-grant", "workout", "item", "Back", 1, "2025-01-02", "2025-01-02T08:00:00Z", 1),
+    muscleEvent("first-cancel", "workout", "item", "Back", -1, "2025-01-04", "2025-01-04T08:00:00Z", 2),
+    muscleEvent("second-grant", "workout", "item", "Back", 1, "2025-01-05", "2025-01-05T08:00:00Z", 3),
+    muscleEvent("second-cancel", "workout", "item", "Back", -1, "2025-01-06", "2025-01-06T08:00:00Z", 4),
+  ];
+  const snapshot = buildProgressionSnapshot([], [], "2025-01-10", events);
+  assert.equal(snapshot.days.find(({ date }) => date === "2025-01-02")?.xp, 0);
+  assert.equal(snapshot.days.find(({ date }) => date === "2025-01-05")?.xp, 0);
+  assert.equal(snapshot.days.find(({ date }) => date === "2025-01-06")?.xp, 0);
+  assert.equal(snapshot.muscles[1].xp, 0);
+  assert.equal(snapshot.avatar.xp, 0);
 });
 
 test("malformed sources, impossible metrics, and duplicate or mismatched awards are rejected", () => {

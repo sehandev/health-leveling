@@ -15,7 +15,7 @@
     "preview": "vite preview --host 0.0.0.0",
     "cf-typegen": "wrangler types",
     "typecheck": "pnpm cf-typegen && tsc --noEmit",
-    "test": "node --experimental-strip-types --test $(find src/domain src/server src/lib bridge -type f -name '*.test.*' -print 2>/dev/null)"
+    "test": "node --experimental-strip-types --test $(find src/domain src/server src/lib src/components bridge -type f -name '*.test.*' -print 2>/dev/null)"
   },
   "dependencies": {
     "@tanstack/react-form": "1.33.5",

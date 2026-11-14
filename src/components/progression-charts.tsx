@@ -38,15 +38,12 @@ function DateLabels({ days }: { days: ProgressionDays }) {
 
 function DataTable({ children, caption }: { children: ReactNode; caption: string }) {
   return (
-    <details className="progression-chart__table">
-      <summary>날짜별 데이터를 표로 보기</summary>
-      <div className="progression-chart__table-wrap">
-        <table>
-          <caption className="sr-only">{caption}</caption>
+    <div className="progression-chart__table-wrap">
+      <table className="progression-chart__table">
+        <caption>{caption}</caption>
           {children}
         </table>
-      </div>
-    </details>
+    </div>
   );
 }
 
@@ -100,10 +97,7 @@ export function WeightHistoryChart({ days, unitPreference }: { days: Progression
           </>
         ) : null}
       </svg>
-      {geometry.axisMode === "scientific" && hasMeasurements
-        ? <p className="progression-chart__axis-note">넓은 몸무게 범위는 과학 표기법으로 축약해 표시합니다.</p>
-        : null}
-      {!hasMeasurements ? <p className="progression-chart__empty-copy">아직 기록된 몸무게가 없습니다.</p> : null}
+      {!hasMeasurements ? <p role="status" className="inline-status">기록이 없어요.</p> : null}
       <DataTable caption="날짜별 몸무게">
         <thead><tr><th scope="col">날짜</th><th scope="col">몸무게 ({unit})</th></tr></thead>
         <tbody>{days.map((day) => (

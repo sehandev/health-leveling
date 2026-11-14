@@ -10,42 +10,209 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BodyWeightRouteImport } from './routes/body-weight'
+import { Route as BodyWeightGoalRouteImport } from './routes/body-weight-goal'
+import { Route as BodyWeightGoalNewRouteImport } from './routes/body-weight-goal-new'
+import { Route as BodyWeightHistoryRouteImport } from './routes/body-weight-history'
+import { Route as BodyWeightProgressionRouteImport } from './routes/body-weight-progression'
+import { Route as ProgressionRouteImport } from './routes/progression'
+import { Route as SettingsRouteImport } from './routes/settings'
+import { Route as WorkoutsRouteImport } from './routes/workouts'
+import { Route as WorkoutsIndexRouteImport } from './routes/workouts.index'
+import { Route as WorkoutsWorkoutIdRouteImport } from './routes/workouts.$workoutId'
+import { Route as WorkoutsNewRouteImport } from './routes/workouts.new'
 import { Route as ApiHealthSplatRouteImport } from './routes/api/health/$'
+import { Route as WorkoutsWorkoutIdIndexRouteImport } from './routes/workouts.$workoutId.index'
+import { Route as WorkoutsWorkoutIdEditRouteImport } from './routes/workouts.$workoutId.edit'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BodyWeightRoute = BodyWeightRouteImport.update({
+  id: '/body-weight',
+  path: '/body-weight',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BodyWeightGoalRoute = BodyWeightGoalRouteImport.update({
+  id: '/body-weight-goal',
+  path: '/body-weight-goal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BodyWeightGoalNewRoute = BodyWeightGoalNewRouteImport.update({
+  id: '/body-weight-goal-new',
+  path: '/body-weight-goal-new',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BodyWeightHistoryRoute = BodyWeightHistoryRouteImport.update({
+  id: '/body-weight-history',
+  path: '/body-weight-history',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BodyWeightProgressionRoute = BodyWeightProgressionRouteImport.update({
+  id: '/body-weight-progression',
+  path: '/body-weight-progression',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProgressionRoute = ProgressionRouteImport.update({
+  id: '/progression',
+  path: '/progression',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SettingsRoute = SettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WorkoutsRoute = WorkoutsRouteImport.update({
+  id: '/workouts',
+  path: '/workouts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WorkoutsIndexRoute = WorkoutsIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => WorkoutsRoute,
+} as any)
+const WorkoutsWorkoutIdRoute = WorkoutsWorkoutIdRouteImport.update({
+  id: '/$workoutId',
+  path: '/$workoutId',
+  getParentRoute: () => WorkoutsRoute,
+} as any)
+const WorkoutsNewRoute = WorkoutsNewRouteImport.update({
+  id: '/new',
+  path: '/new',
+  getParentRoute: () => WorkoutsRoute,
+} as any)
 const ApiHealthSplatRoute = ApiHealthSplatRouteImport.update({
   id: '/api/health/$',
   path: '/api/health/$',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WorkoutsWorkoutIdIndexRoute = WorkoutsWorkoutIdIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => WorkoutsWorkoutIdRoute,
+} as any)
+const WorkoutsWorkoutIdEditRoute = WorkoutsWorkoutIdEditRouteImport.update({
+  id: '/edit',
+  path: '/edit',
+  getParentRoute: () => WorkoutsWorkoutIdRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/body-weight': typeof BodyWeightRoute
+  '/body-weight-goal': typeof BodyWeightGoalRoute
+  '/body-weight-goal-new': typeof BodyWeightGoalNewRoute
+  '/body-weight-history': typeof BodyWeightHistoryRoute
+  '/body-weight-progression': typeof BodyWeightProgressionRoute
+  '/progression': typeof ProgressionRoute
+  '/settings': typeof SettingsRoute
+  '/workouts': typeof WorkoutsRouteWithChildren
+  '/workouts/$workoutId': typeof WorkoutsWorkoutIdRouteWithChildren
+  '/workouts/new': typeof WorkoutsNewRoute
+  '/workouts/': typeof WorkoutsIndexRoute
   '/api/health/$': typeof ApiHealthSplatRoute
+  '/workouts/$workoutId/edit': typeof WorkoutsWorkoutIdEditRoute
+  '/workouts/$workoutId/': typeof WorkoutsWorkoutIdIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/body-weight': typeof BodyWeightRoute
+  '/body-weight-goal': typeof BodyWeightGoalRoute
+  '/body-weight-goal-new': typeof BodyWeightGoalNewRoute
+  '/body-weight-history': typeof BodyWeightHistoryRoute
+  '/body-weight-progression': typeof BodyWeightProgressionRoute
+  '/progression': typeof ProgressionRoute
+  '/settings': typeof SettingsRoute
+  '/workouts/new': typeof WorkoutsNewRoute
+  '/workouts': typeof WorkoutsIndexRoute
   '/api/health/$': typeof ApiHealthSplatRoute
+  '/workouts/$workoutId/edit': typeof WorkoutsWorkoutIdEditRoute
+  '/workouts/$workoutId': typeof WorkoutsWorkoutIdIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/body-weight': typeof BodyWeightRoute
+  '/body-weight-goal': typeof BodyWeightGoalRoute
+  '/body-weight-goal-new': typeof BodyWeightGoalNewRoute
+  '/body-weight-history': typeof BodyWeightHistoryRoute
+  '/body-weight-progression': typeof BodyWeightProgressionRoute
+  '/progression': typeof ProgressionRoute
+  '/settings': typeof SettingsRoute
+  '/workouts': typeof WorkoutsRouteWithChildren
+  '/workouts/$workoutId': typeof WorkoutsWorkoutIdRouteWithChildren
+  '/workouts/new': typeof WorkoutsNewRoute
+  '/workouts/': typeof WorkoutsIndexRoute
   '/api/health/$': typeof ApiHealthSplatRoute
+  '/workouts/$workoutId/edit': typeof WorkoutsWorkoutIdEditRoute
+  '/workouts/$workoutId/': typeof WorkoutsWorkoutIdIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/health/$'
+  fullPaths:
+    | '/'
+    | '/body-weight'
+    | '/body-weight-goal'
+    | '/body-weight-goal-new'
+    | '/body-weight-history'
+    | '/body-weight-progression'
+    | '/progression'
+    | '/settings'
+    | '/workouts'
+    | '/workouts/$workoutId'
+    | '/workouts/new'
+    | '/workouts/'
+    | '/api/health/$'
+    | '/workouts/$workoutId/edit'
+    | '/workouts/$workoutId/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/health/$'
-  id: '__root__' | '/' | '/api/health/$'
+  to:
+    | '/'
+    | '/body-weight'
+    | '/body-weight-goal'
+    | '/body-weight-goal-new'
+    | '/body-weight-history'
+    | '/body-weight-progression'
+    | '/progression'
+    | '/settings'
+    | '/workouts/new'
+    | '/workouts'
+    | '/api/health/$'
+    | '/workouts/$workoutId/edit'
+    | '/workouts/$workoutId'
+  id:
+    | '__root__'
+    | '/'
+    | '/body-weight'
+    | '/body-weight-goal'
+    | '/body-weight-goal-new'
+    | '/body-weight-history'
+    | '/body-weight-progression'
+    | '/progression'
+    | '/settings'
+    | '/workouts'
+    | '/workouts/$workoutId'
+    | '/workouts/new'
+    | '/workouts/'
+    | '/api/health/$'
+    | '/workouts/$workoutId/edit'
+    | '/workouts/$workoutId/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BodyWeightRoute: typeof BodyWeightRoute
+  BodyWeightGoalRoute: typeof BodyWeightGoalRoute
+  BodyWeightGoalNewRoute: typeof BodyWeightGoalNewRoute
+  BodyWeightHistoryRoute: typeof BodyWeightHistoryRoute
+  BodyWeightProgressionRoute: typeof BodyWeightProgressionRoute
+  ProgressionRoute: typeof ProgressionRoute
+  SettingsRoute: typeof SettingsRoute
+  WorkoutsRoute: typeof WorkoutsRouteWithChildren
   ApiHealthSplatRoute: typeof ApiHealthSplatRoute
 }
 
@@ -58,6 +225,83 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/body-weight': {
+      id: '/body-weight'
+      path: '/body-weight'
+      fullPath: '/body-weight'
+      preLoaderRoute: typeof BodyWeightRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/body-weight-goal': {
+      id: '/body-weight-goal'
+      path: '/body-weight-goal'
+      fullPath: '/body-weight-goal'
+      preLoaderRoute: typeof BodyWeightGoalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/body-weight-goal-new': {
+      id: '/body-weight-goal-new'
+      path: '/body-weight-goal-new'
+      fullPath: '/body-weight-goal-new'
+      preLoaderRoute: typeof BodyWeightGoalNewRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/body-weight-history': {
+      id: '/body-weight-history'
+      path: '/body-weight-history'
+      fullPath: '/body-weight-history'
+      preLoaderRoute: typeof BodyWeightHistoryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/body-weight-progression': {
+      id: '/body-weight-progression'
+      path: '/body-weight-progression'
+      fullPath: '/body-weight-progression'
+      preLoaderRoute: typeof BodyWeightProgressionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/progression': {
+      id: '/progression'
+      path: '/progression'
+      fullPath: '/progression'
+      preLoaderRoute: typeof ProgressionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/workouts': {
+      id: '/workouts'
+      path: '/workouts'
+      fullPath: '/workouts'
+      preLoaderRoute: typeof WorkoutsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/workouts/': {
+      id: '/workouts/'
+      path: '/'
+      fullPath: '/workouts/'
+      preLoaderRoute: typeof WorkoutsIndexRouteImport
+      parentRoute: typeof WorkoutsRoute
+    }
+    '/workouts/$workoutId': {
+      id: '/workouts/$workoutId'
+      path: '/$workoutId'
+      fullPath: '/workouts/$workoutId'
+      preLoaderRoute: typeof WorkoutsWorkoutIdRouteImport
+      parentRoute: typeof WorkoutsRoute
+    }
+    '/workouts/new': {
+      id: '/workouts/new'
+      path: '/new'
+      fullPath: '/workouts/new'
+      preLoaderRoute: typeof WorkoutsNewRouteImport
+      parentRoute: typeof WorkoutsRoute
+    }
     '/api/health/$': {
       id: '/api/health/$'
       path: '/api/health/$'
@@ -65,11 +309,62 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiHealthSplatRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/workouts/$workoutId/': {
+      id: '/workouts/$workoutId/'
+      path: '/'
+      fullPath: '/workouts/$workoutId/'
+      preLoaderRoute: typeof WorkoutsWorkoutIdIndexRouteImport
+      parentRoute: typeof WorkoutsWorkoutIdRoute
+    }
+    '/workouts/$workoutId/edit': {
+      id: '/workouts/$workoutId/edit'
+      path: '/edit'
+      fullPath: '/workouts/$workoutId/edit'
+      preLoaderRoute: typeof WorkoutsWorkoutIdEditRouteImport
+      parentRoute: typeof WorkoutsWorkoutIdRoute
+    }
   }
 }
 
+interface WorkoutsWorkoutIdRouteChildren {
+  WorkoutsWorkoutIdEditRoute: typeof WorkoutsWorkoutIdEditRoute
+  WorkoutsWorkoutIdIndexRoute: typeof WorkoutsWorkoutIdIndexRoute
+}
+
+const WorkoutsWorkoutIdRouteChildren: WorkoutsWorkoutIdRouteChildren = {
+  WorkoutsWorkoutIdEditRoute: WorkoutsWorkoutIdEditRoute,
+  WorkoutsWorkoutIdIndexRoute: WorkoutsWorkoutIdIndexRoute,
+}
+
+const WorkoutsWorkoutIdRouteWithChildren =
+  WorkoutsWorkoutIdRoute._addFileChildren(WorkoutsWorkoutIdRouteChildren)
+
+interface WorkoutsRouteChildren {
+  WorkoutsWorkoutIdRoute: typeof WorkoutsWorkoutIdRouteWithChildren
+  WorkoutsNewRoute: typeof WorkoutsNewRoute
+  WorkoutsIndexRoute: typeof WorkoutsIndexRoute
+}
+
+const WorkoutsRouteChildren: WorkoutsRouteChildren = {
+  WorkoutsWorkoutIdRoute: WorkoutsWorkoutIdRouteWithChildren,
+  WorkoutsNewRoute: WorkoutsNewRoute,
+  WorkoutsIndexRoute: WorkoutsIndexRoute,
+}
+
+const WorkoutsRouteWithChildren = WorkoutsRoute._addFileChildren(
+  WorkoutsRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BodyWeightRoute: BodyWeightRoute,
+  BodyWeightGoalRoute: BodyWeightGoalRoute,
+  BodyWeightGoalNewRoute: BodyWeightGoalNewRoute,
+  BodyWeightHistoryRoute: BodyWeightHistoryRoute,
+  BodyWeightProgressionRoute: BodyWeightProgressionRoute,
+  ProgressionRoute: ProgressionRoute,
+  SettingsRoute: SettingsRoute,
+  WorkoutsRoute: WorkoutsRouteWithChildren,
   ApiHealthSplatRoute: ApiHealthSplatRoute,
 }
 export const routeTree = rootRouteImport

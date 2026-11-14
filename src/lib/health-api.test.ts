@@ -22,6 +22,7 @@ test('progression API uses the supplied local end date and preserves server data
   const snapshot = {
     avatar: { xp: 1, level: 1 },
     bodyMetrics: [{ metric: 'body_weight' as const, xp: 1, level: 1 }],
+    muscles: [{ group: 'Chest', xp: 0, level: 1 }],
     days: [{ date: '2026-11-12', bodyWeightKg: 68.5, xp: 1, level: 1 }],
   }
   let requestedUrl = ''

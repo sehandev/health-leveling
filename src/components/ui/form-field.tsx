@@ -3,13 +3,11 @@ import type { InputHTMLAttributes, ReactNode } from 'react'
 export function FormField({
   id,
   label,
-  hint,
   error,
   children,
 }: {
   id: string
   label: string
-  hint?: string
   error?: string
   children: ReactNode
 }) {
@@ -18,7 +16,6 @@ export function FormField({
       <label className="field-label" htmlFor={id}>{label}</label>
       {children}
       {error ? <p className="field-error" id={`${id}-error`}>{error}</p> : null}
-      {hint && !error ? <p className="field-hint" id={`${id}-hint`}>{hint}</p> : null}
     </div>
   )
 }

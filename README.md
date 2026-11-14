@@ -1,15 +1,24 @@
 # 나건렙 — 나답게 건강 레벨업
 
-Mobile-first personal health-record foundation built with pnpm, TanStack Start, React, TanStack Query/Form, and Cloudflare Workers/D1. UI copy is Korean; body-weight values are stored canonically in kilograms, while the profile controls display units and the recording IANA timezone.
+Mobile-first personal health-record app built with pnpm, TanStack Start, React, TanStack Query/Form, and Cloudflare Workers/D1. UI copy is Korean; body-weight and workout loads are stored canonically in kilograms, with profile-wide display units and recording timezone.
 
 ## Current slice
 
-- Home page with explicit body-weight measurement save, recording date/time and timezone, latest-only undo, and a numeric body-weight goal.
-- Persistent body-metric XP and derived Avatar level, with a focused expandable 14-day weight/XP progression view. Undo removes the source measurement and its XP from historical progression; saves disclose whether they earned 1 XP.
-- XP display currently reflects body-metric awards only; workout and supplement XP are not connected yet. No inactivity or unfavorable-measurement penalty is applied.
-- Profile unit/timezone settings, accessible reusable form controls, and loading/error/empty states.
-- API calls use TanStack Query as the single server-state cache and are served by `handleHealthRequest` from the server-side `/api/health/*` route.
-- No fabricated records, owner/auth model, or AI auto-confirmation. Other product domains remain out of scope for this foundation.
+- Home contains navigation only. Body-weight registration, record history and latest-record undo, goal view/registration, profile settings, weight progression, XP progression, and strength workouts have separate pages.
+- Confirmed `Strength Training` records support ordered exercises, sets, exact-name custom picker history, editing, deletion, and per-muscle progression. Qualifying Machine and Free Weight items award muscle XP; Bodyweight items do not.
+- Avatar XP includes body-metric and muscle-group awards. Supplement XP is not connected; Cardio/Endurance, Sport, Mobility/Recovery, Other, Program, Plan linking/completion, AI workout suggestions, and the broader Wake-up flow remain out of this slice.
+- Body-metric undo removes its source measurement and award, then recomputes its historical progression. Workout creation and editing reject future recording instants. Workout XP cancellations are reflected on the canceled award's original registered date, regardless of later timezone changes; historical progression is recomputed. Newly qualifying awards from edits use their own registered edit date. No initial records or XP are fabricated or backfilled.
+- TanStack Query is the single server-state cache. UI displays concise loading, error, empty, and save-result states without visible policy, phase, or disclaimer prose.
+
+## Local D1 setup
+
+Apply the checked-in migrations to the example local database before starting the app:
+
+```sh
+pnpm exec wrangler d1 migrations apply health-leveling-local-example --local --persist-to ./.wrangler/state
+```
+
+This uses the local `DB` binding in `wrangler.jsonc`; it does not create or modify a remote database. Migrations are additive. Keep existing local D1 state. For synthetic browser QA, use a temporary config and a separate disposable `--persist-to` directory; never clear or reuse `./.wrangler/state`, and never seed QA fixtures with personal health records.
 
 ## Local development
 
@@ -22,14 +31,20 @@ pnpm dev
 
 `pnpm dev` runs Vite with the official Cloudflare Vite plugin and Workers runtime. `pnpm dev:cf` invokes `cf dev`, which selects the framework's local development command when available. Use `pnpm build` for the production Worker build, `pnpm typecheck` for Cloudflare binding type generation plus TypeScript, and `pnpm test` for the Node 24 TypeScript tests under `src/domain`, `src/server`, `src/lib`, and `bridge`.
 
-Cloudflare's current TanStack Start integration requires Wrangler as the Vite plugin's peer dependency and uses `wrangler types` to generate binding types. `cf` remains the primary Cloudflare operations CLI. `cf dev` and `cf build` are the preferred local Cloudflare workflows; Wrangler is limited to the plugin-required type generation and local D1 migration exception below. `cf d1 migrations apply` requires a database ID (not a binding name), while this local-only config intentionally has no ID, so apply local migrations with `pnpm exec wrangler d1 migrations apply health-leveling-local-example --local --persist-to ./.wrangler/state`.
+Cloudflare's current TanStack Start integration requires Wrangler as the Vite plugin's peer dependency and uses `wrangler types` to generate binding types. `cf` remains the primary Cloudflare operations CLI. `cf dev` and `cf build` are the preferred local Cloudflare workflows; Wrangler is limited to plugin-required type generation and the local D1 migration command above.
 
 ## Local bindings
 
-`wrangler.jsonc` contains example-only D1 (`DB`) and private R2 (`IMAGE_BUCKET`) binding names. The D1 binding intentionally omits a database ID for local-only use; replace the example database and bucket names and add the actual D1 ID only after the matching resources are intentionally provisioned. No remote resources are created by install, local development, builds, tests, or migrations. Do not deploy until the binding IDs and access plan have been reviewed. Use a separate `--persist-to` directory for stateful synthetic browser tests rather than clearing or reusing an existing local D1 state.
+`wrangler.jsonc` contains example-only D1 (`DB`) and private R2 (`IMAGE_BUCKET`) binding names. The D1 binding intentionally omits a database ID for local-only use; replace the example database and bucket names and add the actual D1 ID only after the matching resources are intentionally provisioned. No remote resources are created by install, local development, builds, tests, or migrations. Do not deploy until binding IDs and access boundaries have been reviewed.
 
-## Privacy and deployment warning
+## Security boundaries
 
-The MVP is intentionally public and has no login or ownership model. Anyone who can reach a deployed instance can view, add, change through the supported undo flow, and remove health data through its API. Do not deploy this app with real personal health data until access management and deployment boundaries have been reviewed. The future local Pi bridge can send prompt data to its configured model provider; it is not wired into this first UI slice.
+### Public MVP app access
+
+The MVP app has no login or ownership model. Anyone who can reach a deployed instance can view, add, and delete health data through its API; supported body-metric correction is undo-and-reenter. Do not deploy with real personal health data until app access management and deployment boundaries have been reviewed.
+
+### Pi bridge Access
+
+Worker-to-bridge Cloudflare Access/Tunnel protection is separate from app-user authentication and does not secure the public health API. The Pi bridge is not connected to this UI slice. If enabled later, prompts may contain health data and the configured model provider may receive it; review that boundary before sending any user data.
 
 The root `LICENSE` remains Apache-2.0. Product decisions and broader scope live in `docs/`.
