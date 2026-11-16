@@ -25,6 +25,7 @@
 .workout-item-list { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
 .workout-insert-point { display: grid; justify-items: center; }
 .workout-add-point { width: auto; min-height: 38px; border: 0; border-radius: 999px; padding: 0 12px; font-size: 13px; line-height: 1; }
+.workout-add-point--outline { border: 1px solid var(--line); border-radius: 8px; background: #fff; }
 .workout-item { min-width: 0; padding: 18px 0 22px; border-top: 1px solid var(--line); }
 .workout-item__heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
 .workout-item__number { display: inline-grid; width: 28px; height: 28px; place-items: center; border: 1px solid var(--line); border-radius: 50%; color: var(--muted); font-size: 12px; }
@@ -40,7 +41,7 @@
 .workout-sets-heading { margin: 18px 0 10px; }
 .workout-sets-heading h3 { margin: 0; font-size: 14px; font-weight: 600; }
 .workout-set-list { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
-.workout-set-add { margin-top: 10px; }
+.workout-set-add { width: 100%; margin-top: 10px; }
 .workout-set { display: grid; grid-template-columns: 26px minmax(0, 1fr) minmax(0, 1fr) 34px; align-items: end; gap: 7px; }
 .workout-set__number { align-self: center; color: var(--muted); font-size: 12px; text-align: center; }
 .workout-set__field { display: grid; gap: 5px; min-width: 0; font-size: 11px; color: var(--muted); }

@@ -341,7 +341,7 @@ function WorkoutPicker({
   const recent = (mode: StrengthMode) => pickerOptions(mode, pickerState)
   useEffect(() => { if (active) updateFade() }, [active, pickerState])
 
-  if (!active) return <li className="workout-insert-point"><Button type="button" variant="quiet" className="workout-add-point" disabled={usagePending} aria-label={`운동 추가, ${index + 1}번째 위치`} onClick={onOpen}>운동 추가</Button></li>
+  if (!active) return <li className="workout-insert-point"><Button type="button" variant="quiet" className={`workout-add-point${index > 0 ? ' workout-add-point--outline' : ''}`} disabled={usagePending} aria-label={`운동 추가, ${index + 1}번째 위치`} onClick={onOpen}>운동 추가</Button></li>
 
   return (
     <li className="workout-insert-point">
