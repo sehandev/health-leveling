@@ -271,10 +271,7 @@ function WorkoutEditorForm({
                         ))}
                       </div>
                     </fieldset>
-                    <div className="workout-sets-heading">
-                      <h3>세트</h3>
-                      <Button type="button" variant="quiet" onClick={() => field.handleChange(replaceItem(field.state.value, index, { ...item, sets: [...item.sets, { reps: '', load: '', originalLoadKg: null }] }))}>+ 세트</Button>
-                    </div>
+                    <div className="workout-sets-heading"><h3>세트</h3></div>
                     <ol className="workout-set-list" aria-label={`${item.name || '운동'} 세트`}>
                       {item.sets.map((set, setIndex) => (
                         <li className="workout-set" key={`${item.id}-set-${setIndex}`}>
@@ -291,6 +288,7 @@ function WorkoutEditorForm({
                         </li>
                       ))}
                     </ol>
+                    <Button type="button" variant="quiet" className="workout-set-add" onClick={() => field.handleChange(replaceItem(field.state.value, index, { ...item, sets: [...item.sets, { reps: '', load: '', originalLoadKg: null }] }))}>세트 추가</Button>
                   </li>
                   <WorkoutPicker
                     key={`insert-${index + 1}`} index={index + 1} active={pickerPosition === index + 1} pickerState={pickerState} usagePending={usagePending}
@@ -343,7 +341,7 @@ function WorkoutPicker({
   const recent = (mode: StrengthMode) => pickerOptions(mode, pickerState)
   useEffect(() => { if (active) updateFade() }, [active, pickerState])
 
-  if (!active) return <li className="workout-insert-point"><Button type="button" variant="quiet" className="workout-add-point" disabled={usagePending} aria-label={`운동 ${index + 1}번째 위치에 추가`} onClick={onOpen}>+</Button></li>
+  if (!active) return <li className="workout-insert-point"><Button type="button" variant="quiet" className="workout-add-point" disabled={usagePending} aria-label={`운동 추가, ${index + 1}번째 위치`} onClick={onOpen}>운동 추가</Button></li>
 
   return (
     <li className="workout-insert-point">
