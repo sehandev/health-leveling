@@ -1,7 +1,5 @@
 .workouts-shell { max-width: 760px; }
-.workouts-home-link { text-decoration: none; }
-.workouts-nav-link { color: var(--muted); font-size: 13px; text-decoration: none; }
-.workouts-nav-link:hover, .workout-record__link:hover { color: var(--ink); }
+.workout-record__link:hover { color: var(--ink); }
 .workouts-intro { padding: 42px 0 24px; }
 .workouts-intro h1, .workouts-editor-heading h1, .workout-detail h1 { margin: 0; font-size: clamp(28px, 7vw, 38px); font-weight: 500; letter-spacing: -.06em; }
 .workouts-page-heading, .workouts-editor-heading, .workout-detail__heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; }

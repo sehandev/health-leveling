@@ -469,8 +469,7 @@ function EditorShell({ children }: { children: React.ReactNode }) {
   return (
     <main className="app-shell workouts-shell">
       <header className="site-header">
-        <Link className="wordmark workouts-home-link" to="/" aria-label="홈으로 돌아가기"><span className="brand-mark" aria-hidden="true" />나건렙</Link>
-        <Link className="workouts-nav-link" to="/workouts">목록</Link>
+        <Link className="wordmark" to="/" aria-label="홈으로 돌아가기"><span className="brand-mark" aria-hidden="true" />나건렙</Link>
       </header>
       {children}
     </main>

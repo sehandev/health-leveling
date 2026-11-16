@@ -38,8 +38,7 @@ export function WorkoutsPage() {
   return (
     <main className="app-shell workouts-shell">
       <header className="site-header">
-        <Link className="wordmark workouts-home-link" to="/" aria-label="홈으로 돌아가기"><span className="brand-mark" aria-hidden="true" />나건렙</Link>
-        <Link className="workouts-nav-link" to="/">홈</Link>
+        <Link className="wordmark" to="/" aria-label="홈으로 돌아가기"><span className="brand-mark" aria-hidden="true" />나건렙</Link>
       </header>
       <header className="workouts-intro">
         <h1>운동 기록</h1>

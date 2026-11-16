@@ -42,8 +42,7 @@ export function WorkoutDetailPage({ workoutId }: { workoutId: string }) {
   return (
     <main className="app-shell workouts-shell">
       <header className="site-header">
-        <Link className="wordmark workouts-home-link" to="/" aria-label="홈으로"><span className="brand-mark" aria-hidden="true" />나건렙</Link>
-        <Link className="workouts-nav-link" to="/workouts">목록</Link>
+        <Link className="wordmark" to="/" aria-label="홈으로"><span className="brand-mark" aria-hidden="true" />나건렙</Link>
       </header>
       {query.isPending || profileQuery.isPending ? <p className="inline-status" role="status">불러오는 중…</p> : null}
       {query.isError || profileQuery.isError ? (
