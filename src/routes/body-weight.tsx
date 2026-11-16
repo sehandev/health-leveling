@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useForm } from '@tanstack/react-form'
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link, useNavigate } from '@tanstack/react-router'
 import { useEffect, useMemo, useRef } from 'react'
 import { AppShell } from '../components/app-shell'
 import { Button } from '../components/ui/button'
@@ -26,13 +26,17 @@ function recordedAtError(value: string, timezone: string) {
 
 function BodyWeightPage() {
   const queryClient = useQueryClient()
+  const navigate = useNavigate()
   const profileQuery = useQuery({ queryKey: ['health', 'profile'], queryFn: loadProfile })
   const saveMeasurement = useMutation({
     mutationFn: healthApi.createMeasurement,
-    onSuccess: () => Promise.all([
-      queryClient.invalidateQueries({ queryKey: ['health', 'measurements', 'body_weight'] }),
-      queryClient.invalidateQueries({ queryKey: ['health', 'progression'] }),
-    ]),
+    onSuccess: async () => {
+      await Promise.all([
+        queryClient.invalidateQueries({ queryKey: ['health', 'measurements', 'body_weight'] }),
+        queryClient.invalidateQueries({ queryKey: ['health', 'progression'] }),
+      ])
+      await navigate({ to: '/body-weight-progression' })
+    },
   })
 
   if (profileQuery.isPending) return <AppShell><h1>몸무게 기록</h1><p role="status" className="inline-status">불러오는 중…</p></AppShell>
@@ -56,7 +60,7 @@ function BodyWeightPage() {
         onSave={(input) => saveMeasurement.mutateAsync(input)}
       />
       {saveMeasurement.isError ? <p role="alert" className="inline-status inline-status--error">{errorMessage(saveMeasurement.error)}</p> : null}
-      {saveMeasurement.isSuccess ? <p role="status" className="inline-status inline-status--success">저장했어요.</p> : null}
+      <Link className="button button--quiet weight-history-link" to="/body-weight-progression">몸무게 기록 목록</Link>
     </AppShell>
   )
 }

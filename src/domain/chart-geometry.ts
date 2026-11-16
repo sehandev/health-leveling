@@ -27,7 +27,7 @@ export interface ChartTick {
 export interface WeightChartGeometry {
   points: (ChartPoint | null)[];
   ticks: ChartTick[];
-  axisMode: "five-unit" | "scientific";
+  axisMode: "one-unit" | "scientific";
 }
 
 export interface XpChartGeometry {
@@ -97,12 +97,19 @@ export function formatWeightValue(kg: number, preference: UnitPreference): strin
   return Number.isFinite(displayed) ? String(displayed) : formatOverflowingWeight(kg, preference);
 }
 
+export function formatWeightPointLabel(kg: number, preference: UnitPreference): string {
+  if (!Number.isFinite(kg) || kg < 0) throw new RangeError("Chart weights must be finite and non-negative");
+  const displayed = toDisplayValue(kg, "mass", preference);
+  if (!Number.isFinite(displayed) || Math.abs(displayed) >= 1e12) return scientificWeightLabel(kg, preference);
+  return new Intl.NumberFormat("ko-KR", { minimumFractionDigits: 1, maximumFractionDigits: 1 }).format(displayed);
+}
+
 function scientificWeightLabel(kg: number, preference: UnitPreference): string {
   const displayed = toDisplayValue(kg, "mass", preference);
   return Number.isFinite(displayed) ? displayed.toExponential(2) : formatOverflowingWeight(kg, preference);
 }
 
-// shortcut: unrepresentable five-unit ticks or more than 61 references use five scientific ticks; upgrade to a zoomable axis if such ranges become normal.
+// shortcut: unrepresentable one-unit ticks or more than 61 references use five scientific ticks; upgrade to a zoomable axis if such ranges become normal.
 function scientificWeightTicks(present: readonly number[], preference: UnitPreference): ChartTick[] {
   const minimum = Math.min(...present);
   const maximum = Math.max(...present);
@@ -124,20 +131,20 @@ export function weightChartGeometry(
   preference: UnitPreference,
 ): WeightChartGeometry {
   const present = assertWeightValues(valuesKg);
-  if (present.length === 0) return { points: valuesKg.map(() => null), ticks: [], axisMode: "five-unit" };
+  if (present.length === 0) return { points: valuesKg.map(() => null), ticks: [], axisMode: "one-unit" };
 
   const displayed = valuesKg.map((value) => value === null ? null : toDisplayValue(value, "mass", preference));
   const displayValues = displayed.filter((value): value is number => value !== null);
   const displayMin = Math.min(...displayValues);
   const displayMax = Math.max(...displayValues);
-  const representableStep = 4 * Number.EPSILON * Math.max(1, Math.abs(displayMin), Math.abs(displayMax)) < 5;
-  const canUseFiveUnitScale = displayValues.every(Number.isFinite) && representableStep;
+  const representableStep = 4 * Number.EPSILON * Math.max(1, Math.abs(displayMin), Math.abs(displayMax)) < 1;
+  const canUseOneUnitScale = displayValues.every(Number.isFinite) && representableStep;
 
-  if (!canUseFiveUnitScale) {
+  if (!canUseOneUnitScale) {
     return { points: seriesPoints(valuesKg), ticks: scientificWeightTicks(present, preference), axisMode: "scientific" };
   }
 
-  const step = 5;
+  const step = 1;
   let axisMin = Math.floor(displayMin / step) * step;
   let axisMax = Math.ceil(displayMax / step) * step;
   if (axisMin === displayMin) axisMin -= step;
@@ -164,7 +171,7 @@ export function weightChartGeometry(
       showLabel: index === 0 || index === tickCount - 1 || index % labelStride === 0,
     };
   });
-  return { points, ticks, axisMode: "five-unit" };
+  return { points, ticks, axisMode: "one-unit" };
 }
 
 /** XP and level share the same XP-equivalent scale; each step is located at its 10-XP threshold. */

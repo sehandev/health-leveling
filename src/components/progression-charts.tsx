@@ -1,7 +1,7 @@
 import { useId, type ReactNode } from "react";
 import {
   CHART,
-  formatWeightValue,
+  formatWeightPointLabel,
   linePath,
   stepPath,
   weightChartGeometry,
@@ -90,23 +90,21 @@ export function WeightHistoryChart({ days, unitPreference }: { days: Progression
               </g>
             ))}
             <path className="progression-chart__weight-line" d={linePath(geometry.points)} fill="none" stroke="currentColor" strokeWidth={2} strokeLinejoin="round" strokeLinecap="round" />
-            {geometry.points.map((point, index) => point ? (
-              <circle key={days[index]?.date ?? index} className="progression-chart__point" cx={point.x} cy={point.y} r={3} fill="currentColor" />
-            ) : null)}
+            {geometry.points.map((point, index) => {
+              const weight = values[index];
+              if (!point || weight === null || weight === undefined) return null;
+              return (
+                <g key={days[index]?.date ?? index}>
+                  <circle className="progression-chart__point" cx={point.x} cy={point.y} r={3} fill="currentColor" />
+                  <text className="progression-chart__point-label" x={point.x} y={point.y + (index % 2 === 0 ? -7 : 13)} textAnchor="middle">{formatWeightPointLabel(weight, unitPreference)}</text>
+                </g>
+              );
+            })}
             <DateLabels days={days} />
           </>
         ) : null}
       </svg>
       {!hasMeasurements ? <p role="status" className="inline-status">기록이 없어요.</p> : null}
-      <DataTable caption="날짜별 몸무게">
-        <thead><tr><th scope="col">날짜</th><th scope="col">몸무게 ({unit})</th></tr></thead>
-        <tbody>{days.map((day) => (
-          <tr key={day.date}>
-            <th scope="row"><time dateTime={day.date}>{day.date}</time></th>
-            <td>{day.bodyWeightKg === null ? "기록 없음" : formatWeightValue(day.bodyWeightKg, unitPreference)}</td>
-          </tr>
-        ))}</tbody>
-      </DataTable>
     </ChartFigure>
   );
 }

@@ -33,6 +33,7 @@ a { color: inherit; }
 h1, h2, p { margin-top: 0; }
 .home-links { display: grid; margin: 0; padding: 0; list-style: none; }
 .home-links a { display: flex; min-height: 56px; align-items: center; border-top: 1px solid var(--line); font-size: 15px; text-decoration: none; }
+.home-links a:first-child { border-top: 0; }
 .home-links a:last-child { border-bottom: 1px solid var(--line); }
 .home-links a:hover { color: var(--muted); }
 
@@ -62,6 +63,7 @@ h1, h2, p { margin-top: 0; }
 .progression-chart__weight-line, .progression-chart__xp-line { stroke: var(--ink); }
 .progression-chart__level-line { stroke: #789900; }
 .progression-chart__point { fill: var(--ink); }
+.progression-chart__point-label { fill: var(--ink); font-family: inherit; font-size: 9px; font-weight: 600; }
 .progression-chart__empty { fill: var(--muted); font-family: inherit; font-size: 12px; }
 .progression-chart__legend { display: flex; flex-wrap: wrap; gap: 8px 18px; margin: 0 0 8px; padding: 0; list-style: none; color: var(--muted); font-size: 11px; }
 .progression-chart__legend-item { display: flex; align-items: center; gap: 6px; }
@@ -73,6 +75,7 @@ h1, h2, p { margin-top: 0; }
 .progression-chart__table th, .progression-chart__table td { padding: 8px; border-top: 1px solid var(--line); font-weight: 400; white-space: nowrap; }
 .progression-chart__table th { color: var(--muted); }
 
+.weight-history-link { margin-top: 16px; }
 .form-stack { display: grid; gap: 16px; }
 .form-stack--two { grid-template-columns: 1fr; }
 .form-row { display: grid; gap: 8px; }
@@ -94,6 +97,17 @@ h1, h2, p { margin-top: 0; }
 .measurement-item time { color: var(--muted); font-size: 12px; }
 .measurement-value { font-size: 15px; font-weight: 600; font-variant-numeric: tabular-nums; }
 .undo-row { display: flex; justify-content: flex-end; align-items: center; gap: 12px; margin-top: 14px; padding-top: 16px; border-top: 1px dashed var(--line); }
+.weight-undo-dialog { width: min(100% - 32px, 440px); max-height: min(84vh, 620px); overflow: auto; border: 1px solid var(--line); border-radius: 14px; padding: 16px 22px 22px; background: #fff; color: var(--ink); box-shadow: 0 18px 70px #1113; }
+.weight-undo-dialog::backdrop { background: #17181366; }
+.weight-undo-dialog[open] { display: grid; gap: 16px; }
+.weight-undo-dialog__top { display: flex; justify-content: flex-end; margin: -6px -10px -10px; }
+.weight-undo-dialog__close { width: 40px; min-height: 40px; padding: 0; font-size: 25px; line-height: 1; }
+.weight-undo-dialog h2 { margin: 0; font-size: 20px; font-weight: 600; }
+.weight-undo-dialog__record { display: grid; gap: 12px; margin: 0; padding: 14px 0; border-block: 1px solid var(--line); }
+.weight-undo-dialog__record > div { display: flex; justify-content: space-between; gap: 16px; }
+.weight-undo-dialog__record dt { color: var(--muted); font-size: 13px; }
+.weight-undo-dialog__record dd { margin: 0; font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; text-align: right; }
+.weight-undo-dialog__actions { display: flex; justify-content: flex-end; }
 .goal-summary { display: flex; align-items: baseline; gap: 12px; margin: 0 0 22px; }
 .goal-summary strong { font-size: 24px; font-weight: 500; letter-spacing: -.04em; }
 .goal-summary time { color: var(--muted); font-size: 13px; }

@@ -2,6 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import {
   CHART,
+  formatWeightPointLabel,
   formatWeightValue,
   linePath,
   seriesPoints,
@@ -21,20 +22,25 @@ function assertFinitePoints(points: readonly ({ x: number; y: number } | null)[]
   }
 }
 
-test("weight reference intervals are five display units in Metric and Imperial", () => {
-  const metric = weightChartGeometry([70, 75, 80], "Metric");
-  assert.deepEqual(metric.ticks.map(({ value }) => value), [65, 70, 75, 80, 85]);
-  assert.ok(metric.ticks.slice(1).every((tick, index) => tick.value! - metric.ticks[index].value! === 5));
+test("weight reference intervals are one display unit in Metric and Imperial", () => {
+  const metric = weightChartGeometry([70, 72], "Metric");
+  assert.deepEqual(metric.ticks.map(({ value }) => value), [69, 70, 71, 72, 73]);
+  assert.ok(metric.ticks.slice(1).every((tick, index) => tick.value! - metric.ticks[index].value! === 1));
 
-  const imperialKg = [150, 155, 160].map((pounds) => toCanonicalValue(pounds, "mass", "Imperial"));
+  const imperialKg = [150, 152].map((pounds) => toCanonicalValue(pounds, "mass", "Imperial"));
   const imperial = weightChartGeometry(imperialKg, "Imperial");
-  assert.deepEqual(imperial.ticks.map(({ value }) => value), [145, 150, 155, 160, 165]);
-  assert.ok(imperial.ticks.slice(1).every((tick, index) => tick.value! - imperial.ticks[index].value! === 5));
+  assert.deepEqual(imperial.ticks.map(({ value }) => value), [149, 150, 151, 152, 153]);
+  assert.ok(imperial.ticks.slice(1).every((tick, index) => tick.value! - imperial.ticks[index].value! === 1));
 
   const wide = weightChartGeometry([50, 100], "Metric");
-  assert.ok(wide.ticks.slice(1).every((tick, index) => tick.value! - wide.ticks[index].value! === 5));
+  assert.ok(wide.ticks.slice(1).every((tick, index) => tick.value! - wide.ticks[index].value! === 1));
   assert.ok(wide.ticks.length > wide.ticks.filter((tick) => tick.showLabel).length);
-  assert.equal(wide.axisMode, "five-unit");
+  assert.equal(wide.axisMode, "one-unit");
+});
+
+test("weight point labels show one decimal in the selected display unit", () => {
+  assert.equal(formatWeightPointLabel(70, "Metric"), "70.0");
+  assert.equal(formatWeightPointLabel(toCanonicalValue(150.26, "mass", "Imperial"), "Imperial"), "150.3");
 });
 
 test("flat, single-point, missing, and empty weight series stay finite and preserve gaps", () => {
@@ -54,11 +60,11 @@ test("flat, single-point, missing, and empty weight series stay finite and prese
   const empty = weightChartGeometry([null, null], "Imperial");
   assert.deepEqual(empty.points, [null, null]);
   assert.deepEqual(empty.ticks, []);
-  assert.equal(empty.axisMode, "five-unit");
+  assert.equal(empty.axisMode, "one-unit");
   assert.equal(linePath(empty.points), "");
 });
 
-test("wide weight ranges use a small scientific scale instead of dropping five-unit ticks silently", () => {
+test("wide weight ranges use a small scientific scale instead of dropping one-unit ticks silently", () => {
   const geometry = weightChartGeometry([0, 1_000], "Metric");
   assert.equal(geometry.axisMode, "scientific");
   assert.equal(geometry.ticks.length, 5);
