@@ -38,15 +38,16 @@
 .workout-muscles__options { display: flex; flex-wrap: wrap; gap: 8px; }
 .workout-muscle-option { display: inline-flex; min-height: 38px; align-items: center; gap: 7px; padding: 0 10px; border: 1px solid var(--line); border-radius: 999px; font-size: 12px; cursor: pointer; }
 .workout-muscle-option input { width: 16px; height: 16px; margin: 0; accent-color: #789900; }
-.workout-sets-heading { margin: 18px 0 10px; }
+.workout-sets-heading { margin: 18px 0 8px; }
 .workout-sets-heading h3 { margin: 0; font-size: 14px; font-weight: 600; }
-.workout-set-list { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
-.workout-set-add { width: 100%; margin-top: 10px; }
-.workout-set { display: grid; grid-template-columns: 26px minmax(0, 1fr) minmax(0, 1fr) 34px; align-items: end; gap: 7px; }
-.workout-set__number { align-self: center; color: var(--muted); font-size: 12px; text-align: center; }
-.workout-set__field { display: grid; gap: 5px; min-width: 0; font-size: 11px; color: var(--muted); }
-.workout-set__field .text-input { min-width: 0; min-height: 44px; padding: 0 8px; font-size: 16px; }
-.workout-set__remove { width: 34px; min-height: 42px; padding: 0; font-size: 20px; }
+.workout-set-editor { width: min(100%, 480px); }
+.workout-set-header, .workout-set { display: grid; grid-template-columns: 24px minmax(0, 1fr) minmax(0, 1fr) 34px; align-items: center; gap: 6px; }
+.workout-set-header { margin-bottom: 4px; color: var(--muted); font-size: 11px; line-height: 1.35; }
+.workout-set-list { display: grid; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.workout-set-add { width: 100%; min-height: 44px; margin-top: 8px; border-style: dashed; }
+.workout-set__number { color: var(--muted); font-size: 12px; font-variant-numeric: tabular-nums; text-align: center; }
+.workout-set__input { min-width: 0; min-height: 44px; padding: 0 8px; font-size: 16px; font-variant-numeric: tabular-nums; text-align: center; }
+.workout-set__remove { width: 34px; min-height: 40px; padding: 0; font-size: 20px; }
 .workout-submit-error { overflow-wrap: anywhere; }
 .workout-submit-actions { display: flex; justify-content: flex-end; gap: 10px; padding: 14px 0 34px; }
 .workout-picker { width: 100%; margin: 8px 0 14px; border: 1px solid var(--line); border-radius: 12px; padding: 14px; background: #fff; }

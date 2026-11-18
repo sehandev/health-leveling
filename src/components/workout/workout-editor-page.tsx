@@ -146,14 +146,33 @@ function WorkoutEditorForm({
   })
 
   const [focusInsertedItemId, setFocusInsertedItemId] = useState<string | null>(null)
+  const [focusInsertedSetId, setFocusInsertedSetId] = useState<string | null>(null)
   useEffect(() => {
+    if (focusInsertedSetId) {
+      const repsInput = document.getElementById(focusInsertedSetId)
+      if (repsInput) {
+        repsInput.focus()
+        setFocusInsertedSetId(null)
+        return
+      }
+    }
     if (!focusInsertedItemId) return
     const nameInput = document.getElementById(`workout-item-${focusInsertedItemId}-name`)
     if (nameInput) {
       nameInput.focus()
       setFocusInsertedItemId(null)
     }
-  }, [focusInsertedItemId, form.state.values.items])
+  }, [focusInsertedItemId, focusInsertedSetId, form.state.values.items])
+  const addSet = (items: EditorItem[], itemIndex: number) => {
+    const item = items[itemIndex]
+    const setIndex = item.sets.length
+    const previousSet = item.sets.at(-1)
+    setFocusInsertedSetId(`workout-item-${item.id}-set-${setIndex}-reps`)
+    return replaceItem(items, itemIndex, {
+      ...item,
+      sets: [...item.sets, previousSet ? { ...previousSet } : { reps: '', load: '', originalLoadKg: null }],
+    })
+  }
 
   const addItem = (position: number, mode: StrengthMode, name: string, source: 'curated' | 'custom') => {
     const targetMuscles = targetMusclesForWorkoutItem({ mode, name, source }, pickerState.selections)
@@ -272,23 +291,40 @@ function WorkoutEditorForm({
                       </div>
                     </fieldset>
                     <div className="workout-sets-heading"><h3>세트</h3></div>
-                    <ol className="workout-set-list" aria-label={`${item.name || '운동'} 세트`}>
-                      {item.sets.map((set, setIndex) => (
-                        <li className="workout-set" key={`${item.id}-set-${setIndex}`}>
-                          <span className="workout-set__number">{setIndex + 1}</span>
-                          <label className="workout-set__field">
-                            <span>횟수</span>
-                            <input className="text-input" aria-label={`${item.name || '운동'} ${setIndex + 1}세트 반복 횟수`} type="number" min="0" step="1" inputMode="numeric" value={set.reps} onChange={(event) => field.handleChange(replaceSet(field.state.value, index, setIndex, { ...set, reps: event.target.value }))} />
-                          </label>
-                          <label className="workout-set__field">
-                            <span>중량 ({displayUnit === 'Imperial' ? 'lb' : 'kg'}, 선택)</span>
-                            <input className="text-input" aria-label={`${item.name || '운동'} ${setIndex + 1}세트 중량 (${displayUnit === 'Imperial' ? 'lb' : 'kg'}, 선택)`} type="number" min="0" step="any" inputMode="decimal" value={set.load} onChange={(event) => field.handleChange(replaceSet(field.state.value, index, setIndex, { ...set, load: event.target.value }))} />
-                          </label>
-                          <Button type="button" variant="quiet" className="workout-set__remove" aria-label={`${item.name || '운동'} ${setIndex + 1}세트 삭제`} onClick={() => field.handleChange(replaceItem(field.state.value, index, { ...item, sets: item.sets.filter((_, removeIndex) => removeIndex !== setIndex) }))}>×</Button>
-                        </li>
-                      ))}
-                    </ol>
-                    <Button type="button" variant="quiet" className="workout-set-add" onClick={() => field.handleChange(replaceItem(field.state.value, index, { ...item, sets: [...item.sets, { reps: '', load: '', originalLoadKg: null }] }))}>세트 추가</Button>
+                    <div className="workout-set-editor">
+                      <div className="workout-set-header" aria-hidden="true">
+                        <span />
+                        <span>횟수</span>
+                        <span>중량 ({displayUnit === 'Imperial' ? 'lb' : 'kg'}, 선택)</span>
+                        <span />
+                      </div>
+                      <ol className="workout-set-list" aria-label={`${item.name || '운동'} 세트`}>
+                        {item.sets.map((set, setIndex) => (
+                          <li className="workout-set" key={`${item.id}-set-${setIndex}`}>
+                            <span className="workout-set__number">{setIndex + 1}</span>
+                            <input
+                              id={`workout-item-${item.id}-set-${setIndex}-reps`}
+                              className="text-input workout-set__input"
+                              aria-label={`${item.name || '운동'} ${setIndex + 1}세트 반복 횟수`}
+                              type="number" min="0" step="1" inputMode="numeric" value={set.reps}
+                              onChange={(event) => field.handleChange(replaceSet(field.state.value, index, setIndex, { ...set, reps: event.target.value }))}
+                            />
+                            <input
+                              className="text-input workout-set__input"
+                              aria-label={`${item.name || '운동'} ${setIndex + 1}세트 중량 (${displayUnit === 'Imperial' ? 'lb' : 'kg'}, 선택)`}
+                              type="number" min="0" step="any" inputMode="decimal" value={set.load}
+                              onChange={(event) => field.handleChange(replaceSet(field.state.value, index, setIndex, { ...set, load: event.target.value }))}
+                            />
+                            <Button type="button" variant="quiet" className="workout-set__remove" aria-label={`${item.name || '운동'} ${setIndex + 1}세트 삭제`} onClick={() => field.handleChange(replaceItem(field.state.value, index, { ...item, sets: item.sets.filter((_, removeIndex) => removeIndex !== setIndex) }))}>×</Button>
+                          </li>
+                        ))}
+                      </ol>
+                      <Button
+                        type="button" variant="quiet" className="workout-set-add"
+                        aria-label={`${item.name || '운동'} ${item.sets.length + 1}세트 추가${item.sets.length ? ', 직전 세트 값 복사' : ''}`}
+                        onClick={() => field.handleChange(addSet(field.state.value, index))}
+                      >세트 추가</Button>
+                    </div>
                   </li>
                   <WorkoutPicker
                     key={`insert-${index + 1}`} index={index + 1} active={pickerPosition === index + 1} pickerState={pickerState} usagePending={usagePending}
