@@ -3,10 +3,10 @@ import { assertIsoInstant, type IsoInstant } from "./time.ts";
 export type StrengthMode = "Machine" | "Free Weight" | "Bodyweight";
 export type MuscleGroup =
   | "Chest" | "Back" | "Shoulders" | "Biceps" | "Triceps"
-  | "Core" | "Glutes" | "Quadriceps" | "Hamstrings" | "Calves";
+  | "Forearms" | "Core" | "Glutes" | "Quadriceps" | "Hamstrings" | "Calves";
 
 export const MUSCLE_GROUPS: readonly MuscleGroup[] = [
-  "Chest", "Back", "Shoulders", "Biceps", "Triceps", "Core", "Glutes", "Quadriceps", "Hamstrings", "Calves",
+  "Chest", "Back", "Shoulders", "Biceps", "Triceps", "Forearms", "Core", "Glutes", "Quadriceps", "Hamstrings", "Calves",
 ];
 
 export const DEFAULT_TARGET_MUSCLES: Readonly<Record<StrengthMode, Readonly<Record<string, readonly MuscleGroup[]>>>> = {

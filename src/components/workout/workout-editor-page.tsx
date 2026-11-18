@@ -16,7 +16,7 @@ import { keepDialogFocusValid, keepDialogTabInside } from './dialog-focus'
 const MODE_LABELS: Record<StrengthMode, string> = { Machine: '머신', 'Free Weight': '프리 웨이트', Bodyweight: '맨몸' }
 const MUSCLE_LABELS: Record<MuscleGroup, string> = {
   Chest: '가슴', Back: '등', Shoulders: '어깨', Biceps: '이두', Triceps: '삼두',
-  Core: '코어', Glutes: '둔근', Quadriceps: '대퇴사두', Hamstrings: '햄스트링', Calves: '종아리',
+  Forearms: '전완', Core: '코어', Glutes: '둔근', Quadriceps: '대퇴사두', Hamstrings: '햄스트링', Calves: '종아리',
 }
 const MODES: readonly StrengthMode[] = ['Machine', 'Free Weight', 'Bodyweight']
 

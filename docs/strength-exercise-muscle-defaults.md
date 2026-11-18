@@ -1,6 +1,6 @@
 # Strength Exercise: Default Target Muscles
 
-This is the initial primary-muscle mapping for every curated `Strength Training` exercise in the [Product Concept](product-concept.md). Defaults omit secondary and stabilizing muscles. A user can change target muscles before confirming a Workout; on reuse, the most recently saved user selection takes precedence over these defaults, including an empty selection. For custom exercises, use the existing exact-name, same-picker reuse rule instead.
+This is the initial primary-muscle mapping for every curated `Strength Training` exercise in the [Product Concept](product-concept.md). Defaults omit secondary and stabilizing muscles. A user can change target muscles before confirming a Workout; on reuse, the most recently saved user selection takes precedence over these defaults, including an empty selection. For custom exercises, use the existing exact-name, same-picker reuse rule instead. The current catalog has no exercise with forearms as a primary group, so `Forearms` is selected manually rather than added to these defaults.
 
 `Bodyweight` exercises have editable target muscles for recording, but do not award exercise XP, even with an added `Load`. Only qualifying `Machine` and `Free Weight` items award muscle XP, as specified in the [Product Roadmap](roadmap.md).
 

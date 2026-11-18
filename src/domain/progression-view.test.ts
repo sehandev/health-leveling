@@ -258,3 +258,20 @@ test("malformed sources, impossible metrics, and duplicate or mismatched awards 
   ], "2024-01-01"), RangeError);
   assert.throws(() => buildProgressionSnapshot([], [], "2024-02-30"), RangeError);
 });
+
+test('existing side-independent muscle events remain counted once per item and survive recomposition', () => {
+  const events = [
+    muscleEvent('first', 'workout', 'first-item', 'Chest', 1, '2024-11-10', '2024-11-10T12:00:00Z', 1),
+    muscleEvent('second', 'workout', 'second-item', 'Chest', 1, '2024-11-10', '2024-11-10T12:01:00Z', 2),
+  ];
+  const retained = structuredClone(events);
+  const before = buildProgressionSnapshot([], [], '2024-11-10', events);
+  assert.equal(before.muscles.filter(({ group }) => group === 'Chest').length, 1);
+  assert.equal(before.muscles.find(({ group }) => group === 'Chest')?.xp, 2);
+  assert.equal(before.avatar.xp, 2);
+  const cancellation = muscleEvent('cancel', 'workout', 'first-item', 'Chest', -1, '2024-11-12', '2024-11-12T12:00:00Z', 3);
+  const after = buildProgressionSnapshot([], [], '2024-11-12', [...events, cancellation]);
+  assert.equal(after.muscles.find(({ group }) => group === 'Chest')?.xp, 1);
+  assert.equal(after.avatar.xp, 1);
+  assert.deepEqual(events, retained);
+});

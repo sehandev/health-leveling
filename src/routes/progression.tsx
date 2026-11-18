@@ -1,10 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
-import { useState } from 'react'
 import { AppShell } from '../components/app-shell'
 import { XpHistoryChart } from '../components/progression-charts'
 import { Button } from '../components/ui/button'
-import { healthApi, loadProfile } from '../lib/health-api'
+import { loadProfile } from '../lib/health-api'
 import { xpProgress } from '../lib/progression'
 import { useProgressionSnapshot } from '../lib/use-progression-snapshot'
 
@@ -31,7 +30,6 @@ function ProgressionPage() {
 
 function ProgressionView({ timezone }: { timezone: string }) {
   const progressionQuery = useProgressionSnapshot(timezone)
-  const [selectedMuscle, setSelectedMuscle] = useState('Chest')
 
   if (progressionQuery.isPending) return <p role="status" className="inline-status">불러오는 중…</p>
   if (progressionQuery.isError) {
@@ -44,7 +42,6 @@ function ProgressionView({ timezone }: { timezone: string }) {
   }
 
   const snapshot = progressionQuery.data
-  const muscle = snapshot.muscles.find((item) => item.group === selectedMuscle) ?? snapshot.muscles[0]
   return (
     <>
       <section className="content-section" aria-labelledby="avatar-heading">
@@ -68,25 +65,6 @@ function ProgressionView({ timezone }: { timezone: string }) {
             </li>
           ))}
         </ul>
-      </section>
-      <section className="content-section" aria-labelledby="muscle-xp-heading">
-        <h2 id="muscle-xp-heading">근육 그룹</h2>
-        {muscle ? (
-          <div className="muscle-progression">
-            <label className="form-row" htmlFor="muscle-group">
-              <span className="field-label">근육 그룹</span>
-              <select
-                id="muscle-group"
-                className="select-input"
-                value={muscle.group}
-                onChange={(event) => setSelectedMuscle(event.target.value)}
-              >
-                {snapshot.muscles.map((item) => <option key={item.group} value={item.group}>{muscleLabel(item.group)}</option>)}
-              </select>
-            </label>
-            <p className="progression-next-level" aria-live="polite">{muscleLabel(muscle.group)} · 레벨 {muscle.level} · {muscle.xp} XP</p>
-          </div>
-        ) : <p className="inline-status">근육 기록이 없어요.</p>}
       </section>
     </>
   )
@@ -122,21 +100,5 @@ function metricLabel(metric: string) {
     case 'body_fat_percentage': return '체지방률'
     case 'skeletal_muscle_mass': return '골격근량'
     default: return metric
-  }
-}
-
-function muscleLabel(group: string) {
-  switch (group) {
-    case 'Chest': return '가슴'
-    case 'Back': return '등'
-    case 'Shoulders': return '어깨'
-    case 'Biceps': return '이두'
-    case 'Triceps': return '삼두'
-    case 'Core': return '코어'
-    case 'Glutes': return '둔근'
-    case 'Quadriceps': return '대퇴사두근'
-    case 'Hamstrings': return '햄스트링'
-    case 'Calves': return '종아리'
-    default: return group
   }
 }

@@ -83,6 +83,7 @@ function makeDatabase() {
   applyMigration(adapter, "0001_health_foundation.sql");
   applyMigration(adapter, "0002_body_metric_xp.sql");
   applyMigration(adapter, "0003_strength_workouts.sql");
+  applyMigration(adapter, "0004_forearms_muscle_group.sql");
   return adapter;
 }
 
@@ -1213,4 +1214,80 @@ test("workout API bounds, origin guard, JSON handling, no-store, and missing D1 
 
 test("unrelated paths are not handled", async () => {
   assert.equal(await handleHealthRequest(request("/api/other"), {}), undefined);
+});
+
+test('0004 preserves existing workouts and XP without backfilling and keeps event sequence high water', async () => {
+  const db = new SQLiteD1();
+  db.database.exec('PRAGMA foreign_keys = ON');
+  applyMigration(db, '0001_health_foundation.sql');
+  applyMigration(db, '0002_body_metric_xp.sql');
+  applyMigration(db, '0003_strength_workouts.sql');
+  const saved = await saveWorkout(db);
+  assert.equal(saved.response.status, 201);
+  const workoutId = saved.workout.id as string;
+  const beforeWorkout = db.prepare('SELECT * FROM strength_workouts WHERE id = ?').bind(workoutId).first();
+  const beforeAwards = db.prepare('SELECT * FROM strength_workout_muscle_awards').all().results;
+  const beforeEvents = db.prepare('SELECT * FROM muscle_xp_events ORDER BY sequence').all().results;
+  const beforeRevision = db.prepare('SELECT revision FROM health_progression_revision WHERE id = 1').first()?.revision;
+  db.prepare(`INSERT INTO muscle_xp_events (sequence, id, workout_id, item_id, group_name, delta, local_date, occurred_at)
+    VALUES (100, 'removed-event', ?, 'press-item', 'Chest', 1, '2026-11-10', '2026-11-10T12:00:00.000Z')`).bind(workoutId).run();
+  db.prepare("DELETE FROM muscle_xp_events WHERE id = 'removed-event'").run();
+  applyMigration(db, '0004_forearms_muscle_group.sql');
+  assert.deepEqual(db.prepare('SELECT * FROM strength_workouts WHERE id = ?').bind(workoutId).first(), beforeWorkout);
+  assert.deepEqual(db.prepare('SELECT * FROM strength_workout_muscle_awards').all().results, beforeAwards);
+  assert.deepEqual(db.prepare('SELECT * FROM muscle_xp_events ORDER BY sequence').all().results, beforeEvents);
+  assert.equal(db.prepare('SELECT revision FROM health_progression_revision WHERE id = 1').first()?.revision, beforeRevision);
+  assert.equal((await progressionSnapshot(db, '2026-11-17')).muscles.find((muscle: any) => muscle.group === 'Forearms').xp, 0);
+  assert.deepEqual(db.prepare('PRAGMA foreign_key_check').all().results, []);
+  const unchanged = await updateWorkout(db, workoutId, workoutDraft(), saved.workout.version);
+  assert.deepEqual(unchanged.xpChange, { added: 0, cancelled: 0 });
+  assert.equal(db.prepare("SELECT count(*) AS count FROM muscle_xp_events WHERE group_name = 'Forearms'").first()?.count, 0);
+  db.prepare("INSERT INTO strength_workout_muscle_awards (workout_id, item_id, group_name) VALUES (?, 'press-item', 'Forearms')").bind(workoutId).run();
+  db.prepare(`INSERT INTO muscle_xp_events (id, workout_id, item_id, group_name, delta, local_date, occurred_at)
+    VALUES ('new-forearm', ?, 'press-item', 'Forearms', 1, '2026-11-10', '2026-11-10T12:00:00.000Z')`).bind(workoutId).run();
+  assert.equal(db.prepare("SELECT sequence FROM muscle_xp_events WHERE id = 'new-forearm'").first()?.sequence, 101);
+  assert.throws(() => db.prepare("INSERT INTO muscle_xp_events (id, workout_id, item_id, group_name, delta, local_date, occurred_at) VALUES ('bad', ?, 'i', 'Unknown', 1, '2026-11-10', '2026-11-10T12:00:00Z')").bind(workoutId).run());
+  db.prepare('DELETE FROM strength_workouts WHERE id = ?').bind(workoutId).run();
+  assert.equal(db.prepare('SELECT count(*) AS count FROM strength_workout_muscle_awards').first()?.count, 0);
+});
+
+test('forearm awards replay, edit, re-award and delete without duplicates', async () => {
+  const db = makeDatabase();
+  const key = '20000000-0000-4000-8000-000000000001';
+  const draft = workoutDraft({ items: [{ ...workoutDraft().items[0], targetMuscles: ['Forearms'] }] });
+  const first = await saveWorkout(db, draft, key);
+  assert.equal(first.response.status, 201);
+  assert.deepEqual(first.xpChange, { added: 1, cancelled: 0 });
+  const id = first.workout.id as string;
+  const replay = await saveWorkout(db, draft, key);
+  assert.equal(replay.response.status, 200);
+  assert.deepEqual(replay.xpChange, { added: 0, cancelled: 0 });
+  const unchanged = await updateWorkout(db, id, draft, 1);
+  assert.deepEqual(unchanged.xpChange, { added: 0, cancelled: 0 });
+  assert.equal((await progressionSnapshot(db, '2026-11-17')).muscles.find((muscle: any) => muscle.group === 'Forearms').xp, 1);
+  const without = workoutDraft({ items: [{ ...draft.items[0], targetMuscles: [] }] });
+  const removed = await updateWorkout(db, id, without, 2);
+  assert.deepEqual(removed.xpChange, { added: 0, cancelled: 1 });
+  const restored = await updateWorkout(db, id, draft, 3);
+  assert.deepEqual(restored.xpChange, { added: 1, cancelled: 0 });
+  const deleted = await call(db, request(`/api/health/workouts/${id}`, 'DELETE', { expectedVersion: 4 }));
+  assert.equal(deleted.status, 200);
+  assert.deepEqual((await jsonBody(deleted)).xpChange, { added: 0, cancelled: 1 });
+  const snapshot = await progressionSnapshot(db, '2026-11-17');
+  assert.equal(snapshot.muscles.find((muscle: any) => muscle.group === 'Forearms').xp, 0);
+  assert.equal(snapshot.avatar.xp, 0);
+  assert.deepEqual(db.prepare("SELECT delta FROM muscle_xp_events WHERE group_name = 'Forearms' ORDER BY sequence").all().results.map((event: any) => event.delta), [1, -1, 1, -1]);
+});
+
+test('0004 preserves the event sequence even when the legacy ledger is empty', () => {
+  const db = new SQLiteD1();
+  db.database.exec('PRAGMA foreign_keys = ON');
+  applyMigration(db, '0001_health_foundation.sql');
+  applyMigration(db, '0002_body_metric_xp.sql');
+  applyMigration(db, '0003_strength_workouts.sql');
+  db.prepare("INSERT INTO muscle_xp_events (sequence, id, workout_id, item_id, group_name, delta, local_date, occurred_at) VALUES (75, 'removed', 'w', 'i', 'Chest', 1, '2026-11-10', '2026-11-10T12:00:00Z')").run();
+  db.prepare('DELETE FROM muscle_xp_events').run();
+  applyMigration(db, '0004_forearms_muscle_group.sql');
+  db.prepare("INSERT INTO muscle_xp_events (id, workout_id, item_id, group_name, delta, local_date, occurred_at) VALUES ('new', 'w', 'i', 'Forearms', 1, '2026-11-10', '2026-11-10T12:00:00Z')").run();
+  assert.equal(db.prepare("SELECT sequence FROM muscle_xp_events WHERE id = 'new'").first()?.sequence, 76);
 });
