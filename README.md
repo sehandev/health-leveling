@@ -4,7 +4,7 @@ Mobile-first personal health-record app built with pnpm, TanStack Start, React, 
 
 ## Current slice
 
-- Home contains navigation only. Body-weight registration, record history and latest-record undo, goal view/registration, profile settings, weight progression, XP progression, and strength workouts have separate pages.
+- Home shows an interactive body scan with muscle progression and navigation. Body-weight registration, record history and latest-record undo, goal view/registration, profile settings, weight progression, XP progression, and strength workouts have separate pages.
 - Confirmed `Strength Training` records support ordered exercises, sets, exact-name custom picker history, editing, deletion, and per-muscle progression. Qualifying Machine and Free Weight items award muscle XP; Bodyweight items do not.
 - Avatar XP includes body-metric and muscle-group awards. Supplement XP is not connected; Cardio/Endurance, Sport, Mobility/Recovery, Other, Program, Plan linking/completion, AI workout suggestions, and the broader Wake-up flow remain out of this slice.
 - Body-metric undo removes its source measurement and award, then recomputes its historical progression. Workout creation and editing reject future recording instants. Workout XP cancellations are reflected on the canceled award's original registered date, regardless of later timezone changes; historical progression is recomputed. Newly qualifying awards from edits use their own registered edit date. No initial records or XP are fabricated or backfilled.
