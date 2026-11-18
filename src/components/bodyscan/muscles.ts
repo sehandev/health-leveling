@@ -1,13 +1,13 @@
-export const muscleNames = {
-  chest: '가슴', shoulder: '어깨', biceps: '이두', triceps: '삼두', forearm: '전완',
-  abs: '복근', oblique: '외복사근', traps: '승모근', lat: '광배근', glute: '둔근',
-  quad: '대퇴사두근', hamstring: '햄스트링', calf: '종아리',
-} as const
+import { MUSCLE_GROUPS, type MuscleGroup } from '../../domain/workouts.ts'
 
-export type Muscle = keyof typeof muscleNames
-export const muscleRegions = (Object.keys(muscleNames) as Muscle[]).map(id => ({ id, label: muscleNames[id] }))
+export const muscleNames: Record<MuscleGroup, string> = {
+  Chest: '가슴', Back: '등', Shoulders: '어깨', Biceps: '이두', Triceps: '삼두',
+  Forearms: '전완', Core: '코어', Glutes: '둔근', Quadriceps: '대퇴사두근', Hamstrings: '햄스트링', Calves: '종아리',
+}
 
-export function adjacentMuscle(current: Muscle | null, direction: 1 | -1): Muscle {
+export const muscleRegions = MUSCLE_GROUPS.map(id => ({ id, label: muscleNames[id] }))
+
+export function adjacentMuscle(current: MuscleGroup | null, direction: 1 | -1): MuscleGroup {
   const index = muscleRegions.findIndex(region => region.id === current)
   return muscleRegions[index < 0 ? (direction === 1 ? 0 : muscleRegions.length - 1) : (index + direction + muscleRegions.length) % muscleRegions.length].id
 }

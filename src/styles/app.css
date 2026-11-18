@@ -135,7 +135,8 @@ h1, h2, p { margin-top: 0; }
 .body-status-side { display: flex; flex-direction: column; justify-content: space-evenly; grid-row: 1; gap: 4px; align-self: start; min-width: 0; min-height: clamp(380px, 48vh, 480px); margin: 0; padding: 0; list-style: none; }
 .body-status-side--left { grid-column: 1; }
 .body-status-side--right { grid-column: 3; }
-.body-status-card { position: relative; flex-shrink: 0; display: grid; gap: 2px; align-content: center; min-width: 0; min-height: 44px; padding: 5px; border: 1px solid var(--line); border-radius: 7px; background: var(--page-bg); font-size: 12px; overflow-wrap: anywhere; }
+.body-status-card { position: relative; flex-shrink: 0; min-width: 0; min-height: 44px; border: 1px solid var(--line); border-radius: 7px; background: var(--page-bg); font-size: 12px; overflow-wrap: anywhere; }
+.body-status-card > button { display: grid; gap: 2px; align-content: center; width: 100%; min-height: 44px; padding: 5px; border: 0; border-radius: inherit; background: transparent; text-align: left; cursor: pointer; }
 .body-status-card strong { font-weight: 600; }
 .body-status-values { display: flex; flex-wrap: wrap; gap: 0 4px; font-size: 12px; font-variant-numeric: tabular-nums; }
 .body-status-values span { min-width: 0; overflow-wrap: anywhere; }
@@ -148,5 +149,6 @@ h1, h2, p { margin-top: 0; }
   .body-status-layout { grid-template-columns: minmax(0, 136px) minmax(0, 1fr) minmax(0, 136px); gap: 10px; }
   .body-status-viewer .bodyscan-view { height: min(70vh, 680px); min-height: 380px; }
   .body-status-side { display: grid; justify-content: stretch; align-content: start; grid-template-rows: repeat(10, minmax(58px, 1fr)); height: min(70vh, 680px); min-height: 580px; gap: 8px; }
-  .body-status-card { grid-row: var(--status-row); min-height: 58px; padding: 9px 10px; font-size: 13px; }
+  .body-status-card { grid-row: var(--status-row); min-height: 58px; font-size: 13px; }
+  .body-status-card > button { min-height: 58px; padding: 9px 10px; }
 }

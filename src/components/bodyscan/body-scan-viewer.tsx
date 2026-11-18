@@ -2,12 +2,13 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { BackSide, type Camera, type Group } from 'three'
+import type { MuscleGroup } from '../../domain/workouts'
 import { createMannequin } from './mannequin'
-import { adjacentMuscle, muscleNames, type Muscle } from './muscles'
+import { adjacentMuscle, muscleNames } from './muscles'
 
 type FrameHandler = (camera: Camera, model: Group, canvas: HTMLCanvasElement) => void
 
-function Mannequin({ angle, selected, select, onFrame }: { angle: number, selected: Muscle | null, select: (id: Muscle) => void, onFrame?: FrameHandler }) {
+function Mannequin({ angle, selected, select, onFrame }: { angle: number, selected: MuscleGroup | null, select: (id: MuscleGroup) => void, onFrame?: FrameHandler }) {
   const model = useRef<Group>(null)
   useFrame(({ camera, gl }) => { if (model.current) onFrame?.(camera, model.current, gl.domElement) })
   const { geometry, outline, edges, neutralEdges, regions } = useMemo(createMannequin, [])
@@ -42,10 +43,8 @@ function Mannequin({ angle, selected, select, onFrame }: { angle: number, select
 }
 
 
-export function BodyScanViewer({ onSelectionChange, onFrame }: { onSelectionChange?: (muscle: Muscle | null) => void, onFrame?: FrameHandler }) {
+export function BodyScanViewer({ selected, onSelectionChange, onFrame }: { selected: MuscleGroup | null, onSelectionChange: (group: MuscleGroup | null) => void, onFrame?: FrameHandler }) {
   const [angle, setAngle] = useState(0)
-  const [selected, setSelected] = useState<Muscle | null>(null)
-  useEffect(() => { onSelectionChange?.(selected) }, [selected, onSelectionChange])
   return (
     <>
       <div
@@ -60,14 +59,14 @@ export function BodyScanViewer({ onSelectionChange, onFrame }: { onSelectionChan
             setAngle(value => value + (event.key === 'ArrowLeft' ? -Math.PI / 8 : Math.PI / 8))
           } else if (event.key === 'ArrowUp' || event.key === 'ArrowDown') {
             event.preventDefault()
-            setSelected(current => adjacentMuscle(current, event.key === 'ArrowDown' ? 1 : -1))
+            onSelectionChange(adjacentMuscle(selected, event.key === 'ArrowDown' ? 1 : -1))
           } else if (event.key === 'Escape') {
-            setSelected(null)
+            onSelectionChange(null)
           }
         }}
       >
         <Canvas gl={{ alpha: true }} onCreated={({ gl }) => gl.setClearColor(0, 0)} camera={{ position: [-1.08, 0, 3.5], fov: 35 }}>
-          <Mannequin angle={angle} selected={selected} select={setSelected} onFrame={onFrame} />
+          <Mannequin angle={angle} selected={selected} select={onSelectionChange} onFrame={onFrame} />
           <OrbitControls enablePan={false} enableZoom={false} minPolarAngle={Math.PI / 2} maxPolarAngle={Math.PI / 2} />
         </Canvas>
       </div>

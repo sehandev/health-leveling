@@ -56,7 +56,7 @@ test('shoulders and calves retain their intended proportions', () => {
   edges.dispose()
 })
 
-test('each named muscle covers both sides with one selectable region', async () => {
+test('each XP group covers both sides with one selectable region', async () => {
   const { muscleRegions } = await import('./muscles.ts')
   const { geometry, edges, regions } = createMannequin()
   assert.deepEqual(regions.map(region => region.id).sort(), muscleRegions.map(region => region.id).sort())
@@ -65,10 +65,18 @@ test('each named muscle covers both sides with one selectable region', async () 
     const p = region.getAttribute('position'), indices = region.index!
     return Array.from({ length: indices.count }, (_, i) => p.getZ(indices.getX(i))).reduce((a, b) => a + b, 0) / indices.count
   }
-  assert.ok(averageZ('chest') > 0)
-  assert.ok(averageZ('lat') < 0)
-  assert.ok(averageZ('quad') > 0)
-  assert.ok(averageZ('hamstring') < 0)
+  assert.ok(averageZ('Chest') > 0)
+  assert.ok(averageZ('Back') < 0)
+  assert.ok(averageZ('Quadriceps') > 0)
+  assert.ok(averageZ('Hamstrings') < 0)
+  const yExtent = (id: string) => {
+    const region = regions.find(item => item.id === id)!.geometry
+    const p = region.getAttribute('position'), indices = region.index!
+    const ys = Array.from({ length: indices.count }, (_, i) => p.getY(indices.getX(i)))
+    return { min: Math.min(...ys), max: Math.max(...ys) }
+  }
+  assert.ok(yExtent('Back').max > .65 && yExtent('Back').min < .2)
+  assert.ok(yExtent('Core').max > .35 && yExtent('Core').min < .1)
   for (const region of regions) {
     assert.ok(region.geometry.index!.count >= 6)
     assert.equal(region.geometry.index!.count % 6, 0)

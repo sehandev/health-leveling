@@ -1,12 +1,5 @@
 import type { MuscleGroup } from '../../domain/workouts.ts'
 import type { ProgressionSnapshot } from '../../domain/progression-view.ts'
-import type { Muscle } from './muscles.ts'
-
-export const muscleXpGroup: Record<Muscle, MuscleGroup> = {
-  chest: 'Chest', shoulder: 'Shoulders', biceps: 'Biceps', triceps: 'Triceps', forearm: 'Forearms',
-  abs: 'Core', oblique: 'Core', traps: 'Back', lat: 'Back', glute: 'Glutes',
-  quad: 'Quadriceps', hamstring: 'Hamstrings', calf: 'Calves',
-}
 
 const layout: readonly { group: MuscleGroup; label: string; side: 'left' | 'right'; row: number }[] = [
   { group: 'Shoulders', label: '어깨', side: 'left', row: 2 },

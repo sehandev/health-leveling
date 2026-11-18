@@ -1,6 +1,6 @@
 import { BufferGeometry, Float32BufferAttribute } from 'three'
 import { mergeVertices } from 'three/examples/jsm/utils/BufferGeometryUtils.js'
-import type { Muscle } from './muscles.ts'
+import type { MuscleGroup } from '../../domain/workouts.ts'
 
 type Ring = [y: number, x: number, z: number, width: number, depth: number]
 
@@ -10,7 +10,7 @@ export function createMannequin() {
   const triangles: number[] = []
   const lines: number[] = []
   const neutralLines: number[] = []
-  const regionTriangles: Partial<Record<Muscle, number[]>> = {}
+  const regionTriangles: Partial<Record<MuscleGroup, number[]>> = {}
   const sides = 12
 
   function surface(rings: Ring[], { legSide = 0, shoulder, torso = false, neutralRows = [] }: { legSide?: number, shoulder?: { boundary: number[], side: number }, torso?: boolean, neutralRows?: number[] } = {}) {
@@ -29,25 +29,25 @@ export function createMannequin() {
         }
       }
     }
-    function region(row: number, i: number): Muscle | undefined {
+    function region(row: number, i: number): MuscleGroup | undefined {
       if (row < 0 || row >= rings.length - 1) return undefined
       const angle = 2 * Math.PI * (i + .5) / sides + (shoulder ? -shoulder.side * Math.PI / 2 : 0)
       const front = Math.sin(angle) > 0
-      let muscle: Muscle | undefined
+      let muscle: MuscleGroup | undefined
       if (torso) {
-        if (row >= 3 && row <= 5 && front) muscle = 'chest'
-        else if (row >= 6 && row <= 8 && front && Math.abs(Math.cos(angle)) < .7) muscle = 'abs'
-        else if (row >= 6 && row <= 9 && Math.abs(Math.cos(angle)) >= .7) muscle = 'oblique'
-        else if (row >= 1 && row <= 3 && !front) muscle = 'traps'
-        else if (row >= 4 && row <= 8 && !front) muscle = 'lat'
-        else if (row >= 10 && !front) muscle = 'glute'
+        if (row >= 3 && row <= 5 && front) muscle = 'Chest'
+        else if (row >= 6 && row <= 8 && front && Math.abs(Math.cos(angle)) < .7) muscle = 'Core'
+        else if (row >= 6 && row <= 9 && Math.abs(Math.cos(angle)) >= .7) muscle = 'Core'
+        else if (row >= 1 && row <= 3 && !front) muscle = 'Back'
+        else if (row >= 4 && row <= 8 && !front) muscle = 'Back'
+        else if (row >= 10 && !front) muscle = 'Glutes'
       } else if (shoulder) {
-        if (row <= 2) muscle = 'shoulder'
-        else if (row <= 5) muscle = front ? 'biceps' : 'triceps'
-        else if (row <= 8) muscle = 'forearm'
+        if (row <= 2) muscle = 'Shoulders'
+        else if (row <= 5) muscle = front ? 'Biceps' : 'Triceps'
+        else if (row <= 8) muscle = 'Forearms'
       } else if (legSide) {
-        if (row <= 4) muscle = front ? 'quad' : 'hamstring'
-        else if (row >= 6 && row <= 9) muscle = 'calf'
+        if (row <= 4) muscle = front ? 'Quadriceps' : 'Hamstrings'
+        else if (row >= 6 && row <= 9) muscle = 'Calves'
       }
       return muscle
     }
@@ -149,7 +149,7 @@ export function createMannequin() {
     const patch = new BufferGeometry()
     patch.setAttribute('position', new Float32BufferAttribute(positions, 3))
     patch.setIndex(indices)
-    return { id: id as Muscle, geometry: patch }
+    return { id: id as MuscleGroup, geometry: patch }
   })
   return { geometry, outline, edges, neutralEdges, regions }
 }

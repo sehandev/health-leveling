@@ -6,12 +6,11 @@ import { loadProfile } from '../../lib/health-api'
 import { useProgressionSnapshot } from '../../lib/use-progression-snapshot'
 import { Button } from '../ui/button'
 import { BodyScanViewer } from './body-scan-viewer'
-import { muscleStatuses, muscleXpGroup } from './muscle-status'
+import { muscleStatuses } from './muscle-status'
 import { projectMuscleAnchor } from './muscle-anchors'
-import type { Muscle } from './muscles'
 
 export function HomeBodyScan() {
-  const [selected, setSelected] = useState<Muscle | null>(null)
+  const [selected, setSelected] = useState<MuscleGroup | null>(null)
   const layout = useRef<HTMLDivElement>(null)
   const updateLines = useCallback((camera: Camera, model: Group, canvas: HTMLCanvasElement) => {
     const root = layout.current
@@ -35,18 +34,18 @@ export function HomeBodyScan() {
   const profile = useQuery({ queryKey: ['health', 'profile'], queryFn: loadProfile })
   return (
     <div className="body-status-layout" ref={layout}>
-      <div className="body-status-viewer"><BodyScanViewer onSelectionChange={setSelected} onFrame={updateLines} /></div>
+      <div className="body-status-viewer"><BodyScanViewer selected={selected} onSelectionChange={setSelected} onFrame={updateLines} /></div>
       <svg className="body-status-lines" aria-hidden="true">
-        {MUSCLE_GROUPS.map(group => <path key={group} data-connector={group} data-selected={selected !== null && muscleXpGroup[selected] === group} />)}
+        {MUSCLE_GROUPS.map(group => <path key={group} data-connector={group} data-selected={selected === group} />)}
       </svg>
       {profile.isPending ? <p role="status" className="body-status-state">불러오는 중…</p>
         : profile.isError ? <div role="alert" className="body-status-state"><p>{profile.error.message}</p><Button variant="quiet" onClick={() => void profile.refetch()}>다시 불러오기</Button></div>
-          : <MuscleStatuses timezone={profile.data.timezone} selected={selected} />}
+          : <MuscleStatuses timezone={profile.data.timezone} selected={selected} onSelect={setSelected} />}
     </div>
   )
 }
 
-function MuscleStatuses({ timezone, selected }: { timezone: string; selected: Muscle | null }) {
+function MuscleStatuses({ timezone, selected, onSelect }: { timezone: string; selected: MuscleGroup | null; onSelect: (group: MuscleGroup) => void }) {
   const progression = useProgressionSnapshot(timezone)
   if (progression.isPending) return <p role="status" className="body-status-state">불러오는 중…</p>
   if (progression.isError) return <div role="alert" className="body-status-state"><p>{progression.error.message}</p><Button variant="quiet" onClick={() => void progression.refetch()}>다시 불러오기</Button></div>
@@ -54,11 +53,16 @@ function MuscleStatuses({ timezone, selected }: { timezone: string; selected: Mu
   if (statuses.length === 0) return <p className="body-status-state">근육 기록이 없어요.</p>
   return (['left', 'right'] as const).map(side => (
     <ul className={`body-status-side body-status-side--${side}`} key={side}>
-      {statuses.filter(status => status.side === side).map(status => (
-        <li key={status.group} className="body-status-card" data-muscle-group={status.group} data-side={side} data-selected={selected !== null && muscleXpGroup[selected] === status.group} style={{ '--status-row': status.row } as React.CSSProperties}>
-          <strong>{status.label}</strong><span className="body-status-values"><span>레벨 {status.level}</span><span>{status.xp} XP</span></span>
-        </li>
-      ))}
+      {statuses.filter(status => status.side === side).map(status => {
+        const isSelected = selected === status.group
+        return (
+          <li key={status.group} className="body-status-card" data-muscle-group={status.group} data-side={side} data-selected={isSelected} style={{ '--status-row': status.row } as React.CSSProperties}>
+            <button type="button" aria-pressed={isSelected} onClick={() => onSelect(status.group)}>
+              <strong>{status.label}</strong><span className="body-status-values"><span>레벨 {status.level}</span><span>{status.xp} XP</span></span>
+            </button>
+          </li>
+        )
+      })}
     </ul>
   ))
 }

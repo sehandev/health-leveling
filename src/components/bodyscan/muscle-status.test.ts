@@ -2,7 +2,7 @@ import assert from 'node:assert/strict'
 import { test } from 'node:test'
 import { buildProgressionSnapshot, type MuscleXpEvent } from '../../domain/progression-view.ts'
 import { MUSCLE_GROUPS } from '../../domain/workouts.ts'
-import { muscleStatuses, muscleXpGroup } from './muscle-status.ts'
+import { muscleStatuses } from './muscle-status.ts'
 
 test('status cards use each existing XP group exactly once without changing level or XP', () => {
   const events: MuscleXpEvent[] = Array.from({ length: 11 }, (_, i) => ({
@@ -22,14 +22,15 @@ test('status cards use each existing XP group exactly once without changing leve
   assert.equal(snapshot.avatar.xp, 11)
 })
 
-test('related mesh regions share the correct existing group without creating missing values', () => {
-  assert.equal(muscleXpGroup.abs, 'Core')
-  assert.equal(muscleXpGroup.oblique, 'Core')
-  assert.equal(muscleXpGroup.traps, 'Back')
-  assert.equal(muscleXpGroup.lat, 'Back')
-  assert.equal(muscleXpGroup.forearm, 'Forearms')
+test('back and core keep one progression status each without splitting into smaller muscles', () => {
   assert.deepEqual(muscleStatuses([]), [])
-  assert.deepEqual(muscleStatuses([{ group: 'Back', level: 3, xp: 21 }]).map(({ group, level, xp }) => ({ group, level, xp })), [{ group: 'Back', level: 3, xp: 21 }])
+  assert.deepEqual(muscleStatuses([
+    { group: 'Core', level: 2, xp: 12 },
+    { group: 'Back', level: 3, xp: 21 },
+  ]).map(({ group, label, level, xp }) => ({ group, label, level, xp })), [
+    { group: 'Core', label: '코어', level: 2, xp: 12 },
+    { group: 'Back', label: '등', level: 3, xp: 21 },
+  ])
 })
 
 test('forearms show the existing progression value, starting at level one and zero XP', () => {
